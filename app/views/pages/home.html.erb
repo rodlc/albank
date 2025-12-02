@@ -1,2 +1,71 @@
 <h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+
+<%# <p>Find me in app/views/pages/home.html.erb</p> %>
+
+<div class="file-upload-wrapper">
+  <label for="file-input" class="upload-label drop-zone" id="dropZone">
+    <img
+      src="<%= image_path 'logo-cochon.svg' %>"
+      alt="Choisir un fichier"
+      title="Cliquer pour importer"
+      class="upload-label-image"
+    >
+  </label>
+
+  <input
+    id="file-input"
+    type="file"
+    accept="*"
+    style="visibility:hidden"
+  >
+</div>
+
+<script>
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('file-input');
+
+  // Empêche le comportement par défaut (ouvrir le fichier dans le navigateur)
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover'); // pour un style visuel
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('dragover');
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      // Ici tu peux soit assigner au input, soit traiter directement
+      // fileInput.files = files; // pas toujours supporté
+      handleFiles(files);
+    }
+  });
+
+  function handleFiles(files) {
+    const f = files[0];
+    console.log("Fichier déposé :", f.name, f.size, f.type);
+    // Exemple d’upload avec FormData :
+    // const fd = new FormData();
+    // fd.append('file', f);
+    // fetch('/upload', { method: 'POST', body: fd });
+  }
+</script>
+
+<style>
+  .drop-zone.dragover {
+    outline: 3px dashed #4a90e2;
+    opacity: 0.8;
+  }
+  .visually-hidden {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+</style>
