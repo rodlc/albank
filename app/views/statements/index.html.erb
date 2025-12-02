@@ -1,0 +1,30 @@
+<div class="container mt-4">
+  <h1>Mes relevés</h1>
+
+  <% if @statements.any? %>
+    <div class="row">
+      <% @statements.each do |statement| %>
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><%= statement.category.name %></h5>
+
+              <p class="card-text">
+                <strong><%= statement.amount %>€</strong>
+                <br>
+
+                <small class="text-muted">
+                  <%= statement.date.strftime("%B %Y") %>
+                </small>
+              </p>
+
+              <%= link_to "Voir les opportunités", statement_path(statement), class: "btn btn-primary" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-muted">Aucun relevé pour le moment.</p>
+  <% end %>
+</div>

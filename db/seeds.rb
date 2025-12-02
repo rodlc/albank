@@ -1,6 +1,6 @@
 puts "Cleaning database..."
+Statement.destroy_all
 Standard.destroy_all
-puts "Cleaning categories..."
 Category.destroy_all
 
 puts "Creating categories..."
@@ -17,4 +17,15 @@ Standard.create!(category: auto, average_amount: 50.0, min_amount: 35.0, max_amo
 Standard.create!(category: habitation, average_amount: 25.0, min_amount: 15.0, max_amount: 40.0, unit: "€/mois", date: Date.today, tiering: "standard")
 Standard.create!(category: banque, average_amount: 5.0, min_amount: 0.0, max_amount: 10.0, unit: "€/mois", date: Date.today, tiering: "standard")
 
-puts "✓ #{Category.count} categories, #{Standard.count} standards created"
+puts "Creating demo user..."
+user = User.find_or_create_by!(email: "demo@albank.bot") do |u|
+  u.password = "password"
+  u.password_confirmation = "password"
+end
+
+puts "Creating statements..."
+user.statements.create!(category: energie, amount: 120.0, date: Date.today)
+user.statements.create!(category: internet, amount: 45.0, date: Date.today)
+user.statements.create!(category: auto, amount: 85.0, date: Date.today)
+
+puts "✓ #{Category.count} categories, #{Standard.count} standards, #{Statement.count} statements created"

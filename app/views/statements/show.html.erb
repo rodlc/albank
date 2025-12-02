@@ -1,0 +1,15 @@
+<div class="container mt-4">
+  <%= link_to "← Retour aux relevés", statements_path, class: "btn btn-link" %>
+
+  <h1><%= @statement.category.name %></h1>
+
+  <p class="lead">
+    Vous payez <strong><%= @statement.amount %>€</strong> par mois
+    <br>
+    <small class="text-muted"><%= @statement.date.strftime("%B %Y") %></small>
+  </p>
+
+  <div class="alert alert-info">
+    Les opportunités d'économie seront affichées ici prochainement.
+  </div>
+</div>
