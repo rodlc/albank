@@ -1,1 +1,27 @@
-// Specific CSS for your home-page
+
+// conteneur
+.file-upload-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  // le logo-cochon
+  .upload-label-image {
+    width: 200px;
+    max-width: 40vw;
+    height: auto;
+    cursor: pointer;
+    display: block;
+  }
+  // masquage accessible
+  .visually-hidden {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
