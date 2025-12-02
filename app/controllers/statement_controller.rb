@@ -1,4 +1,4 @@
-class PdfProcessingController < ApplicationController
+class StatementController < ApplicationController
   def new
     #show upload form
   end
@@ -10,6 +10,16 @@ class PdfProcessingController < ApplicationController
       render plain: "Successfully processed PDF file: #{file_name}"
   end
 
+
+
+private
+  # def extract_text_from_pdf(file_path)
+  # #.  input =
+  # end
+
+  # def llm_analyzer()
+  #   #
+  # end
 
 
 end

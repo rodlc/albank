@@ -51,7 +51,7 @@
   <div class="upload-container">
     <h1>PDF Upload Test</h1>
 
-    <%= form_with url: process_pdf_path, multipart: true, local: true do |form| %>
+    <%= form_with url: pdf_upload_path, multipart: true, local: true, data: { turbo: false } do |form| %>
       <div class="form-group">
         <label for="pdf_file">Wähle eine PDF-Datei:</label>
         <%= form.file_field :pdf_file, accept: "application/pdf", required: true %>
