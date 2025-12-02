@@ -1,0 +1,14 @@
+<div class="container mt-4">
+  <%= link_to "← Retour aux relevés", statements_path, class: "btn btn-link" %>
+
+  <h1>Nouveau relevé</h1>
+
+  <%= form_with model: @statement, local: true do |f| %>
+    <div class="mb-3">
+      <%= f.label :date, "Date du relevé", class: "form-label" %>
+      <%= f.date_field :date, class: "form-control", required: true %>
+    </div>
+
+    <%= f.submit "Créer le relevé", class: "btn btn-primary" %>
+  <% end %>
+</div>
