@@ -1,5 +1,6 @@
 puts "Cleaning database..."
 Standard.destroy_all
+puts "Cleaning categories..."
 Category.destroy_all
 
 puts "Creating categories..."
