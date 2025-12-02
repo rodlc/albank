@@ -1,20 +1,41 @@
 <div class="container mt-4">
   <%= link_to "← Retour aux relevés", statements_path, class: "btn btn-link" %>
 
-  <h1><%= @statement.category.name %></h1>
+  <h1>Relevé du <%= @statement.date.strftime("%B %Y") %></h1>
 
-  <p class="lead">
-    Vous payez <strong><%= @statement.amount %>€</strong> par mois
-    <br>
-    <small class="text-muted"><%= @statement.date.strftime("%B %Y") %></small>
-  </p>
+  <p class="lead">Total: <strong><%= @expenses.sum(&:subtotal) %>€</strong></p>
 
-  <% if @statement.opportunities.any? %>
-    <h3 class="mt-4">Opportunités d'économie</h3>
-    <%= render partial: "shared/opportunity_card", collection: @statement.opportunities, as: :opportunity %>
+  <% if @expenses.any? %>
+    <h3 class="mt-4">Dépenses par catégorie</h3>
+    <div class="row">
+      <% @expenses.each do |expense| %>
+        <div class="col-md-6 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><%= expense.category.name %></h5>
+
+              <p class="card-text"><strong><%= expense.subtotal %>€</strong></p>
+
+              <% if expense.opportunities.any? %>
+                <p class="text-success">
+                  <%= expense.opportunities.count %> opportunité(s) d'économie
+                </p>
+                <% expense.opportunities.each do |opportunity| %>
+                  <%= link_to "Voir l'opportunité",
+                      statement_expense_opportunity_path(@statement, expense, opportunity),
+                      class: "btn btn-sm btn-outline-primary" %>
+                <% end %>
+              <% else %>
+                <p class="text-muted">Aucune opportunité détectée</p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   <% else %>
     <div class="alert alert-info">
-      Aucune opportunité d'économie détectée pour le moment.
+      Aucune dépense dans ce relevé.
     </div>
   <% end %>
 </div>

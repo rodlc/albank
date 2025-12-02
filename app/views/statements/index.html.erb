@@ -1,24 +1,28 @@
 <div class="container mt-4">
   <h1>Mes relevés</h1>
 
+  <%= link_to "Nouveau relevé", new_statement_path, class: "btn btn-success mb-3" %>
+
   <% if @statements.any? %>
     <div class="row">
       <% @statements.each do |statement| %>
         <div class="col-md-4 mb-3">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title"><%= statement.category.name %></h5>
+              <h5 class="card-title">
+                Relevé du <%= statement.date.strftime("%B %Y") %>
+              </h5>
 
               <p class="card-text">
-                <strong><%= statement.amount %>€</strong>
+                <strong><%= statement.expenses.count %> dépenses</strong>
                 <br>
 
                 <small class="text-muted">
-                  <%= statement.date.strftime("%B %Y") %>
+                  Total: <%= statement.expenses.sum(:subtotal) %>€
                 </small>
               </p>
 
-              <%= link_to "Voir les opportunités", statement_path(statement), class: "btn btn-primary" %>
+              <%= link_to "Voir le détail", statement_path(statement), class: "btn btn-primary" %>
             </div>
           </div>
         </div>

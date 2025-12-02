@@ -1,5 +1,6 @@
 puts "Cleaning database..."
 Opportunity.destroy_all
+Expense.destroy_all
 Statement.destroy_all
 Standard.destroy_all
 Category.destroy_all
@@ -25,17 +26,29 @@ user = User.find_or_create_by!(email: "demo@albank.bot") do |u|
 end
 
 puts "Creating statements..."
-statement_energie = user.statements.create!(category: energie, amount: 120.0, date: Date.today)
-statement_internet = user.statements.create!(category: internet, amount: 45.0, date: Date.today)
-statement_auto = user.statements.create!(category: auto, amount: 85.0, date: Date.today)
+statement_nov = user.statements.create!(date: Date.new(2025, 11, 1))
+statement_dec = user.statements.create!(date: Date.new(2025, 12, 1))
+
+puts "Creating expenses for November statement..."
+expense_energie_nov = statement_nov.expenses.create!(category: energie, subtotal: 120.0)
+expense_internet_nov = statement_nov.expenses.create!(category: internet, subtotal: 45.0)
+expense_auto_nov = statement_nov.expenses.create!(category: auto, subtotal: 85.0)
+
+puts "Creating expenses for December statement..."
+expense_energie_dec = statement_dec.expenses.create!(category: energie, subtotal: 110.0)
+expense_internet_dec = statement_dec.expenses.create!(category: internet, subtotal: 42.0)
+expense_habitation_dec = statement_dec.expenses.create!(category: habitation, subtotal: 35.0)
 
 puts "Creating opportunities..."
 standard_energie = Standard.find_by(category: energie)
 standard_internet = Standard.find_by(category: internet)
 standard_auto = Standard.find_by(category: auto)
+standard_habitation = Standard.find_by(category: habitation)
 
-Opportunity.create!(statement: statement_energie, standard: standard_energie, status: "pending")
-Opportunity.create!(statement: statement_internet, standard: standard_internet, status: "pending")
-Opportunity.create!(statement: statement_auto, standard: standard_auto, status: "contacted")
+Opportunity.create!(expense: expense_energie_nov, standard: standard_energie, status: "pending")
+Opportunity.create!(expense: expense_internet_nov, standard: standard_internet, status: "pending")
+Opportunity.create!(expense: expense_auto_nov, standard: standard_auto, status: "contacted")
+Opportunity.create!(expense: expense_energie_dec, standard: standard_energie, status: "pending")
+Opportunity.create!(expense: expense_habitation_dec, standard: standard_habitation, status: "completed")
 
-puts "✓ #{Category.count} categories, #{Standard.count} standards, #{Statement.count} statements, #{Opportunity.count} opportunities created"
+puts "✓ #{Category.count} categories, #{Standard.count} standards, #{Statement.count} statements, #{Expense.count} expenses, #{Opportunity.count} opportunities created"
