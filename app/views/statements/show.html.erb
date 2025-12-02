@@ -9,7 +9,12 @@
     <small class="text-muted"><%= @statement.date.strftime("%B %Y") %></small>
   </p>
 
-  <div class="alert alert-info">
-    Les opportunités d'économie seront affichées ici prochainement.
-  </div>
+  <% if @statement.opportunities.any? %>
+    <h3 class="mt-4">Opportunités d'économie</h3>
+    <%= render partial: "shared/opportunity_card", collection: @statement.opportunities, as: :opportunity %>
+  <% else %>
+    <div class="alert alert-info">
+      Aucune opportunité d'économie détectée pour le moment.
+    </div>
+  <% end %>
 </div>

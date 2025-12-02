@@ -1,4 +1,5 @@
 puts "Cleaning database..."
+Opportunity.destroy_all
 Statement.destroy_all
 Standard.destroy_all
 Category.destroy_all
@@ -24,8 +25,17 @@ user = User.find_or_create_by!(email: "demo@albank.bot") do |u|
 end
 
 puts "Creating statements..."
-user.statements.create!(category: energie, amount: 120.0, date: Date.today)
-user.statements.create!(category: internet, amount: 45.0, date: Date.today)
-user.statements.create!(category: auto, amount: 85.0, date: Date.today)
+statement_energie = user.statements.create!(category: energie, amount: 120.0, date: Date.today)
+statement_internet = user.statements.create!(category: internet, amount: 45.0, date: Date.today)
+statement_auto = user.statements.create!(category: auto, amount: 85.0, date: Date.today)
 
-puts "✓ #{Category.count} categories, #{Standard.count} standards, #{Statement.count} statements created"
+puts "Creating opportunities..."
+standard_energie = Standard.find_by(category: energie)
+standard_internet = Standard.find_by(category: internet)
+standard_auto = Standard.find_by(category: auto)
+
+Opportunity.create!(statement: statement_energie, standard: standard_energie, status: "pending")
+Opportunity.create!(statement: statement_internet, standard: standard_internet, status: "pending")
+Opportunity.create!(statement: statement_auto, standard: standard_auto, status: "contacted")
+
+puts "✓ #{Category.count} categories, #{Standard.count} standards, #{Statement.count} statements, #{Opportunity.count} opportunities created"
