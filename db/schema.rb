@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_02_125247) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_02_125420) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -35,6 +35,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_125247) do
     t.index ["category_id"], name: "index_standards_on_category_id"
   end
 
+  create_table "statements", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "category_id", null: false
+    t.decimal "amount", precision: 10, scale: 2, null: false
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_statements_on_category_id"
+    t.index ["user_id"], name: "index_statements_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -48,4 +59,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_125247) do
   end
 
   add_foreign_key "standards", "categories"
+  add_foreign_key "statements", "categories"
+  add_foreign_key "statements", "users"
 end
