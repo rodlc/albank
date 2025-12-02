@@ -9,11 +9,11 @@ class StatementsController < ApplicationController
   end
 
   def new
-    @statement = current_user.statements.build
+    @statement = current_user.statements.new
   end
 
   def create
-    @statement = current_user.statements.build(statement_params)
+    @statement = current_user.statements.new(statement_params)
 
     if @statement.save
       # TODO: Parse PDF and create expenses
