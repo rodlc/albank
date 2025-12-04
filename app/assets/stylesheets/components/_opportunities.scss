@@ -1,0 +1,113 @@
+// Wise-inspired components for opportunities and statements
+// Emphasis on white space, green accents, and subtle depth
+
+// Savings highlight card - prominent display of savings amount
+.savings-highlight {
+  background: linear-gradient(135deg, #f8f8f5 0%, #e8f5e9 100%);
+  border-radius: 16px;
+  border: 2px solid $gray-300;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: $success;
+    box-shadow: 0 4px 16px rgba(159, 232, 112, 0.2);
+  }
+
+  .savings-amount {
+    color: $success;
+    font-weight: 700;
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin: 0.5rem 0;
+  }
+
+  .savings-percentage {
+    color: $gray-700;
+    font-size: 1.125rem;
+  }
+}
+
+// Statement card - hover effect with lift
+.statement-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 12px;
+  border: 1px solid $gray-300;
+  background: $light;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-color: $gray-500;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+}
+
+// Opportunity status badges
+.opportunity-badge {
+  font-size: 0.875rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+
+  &.badge-pending {
+    background: lighten($warning, 35%);
+    color: darken($warning, 10%);
+  }
+
+  &.badge-contacted {
+    background: lighten($info, 35%);
+    color: darken($info, 10%);
+  }
+
+  &.badge-completed {
+    background: lighten($success, 35%);
+    color: darken($primary, 5%);
+  }
+}
+
+// Opportunity count indicator
+.opportunities-count {
+  background: $success;
+  color: $primary;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 12px;
+}
+
+// Expense card in statement detail
+.expense-card {
+  border-radius: 12px;
+  border: 1px solid $gray-300;
+  background: $light;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: $success;
+  }
+
+  &.has-opportunity {
+    border-left: 4px solid $success;
+  }
+}
+
+// Category icon styling
+.category-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: $secondary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $primary;
+  font-size: 1.5rem;
+}
