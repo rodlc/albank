@@ -105,3 +105,53 @@
     color: #FFFFFF;
   }
 }
+
+// === Comparison Panel (Split-View) ===
+// Modern panel for before/after comparison (Opportunity page)
+
+.comparison-panel {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #E5E7EB;
+  overflow: hidden;
+
+  &__header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #E5E7EB;
+    background: #F9FAFB;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: #111827;
+    }
+
+    p {
+      font-size: 0.875rem;
+      color: #6B7280;
+      margin: 0;
+    }
+  }
+
+  &__left {
+    padding: 2rem;
+    border-right: 1px solid #E5E7EB;
+  }
+
+  &__right {
+    padding: 2rem;
+    background: rgba(5, 150, 105, 0.05);
+  }
+
+  &__footer {
+    padding: 1rem 1.5rem;
+    background: #F9FAFB;
+    border-top: 1px solid #E5E7EB;
+    text-align: right;
+  }
+}
