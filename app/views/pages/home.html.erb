@@ -10,17 +10,19 @@
       <!-- Drop Zone -->
       <div class="file-upload-wrapper mb-4">
         <label for="file-input" class="upload-label drop-zone" id="dropZone">
-          <img
-            src="<%= image_path 'logo-cochon.svg' %>"
-            alt="Choisir un fichier"
-            title="Cliquer pour importer"
-            class="upload-label-image mb-3"
-            style="max-width: 200px; cursor: pointer;"
-          >
-          <p class="text-muted">
-            <i class="fas fa-cloud-upload-alt me-2"></i>
-            Glissez-déposez votre relevé ou cliquez ici
-          </p>
+          <div class="text-center">
+            <img
+              src="<%= image_path 'logo-cochon.svg' %>"
+              alt="Choisir un fichier"
+              title="Cliquer pour importer"
+              class="upload-label-image mb-3"
+              style="max-width: 250px; margin: 0 auto; display: block; cursor: pointer;"
+            >
+            <p class="text-muted">
+              <i class="fas fa-cloud-upload-alt me-2"></i>
+              Glissez-déposez votre relevé ou cliquez ici
+            </p>
+          </div>
         </label>
 
         <input
