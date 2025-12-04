@@ -55,12 +55,14 @@
 
 .letter-actions {
   position: sticky;
-  bottom: 2rem;
+  bottom: 0;
   z-index: 10;
   display: flex;
   justify-content: center;
   gap: 1rem;
   margin-top: 2rem;
+  padding: 2rem 0;
+  background: linear-gradient(to bottom, transparent 0%, #F3F4F6 20%);
   pointer-events: none;
 
   > * {
