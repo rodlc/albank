@@ -1,9 +1,19 @@
-// Import Google fonts - Mon-Entreprise/URSSAF style
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@600;700&display=swap');
+// Import Google fonts - Modern UI (Inter)
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 // Define fonts for body and headers
-$body-font: "Roboto", sans-serif;
-$headers-font: "Montserrat", sans-serif;
+$body-font: "Inter", sans-serif;
+$headers-font: "Inter", sans-serif;
+
+// Modern typography settings
+body {
+  letter-spacing: -0.015em;  // Tight tracking for modern "Tech" look
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.03em;   // Very tight for headings
+  font-weight: 600;
+}
 
 // To use a font file (.woff) uncomment following lines
 // @font-face {

@@ -1,27 +1,28 @@
-// === AlBank "Mon-Entreprise/URSSAF" Theme ===
-// Inspiré de mon-entreprise.urssaf.fr - Style institutionnel
+// === AlBank "Modern Professional" Theme ===
+// DSFR Remastered - Institutional trust + Modern UX
 
 // Brand Colors
-$primary: #000091;        // Bleu France officiel (ancre visuelle)
-$success: #18753C;        // Vert accessible
-$danger: #E1000F;         // Marianne Red
+$primary: #000091;        // Bleu France (ancre de confiance)
+$success: #059669;        // Emerald 600 (moderne)
+$danger: #DC2626;         // Red 600
 $info: #6a6af4;
 $warning: #B34000;
 
-// Neutral Palette
-$text-main: #1E1E1E;      // Gris anthracite (pas noir pur)
-$border-color: #E6E9EC;   // Gris pierre pour bordures
+// Modern Gray Palette (Tailwind-inspired)
+$text-main: #111827;      // Gray 900 (Inter dark)
+$border-color: #E5E7EB;   // Gray 200
 
-$gray-900: #1E1E1E;       // Texte principal
-$gray-700: #3A3A3A;       // Texte secondaire
-$gray-500: #666666;       // Texte tertiaire
-$gray-300: #E6E9EC;       // Bordures
-$gray-200: #E3E3FD;       // Bordures douces
-$gray-100: #F5F5FE;       // Background léger (bleu très pâle admin)
+$gray-900: #111827;       // Texte principal
+$gray-700: #374151;       // Texte secondaire
+$gray-500: #6B7280;       // Texte tertiaire
+$gray-300: #D1D5DB;       // Bordures
+$gray-200: #E5E7EB;       // Bordures principales
+$gray-100: #F3F4F6;       // Background moderne
+$gray-50: #F9FAFB;        // Background sections
 
 // Background
-$body-bg: #F5F5FE;        // Fond légèrement bleuté (style gouvernemental)
+$body-bg: #F3F4F6;        // Gris froid moderne
 $card-bg: #FFFFFF;
 $light: #FFFFFF;
-$secondary: #F6F6F6;
+$secondary: #F9FAFB;
 $body-color: $text-main;
