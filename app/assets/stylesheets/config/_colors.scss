@@ -1,28 +1,47 @@
-// === AlBank "Modern Professional" Theme ===
-// DSFR Remastered - Institutional trust + Modern UX
+// === AlBank "Slate Hybride" Theme ===
+// Structure Linear/Vercel + Identité DSFR
 
-// Brand Colors
-$primary: #000091;        // Bleu France (ancre de confiance)
-$success: #059669;        // Emerald 600 (moderne)
-$danger: #DC2626;         // Red 600
+// === TYPOGRAPHIE ===
+$body-letter-spacing: -0.015em;
+
+// === COULEURS ===
+// Action Principale (DSFR conservé)
+$primary: #000091;        // Bleu France
+$primary-hover: #00006b;  // Bleu France foncé
+
+// Neutres Slate (Tailwind)
+$body-bg: #F8FAFC;        // Slate 50 (fond général)
+$card-bg: #FFFFFF;        // Blanc pur pour composants
+$text-main: #0F172A;      // Slate 900
+$text-muted: #64748B;     // Slate 500
+$border-color: #E2E8F0;   // Slate 200
+
+// Grays mappés sur Slate
+$gray-900: #0F172A;
+$gray-700: #334155;
+$gray-500: #64748B;
+$gray-300: #CBD5E1;
+$gray-200: #E2E8F0;
+$gray-100: #F1F5F9;
+$gray-50: #F8FAFC;
+
+// Semantic
+$success: #059669;        // Emerald 600 (conservé)
+$success-bg: #ECFDF5;     // Emerald 50
+$success-text: #047857;   // Emerald 700
+$danger: #DC2626;
+$danger-bg: #FEF2F2;
+$danger-text: #B91C1C;
 $info: #6a6af4;
 $warning: #B34000;
 
-// Modern Gray Palette (Tailwind-inspired)
-$text-main: #111827;      // Gray 900 (Inter dark)
-$border-color: #E5E7EB;   // Gray 200
-
-$gray-900: #111827;       // Texte principal
-$gray-700: #374151;       // Texte secondaire
-$gray-500: #6B7280;       // Texte tertiaire
-$gray-300: #D1D5DB;       // Bordures
-$gray-200: #E5E7EB;       // Bordures principales
-$gray-100: #F3F4F6;       // Background moderne
-$gray-50: #F9FAFB;        // Background sections
-
-// Background
-$body-bg: #F3F4F6;        // Gris froid moderne
-$card-bg: #FFFFFF;
+// Legacy mappings
 $light: #FFFFFF;
-$secondary: #F9FAFB;
+$secondary: #F8FAFC;
 $body-color: $text-main;
+
+// === FORMES ===
+$border-radius-base: 8px;
+$border-radius-lg: 12px;
+$box-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+$box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
