@@ -15,56 +15,31 @@
         </p>
       </div>
 
-      <!-- Savings Highlight - Wise Style -->
-      <div class="savings-highlight mb-5">
-        <p class="text-muted mb-2">Économies potentielles</p>
-        <div class="savings-amount">
+      <!-- Callout Box - Économie Potentielle -->
+      <div class="opportunity-callout">
+        <p class="opportunity-callout__title mb-2">Économie potentielle</p>
+        <div class="opportunity-callout__amount">
           <%= number_to_currency(@opportunity.savings, unit: "€", precision: 0) %>
         </div>
         <% savings_percentage = (@opportunity.savings / @opportunity.expense.subtotal * 100).round %>
-        <p class="savings-percentage mb-0">
+        <p class="opportunity-callout__subtitle mb-0">
           soit <strong><%= savings_percentage %>%</strong> de réduction possible
         </p>
       </div>
 
-      <!-- Comparison Cards -->
-      <div class="row g-4 mb-5">
-        <div class="col-md-6">
-          <div class="card h-100 border-0 shadow-sm">
-            <div class="card-body p-4">
-              <div class="d-flex align-items-start mb-3">
-                <div class="category-icon me-3">
-                  <i class="fas fa-receipt"></i>
-                </div>
-                <div>
-                  <h5 class="mb-1">Votre dépense actuelle</h5>
-                  <p class="text-muted small mb-0">Prix que vous payez</p>
-                </div>
-              </div>
-              <p class="display-6 fw-bold mb-0">
-                <%= number_to_currency(@opportunity.expense.subtotal, unit: "€") %>
-              </p>
-            </div>
-          </div>
+      <!-- VS Container - Comparaison -->
+      <div class="vs-container">
+        <div class="price-box price-box--current">
+          <label>Ce que vous payez</label>
+          <strong><%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 0) %></strong>
         </div>
 
-        <div class="col-md-6">
-          <div class="card h-100 border-0 shadow-sm">
-            <div class="card-body p-4">
-              <div class="d-flex align-items-start mb-3">
-                <div class="category-icon me-3">
-                  <i class="fas fa-chart-line"></i>
-                </div>
-                <div>
-                  <h5 class="mb-1">Moyenne du marché</h5>
-                  <p class="text-muted small mb-0"><%= @opportunity.standard.unit %></p>
-                </div>
-              </div>
-              <p class="display-6 fw-bold mb-0">
-                <%= number_to_currency(@opportunity.standard.average_amount, unit: "€") %>
-              </p>
-            </div>
-          </div>
+        <div class="text-muted fw-bold">vs</div>
+
+        <div class="price-box price-box--market">
+          <label>Prix du marché</label>
+          <strong><%= number_to_currency(@opportunity.standard.average_amount, unit: "€", precision: 0) %></strong>
+          <small class="text-muted d-block mt-1"><%= @opportunity.standard.unit %></small>
         </div>
       </div>
 
