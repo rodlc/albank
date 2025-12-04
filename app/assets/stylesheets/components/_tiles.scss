@@ -2,9 +2,9 @@
 // Combines institutional trust with modern UX patterns (Shadcn/Linear)
 
 .smart-card {
-  background: white;
-  border: 1px solid #E5E7EB;
-  border-radius: 12px;
+  background: $card-bg;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-lg;
   padding: 1.5rem;
   position: relative;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -14,9 +14,9 @@
   flex-direction: column;
 
   &:hover {
-    border-color: #000091;
+    border-color: $primary;
     transform: translateY(-2px);
-    box-shadow: 0 12px 24px -10px rgba(0, 0, 145, 0.15);
+    box-shadow: $box-shadow;
   }
 
   // Barre latérale de statut (visual cue)
@@ -27,12 +27,12 @@
     top: 0;
     bottom: 0;
     width: 4px;
-    background: #E5E7EB;
+    background: $border-color;
     transition: background 0.2s;
   }
 
   &.has-savings::before {
-    background: #059669;  // Emerald green indicator
+    background: $success;  // Emerald green indicator
   }
 
   &__label {
