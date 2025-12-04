@@ -1,109 +1,86 @@
-<div class="card border-0 shadow-sm mt-5" id="negotiation-letter-card" data-controller="clipboard">
-  <div class="card-header bg-primary text-white">
-    <h5 class="mb-0">
-      <i class="fas fa-file-alt me-2"></i>
-      Lettre de renégociation
-    </h5>
-  </div>
-
-  <div class="card-body p-4">
-    <div data-clipboard-target="source" class="letter-content" style="font-family: 'Times New Roman', serif; font-size: 1rem; line-height: 1.8; color: #161616;">
-      <p class="mb-4">
-        <%= l(Date.current, format: :long).capitalize %>
-      </p>
-
-      <p class="mb-4">
-        <strong>Objet :</strong> Demande de renégociation de mon contrat <%= @opportunity.expense.category.name %>
-      </p>
-
-      <p class="mb-4">Madame, Monsieur,</p>
-
-      <p class="mb-4">
-        Je suis actuellement client(e) chez vous pour mon contrat de
-        <strong><%= @opportunity.expense.category.name %></strong>.
-      </p>
-
-      <p class="mb-4">
-        En consultant les tarifs moyens du marché, j'ai constaté que ma dépense actuelle de
-        <strong><%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 2) %></strong>
-        est supérieure à la moyenne du marché qui s'élève à
-        <strong><%= number_to_currency(@opportunity.standard.average_amount, unit: "€", precision: 2) %></strong>.
-      </p>
-
-      <div class="alert alert-success my-4" style="background: #E3F4E8; border: 2px solid #18753C; border-radius: 8px;">
-        <div class="text-center">
-          <p class="text-muted small mb-1">Économie potentielle</p>
-          <p class="h3 mb-0" style="color: #18753C;">
-            <strong><%= number_to_currency(@opportunity.savings, unit: "€", precision: 2) %></strong>
-          </p>
-        </div>
-      </div>
-
-      <p class="mb-4">
-        Je souhaiterais donc renégocier mon contrat afin de bénéficier d'un tarif plus compétitif,
-        en cohérence avec les prix pratiqués sur le marché.
-      </p>
-
-      <p class="mb-4">
-        Je reste à votre disposition pour toute discussion à ce sujet et vous remercie par avance
-        de l'attention que vous porterez à ma demande.
-      </p>
-
-      <p class="mb-4">
-        Dans l'attente de votre réponse, je vous prie d'agréer, Madame, Monsieur,
-        l'expression de mes salutations distinguées.
-      </p>
-
-      <p class="text-end mt-5">
-        <em>Signature</em>
-      </p>
+<div class="action-section" data-controller="clipboard">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2 class="h4 fw-bold mb-2">📝 Passez à l'action</h2>
+      <p class="text-muted">Ce modèle a été pré-rempli avec vos données d'analyse</p>
     </div>
 
-    <hr class="my-4">
+    <div class="paper-sheet" id="letter-content" data-clipboard-target="source">
+      <p class="mb-5 text-end">
+        Le <%= l(Date.current, format: "%d %B %Y") %>
+      </p>
 
-    <div class="d-flex gap-2 justify-content-end">
+      <p class="fw-bold mb-4">
+        Objet : Demande d'alignement tarifaire - Contrat <strong><%= @opportunity.expense.category.name %></strong>
+      </p>
+
+      <p>Madame, Monsieur,</p>
+
+      <p>
+        Titulaire d'un contrat auprès de votre établissement, je viens par la présente solliciter
+        une révision de mes conditions tarifaires.
+      </p>
+
+      <p>
+        Une analyse comparative de mes charges, effectuée ce jour, a mis en évidence un décalage
+        significatif entre ma tarification actuelle et la réalité du marché :
+      </p>
+
+      <ul class="my-4">
+        <li>Mon tarif actuel : <strong><%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 2) %></strong> / <%= @opportunity.standard.unit %></li>
+        <li>Moyenne du marché : <strong><%= number_to_currency(@opportunity.standard.average_amount, unit: "€", precision: 2) %></strong> / <%= @opportunity.standard.unit %></li>
+        <li>Écart constaté : <strong>+<%= ((@opportunity.savings / @opportunity.expense.subtotal) * 100).round %>%</strong></li>
+      </ul>
+
+      <p>
+        Client fidèle, je privilégie la continuité de nos relations. Toutefois, cet écart n'est plus
+        justifié au regard des offres concurrentes à garanties équivalentes.
+      </p>
+
+      <p>
+        Je vous invite donc à me faire parvenir une proposition commerciale rectificative sous 10 jours.
+        À défaut d'un alignement concurrentiel de votre part, je me verrais contraint de procéder à la
+        résiliation de ce contrat conformément à la législation en vigueur.
+      </p>
+
+      <p class="mt-5">
+        Dans cette attente, je vous prie d'agréer, Madame, Monsieur, mes salutations distinguées.
+      </p>
+
+      <div class="mt-5 pt-5 fst-italic text-muted">
+        [Votre Signature]
+      </div>
+    </div>
+
+    <!-- Boutons d'action flottants -->
+    <div class="letter-actions">
       <button
         type="button"
-        class="btn btn-outline-primary"
+        class="btn btn-light btn-lg border rounded-pill px-4"
         data-clipboard-target="button"
         data-action="click->clipboard#copy"
       >
-        <i class="fas fa-copy me-2"></i>
-        Copier la lettre
+        <span class="me-2">📋</span>
+        Copier le texte
       </button>
 
       <button
         type="button"
-        class="btn btn-primary"
+        class="btn btn-gov-primary btn-lg rounded-pill px-4"
         onclick="window.print()"
       >
-        <i class="fas fa-print me-2"></i>
+        <span class="me-2">🖨️</span>
         Imprimer
       </button>
     </div>
 
-    <div data-clipboard-target="feedback" class="alert alert-success mt-3 d-none" role="alert">
-      <i class="fas fa-check-circle me-2"></i>
+    <div
+      data-clipboard-target="feedback"
+      class="alert alert-success mt-3 text-center d-none"
+      role="alert"
+    >
+      <span class="me-2">✅</span>
       Lettre copiée dans le presse-papiers !
     </div>
   </div>
 </div>
-
-<style>
-@media print {
-  nav, .btn, #copy-feedback, hr {
-    display: none !important;
-  }
-
-  #negotiation-letter-card {
-    box-shadow: none !important;
-    border: none !important;
-  }
-
-  .card-header {
-    background: white !important;
-    color: #000091 !important;
-    border-bottom: 2px solid #000091 !important;
-  }
-}
-</style>
