@@ -1,4 +1,4 @@
-<div class="card border-0 shadow-sm mt-5" id="negotiation-letter-card">
+<div class="card border-0 shadow-sm mt-5" id="negotiation-letter-card" data-controller="clipboard">
   <div class="card-header bg-primary text-white">
     <h5 class="mb-0">
       <i class="fas fa-file-alt me-2"></i>
@@ -7,7 +7,7 @@
   </div>
 
   <div class="card-body p-4">
-    <div id="letter-content" class="letter-content" style="font-family: 'Times New Roman', serif; font-size: 1rem; line-height: 1.8; color: #161616;">
+    <div data-clipboard-target="source" class="letter-content" style="font-family: 'Times New Roman', serif; font-size: 1rem; line-height: 1.8; color: #161616;">
       <p class="mb-4">
         <%= l(Date.current, format: :long).capitalize %>
       </p>
@@ -65,8 +65,8 @@
       <button
         type="button"
         class="btn btn-outline-primary"
-        onclick="copyLetterToClipboard()"
-        id="copy-button"
+        data-clipboard-target="button"
+        data-action="click->clipboard#copy"
       >
         <i class="fas fa-copy me-2"></i>
         Copier la lettre
@@ -82,43 +82,12 @@
       </button>
     </div>
 
-    <div id="copy-feedback" class="alert alert-success mt-3 d-none" role="alert">
+    <div data-clipboard-target="feedback" class="alert alert-success mt-3 d-none" role="alert">
       <i class="fas fa-check-circle me-2"></i>
       Lettre copiée dans le presse-papiers !
     </div>
   </div>
 </div>
-
-<script>
-function copyLetterToClipboard() {
-  const letterContent = document.getElementById('letter-content');
-  const textToCopy = letterContent.innerText;
-
-  navigator.clipboard.writeText(textToCopy).then(() => {
-    // Show success feedback
-    const feedback = document.getElementById('copy-feedback');
-    feedback.classList.remove('d-none');
-
-    // Update button
-    const button = document.getElementById('copy-button');
-    const originalHTML = button.innerHTML;
-    button.innerHTML = '<i class="fas fa-check me-2"></i>Copié !';
-    button.classList.remove('btn-outline-primary');
-    button.classList.add('btn-success');
-
-    // Reset after 3 seconds
-    setTimeout(() => {
-      feedback.classList.add('d-none');
-      button.innerHTML = originalHTML;
-      button.classList.remove('btn-success');
-      button.classList.add('btn-outline-primary');
-    }, 3000);
-  }).catch(err => {
-    console.error('Erreur lors de la copie:', err);
-    alert('Impossible de copier le texte. Veuillez le sélectionner manuellement.');
-  });
-}
-</script>
 
 <style>
 @media print {
