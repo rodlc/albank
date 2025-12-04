@@ -15,58 +15,69 @@
         </p>
       </div>
 
-      <!-- Résultat de l'analyse (Style Simulateur URSSAF) -->
-      <div class="bg-light p-4 rounded mb-4">
-        <h2 class="text-center mb-4" style="color: #1E1E1E;">Résultat de l'analyse</h2>
-
-        <!-- Comparaison Avant / Après -->
-        <div class="row g-4 mb-4">
-          <div class="col-md-6">
-            <div class="gov-tile" style="border-bottom: 4px solid #E1000F;">
-              <span class="text-muted text-uppercase small">Ce que vous payez</span>
-              <div class="gov-tile__amount" style="color: #E1000F;">
-                <%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 0) %>
-              </div>
-              <small class="text-muted"><%= @opportunity.standard.unit %></small>
-            </div>
+      <!-- Panneau de comparaison unifié (Modern UI) -->
+      <% savings_percentage = (@opportunity.savings / @opportunity.expense.subtotal * 100).round %>
+      <div class="comparison-panel mb-4">
+        <!-- Header -->
+        <div class="comparison-panel__header">
+          <div>
+            <h2>Analyse d'économie</h2>
+            <p class="text-muted">Basé sur les prix du marché</p>
           </div>
-          <div class="col-md-6">
-            <div class="gov-tile" style="border-bottom: 4px solid #18753C;">
-              <span class="text-muted text-uppercase small">Prix du marché</span>
-              <div class="gov-tile__amount" style="color: #18753C;">
-                <%= number_to_currency(@opportunity.standard.average_amount, unit: "€", precision: 0) %>
-              </div>
-              <small class="text-muted"><%= @opportunity.standard.unit %></small>
+          <span class="badge bg-success px-3 py-2 rounded-pill">
+            <i class="fas fa-arrow-down me-1"></i>
+            -<%= savings_percentage %>% possible
+          </span>
+        </div>
+
+        <!-- Corps split-view -->
+        <div class="row g-0">
+          <!-- Colonne gauche : Actuel -->
+          <div class="col-md-6 comparison-panel__left">
+            <span class="d-block text-muted text-uppercase mb-2" style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px;">
+              <i class="fas fa-receipt me-1"></i>
+              Votre contrat actuel
+            </span>
+            <div class="display-4 fw-bold text-dark" style="letter-spacing: -0.02em;">
+              <%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 0) %>
+            </div>
+            <div class="text-muted small mt-2"><%= @opportunity.standard.unit %></div>
+          </div>
+
+          <!-- Colonne droite : Nouveau (Highlight) -->
+          <div class="col-md-6 comparison-panel__right">
+            <span class="d-block text-uppercase mb-2" style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px; color: #059669;">
+              <i class="fas fa-chart-line me-1"></i>
+              Offre du marché
+            </span>
+            <div class="display-4 fw-bold" style="color: #059669; letter-spacing: -0.02em;">
+              <%= number_to_currency(@opportunity.standard.average_amount, unit: "€", precision: 0) %>
+            </div>
+            <div class="small mt-2" style="color: #059669;"><%= @opportunity.standard.unit %></div>
+
+            <!-- Gain box -->
+            <div class="mt-4 p-3 bg-white rounded border" style="border-color: rgba(5, 150, 105, 0.25) !important;">
+              <i class="fas fa-coins text-warning me-2"></i>
+              <strong style="color: #059669;"><%= number_to_currency(@opportunity.savings, unit: "€", precision: 0) %> d'économie</strong> / mois
             </div>
           </div>
         </div>
 
-        <!-- Gain potentiel -->
-        <div class="text-center mt-4">
-          <p class="text-muted text-uppercase mb-2" style="font-size: 0.75rem; letter-spacing: 1px;">Économie potentielle</p>
-          <div style="font-size: 3rem; font-weight: 800; color: #18753C;">
-            <%= number_to_currency(@opportunity.savings, unit: "€", precision: 0) %>
-          </div>
-          <% savings_percentage = (@opportunity.savings / @opportunity.expense.subtotal * 100).round %>
-          <p class="text-muted mt-2">soit <strong><%= savings_percentage %>%</strong> de réduction possible</p>
-        </div>
-      </div>
-
-      <!-- Status & Actions -->
-      <div class="card border-0 shadow-sm">
-        <div class="card-body p-4">
-          <div class="d-flex justify-content-between align-items-center mb-4">
+        <!-- Footer avec actions -->
+        <div class="comparison-panel__footer">
+          <div class="d-flex justify-content-between align-items-center">
             <div>
-              <h5 class="mb-2">Statut de l'opportunité</h5>
-              <span class="opportunity-badge badge-<%= @opportunity.status %>">
+              <span class="opportunity-badge badge-<%= @opportunity.status %> me-2">
                 <i class="fas fa-circle" style="font-size: 0.5rem;"></i>
                 <%= @opportunity.status.humanize %>
               </span>
+              <span class="text-muted small">
+                <i class="fas fa-info-circle me-1"></i>
+                En passant à un fournisseur au prix moyen du marché
+              </span>
             </div>
-          </div>
 
-          <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true) do |f| %>
-            <div class="d-flex gap-2">
+            <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true, html: { class: "d-inline-flex gap-2" }) do |f| %>
               <%= f.button "Marquer comme contacté",
                   name: "opportunity[status]",
                   value: "contacted",
@@ -78,13 +89,8 @@
                   value: "completed",
                   class: "btn-gov-primary",
                   disabled: @opportunity.completed? %>
-            </div>
-          <% end %>
-
-          <p class="text-muted small mt-3 mb-0">
-            <i class="fas fa-info-circle me-1"></i>
-            En passant à un fournisseur au prix moyen du marché
-          </p>
+            <% end %>
+          </div>
         </div>
       </div>
 
