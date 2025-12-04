@@ -1,0 +1,140 @@
+<div class="card border-0 shadow-sm mt-5" id="negotiation-letter-card">
+  <div class="card-header bg-primary text-white">
+    <h5 class="mb-0">
+      <i class="fas fa-file-alt me-2"></i>
+      Lettre de renégociation
+    </h5>
+  </div>
+
+  <div class="card-body p-4">
+    <div id="letter-content" class="letter-content" style="font-family: 'Times New Roman', serif; font-size: 1rem; line-height: 1.8; color: #161616;">
+      <p class="mb-4">
+        <%= l(Date.current, format: :long).capitalize %>
+      </p>
+
+      <p class="mb-4">
+        <strong>Objet :</strong> Demande de renégociation de mon contrat <%= @opportunity.expense.category.name %>
+      </p>
+
+      <p class="mb-4">Madame, Monsieur,</p>
+
+      <p class="mb-4">
+        Je suis actuellement client(e) chez vous pour mon contrat de
+        <strong><%= @opportunity.expense.category.name %></strong>.
+      </p>
+
+      <p class="mb-4">
+        En consultant les tarifs moyens du marché, j'ai constaté que ma dépense actuelle de
+        <strong><%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 2) %></strong>
+        est supérieure à la moyenne du marché qui s'élève à
+        <strong><%= number_to_currency(@opportunity.standard.average_amount, unit: "€", precision: 2) %></strong>.
+      </p>
+
+      <div class="alert alert-success my-4" style="background: #E3F4E8; border: 2px solid #18753C; border-radius: 8px;">
+        <div class="text-center">
+          <p class="text-muted small mb-1">Économie potentielle</p>
+          <p class="h3 mb-0" style="color: #18753C;">
+            <strong><%= number_to_currency(@opportunity.savings, unit: "€", precision: 2) %></strong>
+          </p>
+        </div>
+      </div>
+
+      <p class="mb-4">
+        Je souhaiterais donc renégocier mon contrat afin de bénéficier d'un tarif plus compétitif,
+        en cohérence avec les prix pratiqués sur le marché.
+      </p>
+
+      <p class="mb-4">
+        Je reste à votre disposition pour toute discussion à ce sujet et vous remercie par avance
+        de l'attention que vous porterez à ma demande.
+      </p>
+
+      <p class="mb-4">
+        Dans l'attente de votre réponse, je vous prie d'agréer, Madame, Monsieur,
+        l'expression de mes salutations distinguées.
+      </p>
+
+      <p class="text-end mt-5">
+        <em>Signature</em>
+      </p>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="d-flex gap-2 justify-content-end">
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        onclick="copyLetterToClipboard()"
+        id="copy-button"
+      >
+        <i class="fas fa-copy me-2"></i>
+        Copier la lettre
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        onclick="window.print()"
+      >
+        <i class="fas fa-print me-2"></i>
+        Imprimer
+      </button>
+    </div>
+
+    <div id="copy-feedback" class="alert alert-success mt-3 d-none" role="alert">
+      <i class="fas fa-check-circle me-2"></i>
+      Lettre copiée dans le presse-papiers !
+    </div>
+  </div>
+</div>
+
+<script>
+function copyLetterToClipboard() {
+  const letterContent = document.getElementById('letter-content');
+  const textToCopy = letterContent.innerText;
+
+  navigator.clipboard.writeText(textToCopy).then(() => {
+    // Show success feedback
+    const feedback = document.getElementById('copy-feedback');
+    feedback.classList.remove('d-none');
+
+    // Update button
+    const button = document.getElementById('copy-button');
+    const originalHTML = button.innerHTML;
+    button.innerHTML = '<i class="fas fa-check me-2"></i>Copié !';
+    button.classList.remove('btn-outline-primary');
+    button.classList.add('btn-success');
+
+    // Reset after 3 seconds
+    setTimeout(() => {
+      feedback.classList.add('d-none');
+      button.innerHTML = originalHTML;
+      button.classList.remove('btn-success');
+      button.classList.add('btn-outline-primary');
+    }, 3000);
+  }).catch(err => {
+    console.error('Erreur lors de la copie:', err);
+    alert('Impossible de copier le texte. Veuillez le sélectionner manuellement.');
+  });
+}
+</script>
+
+<style>
+@media print {
+  nav, .btn, #copy-feedback, hr {
+    display: none !important;
+  }
+
+  #negotiation-letter-card {
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .card-header {
+    background: white !important;
+    color: #000091 !important;
+    border-bottom: 2px solid #000091 !important;
+  }
+}
+</style>
