@@ -1,18 +1,18 @@
 // === Public Service Components ===
 // Flat design, bordures visibles, haute lisibilité
 
-// === La "Tuile" Administrative ===
+// === La "Tuile" Administrative (Legacy - use .gov-tile instead) ===
 .statement-card {
   background: white;
   border: 1px solid $gray-300;
-  border-left: 6px solid $navy-brand;  // Marqueur visuel fort (style dossier)
+  border-left: 6px solid $primary;  // Marqueur visuel fort (style dossier)
   border-radius: 8px;
   padding: 1.5rem;
   transition: all 0.2s ease;
 
   &:hover {
     background-color: $gray-100;  // Feedback simple au survol
-    border-color: $blue-link;
+    border-color: $primary;
     text-decoration: none;
     transform: translateY(-2px);
   }
@@ -20,17 +20,16 @@
   &__month {
     font-size: 1.25rem;
     font-weight: 700;
-    color: $navy-brand;
+    color: $primary;
   }
 
-  // Chiffres très lisibles (Wise style)
+  // Chiffres très lisibles
   &__amount {
-    font-family: 'Inter', monospace;  // Alignement des chiffres
     font-weight: 600;
     font-size: 1.5rem;
 
     &--savings {
-      color: darken($green-action, 10%);  // Vert lisible sur blanc
+      color: darken($success, 10%);  // Vert lisible sur blanc
       background-color: #E6F9ED;  // Fond léger
       padding: 0.2rem 0.5rem;
       border-radius: 4px;
@@ -56,22 +55,22 @@
   }
 
   &.has-opportunity {
-    border-left: 4px solid $green-action;
+    border-left: 4px solid $success;
     padding-left: 1rem;
   }
 }
 
-// === La Callout Box (Opportunity Hero) ===
+// === La Callout Box (Opportunity Hero - Legacy) ===
 .opportunity-callout {
   background-color: #F0FCF4;  // Vert très pâle
-  border: 2px solid $green-action;
+  border: 2px solid $success;
   border-radius: 12px;
   padding: 2rem;
   text-align: center;
   margin-bottom: 2rem;
 
   &__title {
-    color: darken($green-action, 20%);
+    color: darken($success, 20%);
     font-weight: 600;
     text-transform: uppercase;
     font-size: 0.875rem;
@@ -80,7 +79,7 @@
   }
 
   &__amount {
-    color: $navy-brand;
+    color: $primary;
     font-size: 3.5rem;  // Très gros
     font-weight: 800;
     line-height: 1;
@@ -112,8 +111,8 @@
     border-radius: 8px;
     min-width: 150px;
 
-    &--current { border-bottom: 4px solid $red-alert; }
-    &--market { border-bottom: 4px solid $green-action; }
+    &--current { border-bottom: 4px solid $danger; }
+    &--market { border-bottom: 4px solid $success; }
 
     label {
       font-size: 0.875rem;
@@ -149,14 +148,14 @@
   }
 
   &.badge-completed {
-    background: lighten($green-action, 35%);
-    color: darken($green-action, 15%);
+    background: lighten($success, 35%);
+    color: darken($success, 15%);
   }
 }
 
 // Opportunity count indicator
 .opportunities-count {
-  background: $green-action;
+  background: $success;
   color: white;
   font-weight: 600;
   font-size: 0.8125rem;
@@ -173,6 +172,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $blue-link;
+  color: $primary;
   font-size: 1.5rem;
 }
