@@ -1,10 +1,21 @@
-// Define variables for your color scheme
+// Wise Design System Color Palette
+// https://wise.design/foundations/colour
+// "When banks say no, green says go."
 
-// For example:
-$red: #FD1015;
-$blue: #0D6EFD;
-$yellow: #FFC65A;
-$orange: #E67E22;
-$green: #1EDD88;
-$gray: #0E0000;
-$light-gray: #F4F4F4;
+// Primary Wise Colors
+$primary: #163300;        // Forest Green - interactivity, links, icons
+$success: #9FE870;        // Bright Green - savings, CTAs, accents
+$light: #FFFFFF;          // White - main background, let screens breathe
+$secondary: #F5F5F0;      // Neutral Warm - card backgrounds, separators
+
+// Content Greys (with green hints)
+$gray-900: #1a1a1a;       // Headers, primary text
+$gray-700: #4a4a48;       // Secondary text
+$gray-500: #78786e;       // Tertiary text
+$gray-300: #c4c4bd;       // Borders, disabled
+$gray-100: #f8f8f5;       // Background tints
+
+// Semantic Colors (kept for alerts/states)
+$danger: #FD1015;         // Errors, destructive actions
+$warning: #E67E22;        // Warnings, attention needed
+$info: #0D6EFD;           // Information
