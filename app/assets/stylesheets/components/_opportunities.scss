@@ -1,49 +1,130 @@
-// DSFR-inspired components for opportunities and statements
-// Emphasis on trust, accessibility, and service public identity
+// === Public Service Components ===
+// Flat design, bordures visibles, haute lisibilité
 
-// Savings highlight card - prominent display of savings amount
-.savings-highlight {
-  background: linear-gradient(135deg, #F6F6F6 0%, #E3F4E8 100%);
-  border-radius: 8px;
-  border: 2px solid $gray-300;
-  padding: 2rem;
-  text-align: center;
-  transition: all 0.3s ease;
-
-  &:hover {
-    border-color: $success;
-    box-shadow: 0 4px 16px rgba(24, 117, 60, 0.15);
-  }
-
-  .savings-amount {
-    color: $success;
-    font-weight: 700;
-    font-size: 3rem;
-    line-height: 1.2;
-    margin: 0.5rem 0;
-  }
-
-  .savings-percentage {
-    color: $gray-700;
-    font-size: 1.125rem;
-  }
-}
-
-// Statement card - DSFR style with subtle hover
+// === La "Tuile" Administrative ===
 .statement-card {
-  transition: all 0.2s ease;
-  border-radius: 8px;
+  background: white;
   border: 1px solid $gray-300;
-  background: $light;
+  border-left: 6px solid $navy-brand;  // Marqueur visuel fort (style dossier)
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.2s ease;
 
   &:hover {
+    background-color: $gray-100;  // Feedback simple au survol
+    border-color: $blue-link;
+    text-decoration: none;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    border-color: $primary;
+  }
+
+  &__month {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $navy-brand;
+  }
+
+  // Chiffres très lisibles (Wise style)
+  &__amount {
+    font-family: 'Inter', monospace;  // Alignement des chiffres
+    font-weight: 600;
+    font-size: 1.5rem;
+
+    &--savings {
+      color: darken($green-action, 10%);  // Vert lisible sur blanc
+      background-color: #E6F9ED;  // Fond léger
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
   }
 
   .card-body {
+    padding: 0;  // Padding déjà géré par .statement-card
+  }
+}
+
+// === La Carte Détail (Expense) ===
+.expense-card {
+  border-bottom: 1px solid $gray-200;  // Liste façon tableau
+  padding: 1rem 0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &__category {
+    font-weight: 600;
+  }
+
+  &.has-opportunity {
+    border-left: 4px solid $green-action;
+    padding-left: 1rem;
+  }
+}
+
+// === La Callout Box (Opportunity Hero) ===
+.opportunity-callout {
+  background-color: #F0FCF4;  // Vert très pâle
+  border: 2px solid $green-action;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+
+  &__title {
+    color: darken($green-action, 20%);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+
+  &__amount {
+    color: $navy-brand;
+    font-size: 3.5rem;  // Très gros
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  &__subtitle {
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+}
+
+// === Le VS (Comparateur) ===
+.vs-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .price-box {
+    text-align: center;
     padding: 1.5rem;
+    background: $gray-100;
+    border-radius: 8px;
+    min-width: 150px;
+
+    &--current { border-bottom: 4px solid $red-alert; }
+    &--market { border-bottom: 4px solid $green-action; }
+
+    label {
+      font-size: 0.875rem;
+      color: #666;
+      display: block;
+    }
+    strong {
+      font-size: 1.5rem;
+      display: block;
+      margin-top: 0.5rem;
+    }
   }
 }
 
@@ -68,35 +149,19 @@
   }
 
   &.badge-completed {
-    background: lighten($success, 35%);
-    color: darken($primary, 5%);
+    background: lighten($green-action, 35%);
+    color: darken($green-action, 15%);
   }
 }
 
 // Opportunity count indicator
 .opportunities-count {
-  background: $success;
-  color: $primary;
+  background: $green-action;
+  color: white;
   font-weight: 600;
   font-size: 0.8125rem;
   padding: 0.25rem 0.625rem;
   border-radius: 12px;
-}
-
-// Expense card in statement detail
-.expense-card {
-  border-radius: 12px;
-  border: 1px solid $gray-300;
-  background: $light;
-  transition: border-color 0.2s ease;
-
-  &:hover {
-    border-color: $success;
-  }
-
-  &.has-opportunity {
-    border-left: 4px solid $success;
-  }
 }
 
 // Category icon styling
@@ -108,6 +173,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $primary;
+  color: $blue-link;
   font-size: 1.5rem;
 }
