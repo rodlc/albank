@@ -1,26 +1,29 @@
-// DSFR - Système de Design de l'État
-// https://www.systeme-de-design.gouv.fr/fondamentaux/couleurs
-// Inspiré de beta.gouv.fr pour la confiance service public
+// === AlBank "Public Service" Theme ===
+// Inspiré de beta.gouv.fr, Wise, et Transavia pour sobriété et confiance
 
-// Primary - Bleu France
-$primary: #000091;        // Bleu France officiel - liens, interactions
-$info: #6a6af4;           // Bleu France clair - hover, focus
+// Brand Colors
+$navy-brand: #2E3A59;     // Wise Navy - Trust, headers
+$green-action: #00C65E;   // Transavia Green - Action, savings
+$blue-link: #000091;      // Beta.gouv Blue - Links, primary interactions
+$red-alert: #E1000F;      // Marianne Red - Alerts, warnings
 
-// Success - Économies détectées
-$success: #18753C;        // Vert DSFR officiel - économies, confirmations
-$success-light: #B8FEC9;  // Vert clair - backgrounds success
-
-// Background & Cards
-$light: #FFFFFF;          // Fond principal
-$secondary: #F6F6F6;      // Fond cards, séparateurs
-
-// Content Greys - Neutres DSFR
-$gray-900: #161616;       // Headers, texte primaire
+// Neutral Palette
+$gray-900: #161616;       // Texte principal (quasi noir pour contraste)
 $gray-700: #3A3A3A;       // Texte secondaire
 $gray-500: #666666;       // Texte tertiaire
-$gray-300: #E5E5E5;       // Bordures, disabled
-$gray-100: #F5F5F5;       // Background léger
+$gray-300: #E5E7EB;       // Bordures
+$gray-200: #E3E3FD;       // Bordures douces
+$gray-100: #F5F5FE;       // Background léger (légèrement bleuté)
 
-// Semantic Colors - DSFR
-$danger: #CE0500;         // Erreurs (rouge officiel)
-$warning: #B34000;        // Attention (orange officiel)
+// Bootstrap Overrides
+$primary: $blue-link;
+$success: $green-action;
+$danger: $red-alert;
+$info: #6a6af4;
+$warning: #B34000;
+
+// Background
+$light: #FFFFFF;          // Fond principal (blanc strict pour lisibilité)
+$secondary: #F6F6F6;      // Fond cards alternatif
+$body-bg: $light;
+$body-color: $gray-900;
