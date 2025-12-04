@@ -74,52 +74,51 @@
   }
 }
 
-// === Boutons Gouvernementaux ===
+// === Boutons Unifiés (Bleu France) ===
 
-.btn-gov-primary {
-  background-color: #000091;
-  color: #FFFFFF;
-  border: 2px solid #000091;
-  border-radius: 4px;
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
+.btn {
+  border-radius: 6px;
+  font-weight: 500;
+  padding: 0.625rem 1.25rem;
   transition: all 0.2s ease;
+  border: 1px solid transparent;
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(0, 0, 145, 0.15) !important;
+  }
+}
+
+// Action Principale (Bleu France)
+.btn-gov-primary, .btn-primary {
+  background-color: #000091;
+  border-color: #000091;
+  color: white;
 
   &:hover:not(:disabled) {
     background-color: #00006b;
     border-color: #00006b;
-    color: #FFFFFF;
+    color: white;
+    transform: translateY(-1px);
   }
 
   &:disabled {
     background-color: #9999C4;
     border-color: #9999C4;
-    color: #FFFFFF;
-    cursor: not-allowed;
     opacity: 0.6;
+    cursor: not-allowed;
   }
 }
 
-.btn-gov-outline {
-  background-color: #FFFFFF;
-  color: #000091;
-  border: 2px solid #000091;
-  border-radius: 4px;
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  transition: all 0.2s ease;
+// Secondaire (Blanc borduré Slate)
+.btn-gov-outline, .btn-outline, .btn-light, .btn-secondary {
+  background-color: white;
+  border-color: #E2E8F0;
+  color: #0F172A;
 
   &:hover:not(:disabled) {
-    background-color: #000091;
-    color: #FFFFFF;
-  }
-
-  &:disabled {
-    background-color: #F3F4F6;
-    border-color: #D1D5DB;
-    color: #9CA3AF;
-    cursor: not-allowed;
-    opacity: 0.6;
+    background-color: #F1F5F9;
+    border-color: #CBD5E1;
+    color: #0F172A;
   }
 }
 
