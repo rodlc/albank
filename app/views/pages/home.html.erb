@@ -1,33 +1,63 @@
-<h1>Pages#home</h1>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6 text-center">
+      <!-- Header -->
+      <h1 class="mb-3">Importez votre relevé bancaire</h1>
+      <p class="text-muted mb-5">
+        Déposez votre relevé PDF pour détecter les économies possibles sur vos abonnements et assurances.
+      </p>
 
-<%# <p>Find me in app/views/pages/home.html.erb</p> %>
+      <!-- Drop Zone -->
+      <div class="file-upload-wrapper mb-4">
+        <label for="file-input" class="upload-label drop-zone" id="dropZone">
+          <img
+            src="<%= image_path 'logo-cochon.svg' %>"
+            alt="Choisir un fichier"
+            title="Cliquer pour importer"
+            class="upload-label-image mb-3"
+            style="max-width: 200px; cursor: pointer;"
+          >
+          <p class="text-muted">
+            <i class="fas fa-cloud-upload-alt me-2"></i>
+            Glissez-déposez votre relevé ou cliquez ici
+          </p>
+        </label>
 
-<div class="file-upload-wrapper">
-  <label for="file-input" class="upload-label drop-zone" id="dropZone">
-    <img
-      src="<%= image_path 'logo-cochon.svg' %>"
-      alt="Choisir un fichier"
-      title="Cliquer pour importer"
-      class="upload-label-image"
-    >
-  </label>
+        <input
+          id="file-input"
+          type="file"
+          accept="application/pdf,*"
+          style="display: none;"
+        >
+      </div>
 
-  <input
-    id="file-input"
-    type="file"
-    accept="*"
-    style="visibility:hidden"
-  >
+      <!-- Loading State -->
+      <div id="loading-state" class="d-none">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Importation en cours...</span>
+        </div>
+        <p class="text-muted mt-2">Analyse du relevé en cours...</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
   const dropZone = document.getElementById('dropZone');
   const fileInput = document.getElementById('file-input');
+  const loadingState = document.getElementById('loading-state');
 
-  // Empêche le comportement par défaut (ouvrir le fichier dans le navigateur)
+  // Click to upload
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+      handleFiles(e.target.files);
+    }
+  });
+
+  // Drag & Drop
   dropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
-    dropZone.classList.add('dragover'); // pour un style visuel
+    dropZone.classList.add('dragover');
   });
 
   dropZone.addEventListener('dragleave', () => {
@@ -39,33 +69,66 @@
     dropZone.classList.remove('dragover');
     const files = e.dataTransfer.files;
     if (files.length > 0) {
-      // Ici tu peux soit assigner au input, soit traiter directement
-      // fileInput.files = files; // pas toujours supporté
       handleFiles(files);
     }
   });
 
   function handleFiles(files) {
-    const f = files[0];
-    console.log("Fichier déposé :", f.name, f.size, f.type);
-    // Exemple d’upload avec FormData :
-    // const fd = new FormData();
-    // fd.append('file', f);
-    // fetch('/upload', { method: 'POST', body: fd });
+    const file = files[0];
+    console.log("Fichier déposé :", file.name, file.size, file.type);
+
+    // Show loading state
+    dropZone.classList.add('d-none');
+    loadingState.classList.remove('d-none');
+
+    // Simulate PDF import
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+    fetch('<%= import_pdf_statements_path %>', {
+      method: 'POST',
+      headers: {
+        'X-CSRF-Token': csrfToken,
+        'Accept': 'text/html'
+      }
+    })
+    .then(response => {
+      if (response.redirected) {
+        window.location.href = response.url;
+      } else {
+        return response.text().then(html => {
+          document.body.innerHTML = html;
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Erreur import:', error);
+      alert('Erreur lors de l\'importation. Veuillez réessayer.');
+      dropZone.classList.remove('d-none');
+      loadingState.classList.add('d-none');
+    });
   }
 </script>
 
 <style>
-  .drop-zone.dragover {
-    outline: 3px dashed #4a90e2;
-    opacity: 0.8;
-  }
-  .visually-hidden {
-    position: absolute;
-    left: -9999px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
+  .drop-zone {
+    border: 2px dashed #E5E7EB;
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    transition: all 0.2s ease;
+    display: block;
+    cursor: pointer;
+    background: white;
   }
 
+  .drop-zone:hover {
+    border-color: #000091;
+    background-color: #F5F5FE;
+  }
+
+  .drop-zone.dragover {
+    border-color: #000091;
+    border-width: 3px;
+    background-color: #F5F5FE;
+    transform: scale(1.02);
+  }
 </style>
