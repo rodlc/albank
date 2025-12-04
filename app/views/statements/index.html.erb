@@ -19,52 +19,34 @@
         <div class="col-md-6 col-lg-4">
           <%= link_to statement, class: "text-decoration-none" do %>
             <div class="statement-card">
-              <div class="card-body">
-                <!-- Header with date and badge -->
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                  <div>
-                    <h5 class="card-title mb-1 text-dark">
-                      <%= statement.date.strftime("%B %Y").capitalize %>
-                    </h5>
-                    <p class="text-muted small mb-0">
-                      <%= statement.expenses.count %> dépenses
-                    </p>
-                  </div>
-                  <% if opportunities_count > 0 %>
-                    <span class="opportunities-count">
-                      <%= opportunities_count %>
-                    </span>
-                  <% end %>
-                </div>
-
-                <!-- Stats -->
-                <div class="mb-3">
-                  <div class="d-flex justify-content-between mb-2">
-                    <span class="text-muted small">Total dépenses</span>
-                    <span class="fw-semibold">
-                      <%= number_to_currency(statement.expenses.sum(:subtotal), unit: "€", precision: 0) %>
-                    </span>
-                  </div>
-
-                  <% if total_savings > 0 %>
-                    <div class="d-flex justify-content-between">
-                      <span class="text-muted small">
-                        <i class="fas fa-lightbulb me-1" style="color: #18753C;"></i>
-                        Économies possibles
-                      </span>
-                      <span class="fw-bold" style="color: #18753C;">
-                        <%= number_to_currency(total_savings, unit: "€", precision: 0) %>
-                      </span>
-                    </div>
-                  <% end %>
-                </div>
-
-                <!-- CTA -->
-                <div class="text-end">
-                  <span class="text-primary small">
-                    Voir le détail <i class="fas fa-arrow-right ms-1"></i>
+              <!-- Header with date and badge -->
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <h3 class="statement-card__month mb-0">
+                  <%= statement.date.strftime("%B %Y").capitalize %>
+                </h3>
+                <% if opportunities_count > 0 %>
+                  <span class="badge bg-success text-white">
+                    <%= opportunities_count %> <%= opportunities_count > 1 ? 'économies' : 'économie' %>
                   </span>
+                <% end %>
+              </div>
+
+              <!-- Stats - Layout 2 colonnes -->
+              <div class="row">
+                <div class="col-6">
+                  <small class="text-muted">Total dépenses</small>
+                  <div class="statement-card__amount">
+                    <%= number_to_currency(statement.expenses.sum(:subtotal), unit: "€", precision: 0) %>
+                  </div>
                 </div>
+                <% if total_savings > 0 %>
+                  <div class="col-6 text-end">
+                    <small class="text-muted">Économie possible</small>
+                    <div class="statement-card__amount statement-card__amount--savings">
+                      <%= number_to_currency(total_savings, unit: "€", precision: 0) %>
+                    </div>
+                  </div>
+                <% end %>
               </div>
             </div>
           <% end %>
