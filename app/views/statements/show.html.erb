@@ -9,10 +9,20 @@
     <h3 class="mt-4">Dépenses par catégorie</h3>
     <div class="row">
       <% @expenses.each do |expense| %>
+        <% category_emoji = case expense.category.name
+             when /électricité|gaz|énergie/i then "⚡"
+             when /internet|box|fibre/i then "📡"
+             when /assurance|habitation|auto/i then "🛡️"
+             when /banque|frais/i then "🏦"
+             else "📋"
+           end %>
         <div class="col-md-6 mb-3">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title"><%= expense.category.name %></h5>
+              <h5 class="card-title">
+                <span class="me-2"><%= category_emoji %></span>
+                <%= expense.category.name %>
+              </h5>
 
               <p class="card-text"><strong><%= expense.subtotal %>€</strong></p>
 
