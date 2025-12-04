@@ -25,7 +25,7 @@
             <p class="text-muted">Basé sur les prix du marché</p>
           </div>
           <span class="badge bg-success px-3 py-2 rounded-pill">
-            <i class="fas fa-arrow-down me-1"></i>
+            <span class="me-1">⬇️</span>
             -<%= savings_percentage %>% possible
           </span>
         </div>
@@ -35,7 +35,7 @@
           <!-- Colonne gauche : Actuel -->
           <div class="col-md-6 comparison-panel__left">
             <span class="d-block text-muted text-uppercase mb-2" style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px;">
-              <i class="fas fa-receipt me-1"></i>
+              <span class="me-1">🧾</span>
               Votre contrat actuel
             </span>
             <div class="display-4 fw-bold text-dark" style="letter-spacing: -0.02em;">
@@ -47,7 +47,7 @@
           <!-- Colonne droite : Nouveau (Highlight) -->
           <div class="col-md-6 comparison-panel__right">
             <span class="d-block text-uppercase mb-2" style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px; color: #059669;">
-              <i class="fas fa-chart-line me-1"></i>
+              <span class="me-1">📈</span>
               Offre du marché
             </span>
             <div class="display-4 fw-bold" style="color: #059669; letter-spacing: -0.02em;">
@@ -57,7 +57,7 @@
 
             <!-- Gain box -->
             <div class="mt-4 p-3 bg-white rounded border" style="border-color: rgba(5, 150, 105, 0.25) !important;">
-              <i class="fas fa-coins text-warning me-2"></i>
+              <span class="me-2">💰</span>
               <strong style="color: #059669;"><%= number_to_currency(@opportunity.savings, unit: "€", precision: 0) %> d'économie</strong> / mois
             </div>
           </div>
@@ -68,11 +68,17 @@
           <div class="d-flex justify-content-between align-items-center">
             <div>
               <span class="opportunity-badge badge-<%= @opportunity.status %> me-2">
-                <i class="fas fa-circle" style="font-size: 0.5rem;"></i>
+                <% status_emoji = case @opportunity.status
+                     when 'pending' then '⚫'
+                     when 'contacted' then '🔵'
+                     when 'completed' then '🟢'
+                     else '⚫'
+                   end %>
+                <span style="font-size: 0.5rem;"><%= status_emoji %></span>
                 <%= @opportunity.status.humanize %>
               </span>
               <span class="text-muted small">
-                <i class="fas fa-info-circle me-1"></i>
+                <span class="me-1">ℹ️</span>
                 En passant à un fournisseur au prix moyen du marché
               </span>
             </div>
