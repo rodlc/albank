@@ -23,9 +23,42 @@ class StatementsController < ApplicationController
     end
   end
 
+  def import_pdf
+    # Simulate PDF import with realistic demo data
+    statement = current_user.statements.create!(date: Date.current.beginning_of_month)
+    create_simulated_expenses(statement)
+
+    redirect_to statement, notice: "Relevé importé avec succès ! #{statement.expenses.count} dépenses détectées."
+  end
+
   private
 
   def statement_params
     params.require(:statement).permit(:date)
+  end
+
+  def create_simulated_expenses(statement)
+    # Use categories with standards from db:seed
+    # Pick 3-4 random categories to simulate variety
+    standards_with_categories = Standard.includes(:category).sample(rand(3..4))
+
+    standards_with_categories.each do |standard|
+      # Generate amount slightly above average to trigger opportunities
+      # Use the standard's min/max range from seed data
+      amount_above_avg = standard.average_amount + rand(10.0..30.0)
+      realistic_amount = [amount_above_avg, standard.max_amount + 10].min
+
+      expense = statement.expenses.create!(
+        category: standard.category,
+        subtotal: realistic_amount.round(2)
+      )
+
+      # Auto-create opportunity since amount is above average
+      Opportunity.create!(
+        expense: expense,
+        standard: standard,
+        status: "pending"
+      )
+    end
   end
 end

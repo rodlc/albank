@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   root to: "pages#home"
 
   resources :statements, only: [:index, :show, :new, :create] do
+    collection do
+      post :import_pdf
+    end
+
     resources :expenses, only: [:index, :show] do
       resources :opportunities, only: [:show, :update]
     end
