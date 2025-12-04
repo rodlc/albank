@@ -1,0 +1,25 @@
+fr:
+  hello: "Bonjour"
+
+  activerecord:
+    attributes:
+      user:
+        email: "Email"
+        password: "Mot de passe"
+        password_confirmation: "Confirmation du mot de passe"
+        remember_me: "Se souvenir de moi"
+
+  simple_form:
+    labels:
+      user:
+        email: "Email"
+        password: "Mot de passe"
+        password_confirmation: "Confirmation du mot de passe"
+        remember_me: "Se souvenir de moi"
+    placeholders:
+      user:
+        email: "votre@email.com"
+        password: "••••••••"
+    hints:
+      user:
+        password: "%{count} caractères minimum"
