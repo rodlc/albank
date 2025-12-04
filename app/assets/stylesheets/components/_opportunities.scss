@@ -1,10 +1,10 @@
-// Wise-inspired components for opportunities and statements
-// Emphasis on white space, green accents, and subtle depth
+// DSFR-inspired components for opportunities and statements
+// Emphasis on trust, accessibility, and service public identity
 
 // Savings highlight card - prominent display of savings amount
 .savings-highlight {
-  background: linear-gradient(135deg, #f8f8f5 0%, #e8f5e9 100%);
-  border-radius: 16px;
+  background: linear-gradient(135deg, #F6F6F6 0%, #E3F4E8 100%);
+  border-radius: 8px;
   border: 2px solid $gray-300;
   padding: 2rem;
   text-align: center;
@@ -12,13 +12,13 @@
 
   &:hover {
     border-color: $success;
-    box-shadow: 0 4px 16px rgba(159, 232, 112, 0.2);
+    box-shadow: 0 4px 16px rgba(24, 117, 60, 0.15);
   }
 
   .savings-amount {
     color: $success;
     font-weight: 700;
-    font-size: 3.5rem;
+    font-size: 3rem;
     line-height: 1.2;
     margin: 0.5rem 0;
   }
@@ -29,17 +29,17 @@
   }
 }
 
-// Statement card - hover effect with lift
+// Statement card - DSFR style with subtle hover
 .statement-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 12px;
+  transition: all 0.2s ease;
+  border-radius: 8px;
   border: 1px solid $gray-300;
   background: $light;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    border-color: $gray-500;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-color: $primary;
   }
 
   .card-body {

@@ -1,21 +1,26 @@
-// Wise Design System Color Palette
-// https://wise.design/foundations/colour
-// "When banks say no, green says go."
+// DSFR - Système de Design de l'État
+// https://www.systeme-de-design.gouv.fr/fondamentaux/couleurs
+// Inspiré de beta.gouv.fr pour la confiance service public
 
-// Primary Wise Colors
-$primary: #163300;        // Forest Green - interactivity, links, icons
-$success: #9FE870;        // Bright Green - savings, CTAs, accents
-$light: #FFFFFF;          // White - main background, let screens breathe
-$secondary: #F5F5F0;      // Neutral Warm - card backgrounds, separators
+// Primary - Bleu France
+$primary: #000091;        // Bleu France officiel - liens, interactions
+$info: #6a6af4;           // Bleu France clair - hover, focus
 
-// Content Greys (with green hints)
-$gray-900: #1a1a1a;       // Headers, primary text
-$gray-700: #4a4a48;       // Secondary text
-$gray-500: #78786e;       // Tertiary text
-$gray-300: #c4c4bd;       // Borders, disabled
-$gray-100: #f8f8f5;       // Background tints
+// Success - Économies détectées
+$success: #18753C;        // Vert DSFR officiel - économies, confirmations
+$success-light: #B8FEC9;  // Vert clair - backgrounds success
 
-// Semantic Colors (kept for alerts/states)
-$danger: #FD1015;         // Errors, destructive actions
-$warning: #E67E22;        // Warnings, attention needed
-$info: #0D6EFD;           // Information
+// Background & Cards
+$light: #FFFFFF;          // Fond principal
+$secondary: #F6F6F6;      // Fond cards, séparateurs
+
+// Content Greys - Neutres DSFR
+$gray-900: #161616;       // Headers, texte primaire
+$gray-700: #3A3A3A;       // Texte secondaire
+$gray-500: #666666;       // Texte tertiaire
+$gray-300: #E5E5E5;       // Bordures, disabled
+$gray-100: #F5F5F5;       // Background léger
+
+// Semantic Colors - DSFR
+$danger: #CE0500;         // Erreurs (rouge officiel)
+$warning: #B34000;        // Attention (orange officiel)
