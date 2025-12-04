@@ -9,7 +9,7 @@
 
       <!-- Drop Zone -->
       <div class="file-upload-wrapper mb-4">
-        <label for="file-input" class="upload-label drop-zone" id="dropZone">
+        <label for="file-input" class="upload-label upload-hero" id="dropZone">
           <div class="text-center">
             <img
               src="<%= image_path 'logo-cochon.svg' %>"
@@ -111,26 +111,3 @@
   }
 </script>
 
-<style>
-  .drop-zone {
-    border: 2px dashed #E5E7EB;
-    border-radius: 12px;
-    padding: 3rem 2rem;
-    transition: all 0.2s ease;
-    display: block;
-    cursor: pointer;
-    background: white;
-  }
-
-  .drop-zone:hover {
-    border-color: #000091;
-    background-color: #F5F5FE;
-  }
-
-  .drop-zone.dragover {
-    border-color: #000091;
-    border-width: 3px;
-    background-color: #F5F5FE;
-    transform: scale(1.02);
-  }
-</style>
