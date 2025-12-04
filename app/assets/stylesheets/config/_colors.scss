@@ -1,29 +1,27 @@
-// === AlBank "Public Service" Theme ===
-// Inspiré de beta.gouv.fr, Wise, et Transavia pour sobriété et confiance
+// === AlBank "Mon-Entreprise/URSSAF" Theme ===
+// Inspiré de mon-entreprise.urssaf.fr - Style institutionnel
 
 // Brand Colors
-$navy-brand: #2E3A59;     // Wise Navy - Trust, headers
-$green-action: #00C65E;   // Transavia Green - Action, savings
-$blue-link: #000091;      // Beta.gouv Blue - Links, primary interactions
-$red-alert: #E1000F;      // Marianne Red - Alerts, warnings
-
-// Neutral Palette
-$gray-900: #161616;       // Texte principal (quasi noir pour contraste)
-$gray-700: #3A3A3A;       // Texte secondaire
-$gray-500: #666666;       // Texte tertiaire
-$gray-300: #E5E7EB;       // Bordures
-$gray-200: #E3E3FD;       // Bordures douces
-$gray-100: #F5F5FE;       // Background léger (légèrement bleuté)
-
-// Bootstrap Overrides
-$primary: $blue-link;
-$success: $green-action;
-$danger: $red-alert;
+$primary: #000091;        // Bleu France officiel (ancre visuelle)
+$success: #18753C;        // Vert accessible
+$danger: #E1000F;         // Marianne Red
 $info: #6a6af4;
 $warning: #B34000;
 
+// Neutral Palette
+$text-main: #1E1E1E;      // Gris anthracite (pas noir pur)
+$border-color: #E6E9EC;   // Gris pierre pour bordures
+
+$gray-900: #1E1E1E;       // Texte principal
+$gray-700: #3A3A3A;       // Texte secondaire
+$gray-500: #666666;       // Texte tertiaire
+$gray-300: #E6E9EC;       // Bordures
+$gray-200: #E3E3FD;       // Bordures douces
+$gray-100: #F5F5FE;       // Background léger (bleu très pâle admin)
+
 // Background
-$light: #FFFFFF;          // Fond principal (blanc strict pour lisibilité)
-$secondary: #F6F6F6;      // Fond cards alternatif
-$body-bg: $light;
-$body-color: $gray-900;
+$body-bg: #F5F5FE;        // Fond légèrement bleuté (style gouvernemental)
+$card-bg: #FFFFFF;
+$light: #FFFFFF;
+$secondary: #F6F6F6;
+$body-color: $text-main;

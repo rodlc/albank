@@ -13,12 +13,12 @@ $font-size-base:         1rem;
 // Colors - Public Service Style
 $body-color: $gray-900;
 
-// Buttons & inputs' radius (plus courts = plus sérieux)
+// Buttons & inputs' radius (style institutionnel - arrondis faibles)
 $border-radius-sm:            .25rem;   // 4px
-$border-radius:               .5rem;    // 8px
-$border-radius-lg:            .75rem;   // 12px
-$border-radius-xl:            1rem;     // 16px
-$border-radius-xxl:           1.5rem;   // 24px
+$border-radius:               .375rem;  // 6px (Mon-Entreprise standard)
+$border-radius-lg:            .5rem;    // 8px
+$border-radius-xl:            .75rem;   // 12px
+$border-radius-xxl:           1rem;     // 16px
 
 // Shadows (Discrètes, juste pour le relief)
 $box-shadow-sm:               0 1px 2px rgba(0, 0, 0, 0.05);
