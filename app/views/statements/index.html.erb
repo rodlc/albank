@@ -1,34 +1,83 @@
-<div class="container mt-4">
-  <h1>Mes relevés</h1>
-
-  <%= link_to "Nouveau relevé", new_statement_path, class: "btn btn-success mb-3" %>
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="mb-1">Mes relevés</h1>
+      <p class="text-muted mb-0">Suivez vos dépenses et économies potentielles</p>
+    </div>
+    <%= link_to new_statement_path, class: "btn btn-success" do %>
+      <i class="fas fa-plus me-2"></i>
+      Nouveau relevé
+    <% end %>
+  </div>
 
   <% if @statements.any? %>
-    <div class="row">
+    <div class="row g-4">
       <% @statements.each do |statement| %>
-        <div class="col-md-4 mb-3">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">
-                Relevé du <%= statement.date.strftime("%B %Y") %>
-              </h5>
+        <% opportunities_count = statement.expenses.joins(:opportunities).count %>
+        <% total_savings = statement.expenses.joins(:opportunities).includes(:opportunities).sum { |e| e.opportunities.sum(&:savings) } %>
 
-              <p class="card-text">
-                <strong><%= statement.expenses.count %> dépenses</strong>
-                <br>
+        <div class="col-md-6 col-lg-4">
+          <%= link_to statement, class: "text-decoration-none" do %>
+            <div class="statement-card">
+              <div class="card-body">
+                <!-- Header with date and badge -->
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div>
+                    <h5 class="card-title mb-1 text-dark">
+                      <%= statement.date.strftime("%B %Y").capitalize %>
+                    </h5>
+                    <p class="text-muted small mb-0">
+                      <%= statement.expenses.count %> dépenses
+                    </p>
+                  </div>
+                  <% if opportunities_count > 0 %>
+                    <span class="opportunities-count">
+                      <%= opportunities_count %>
+                    </span>
+                  <% end %>
+                </div>
 
-                <small class="text-muted">
-                  Total: <%= statement.expenses.sum(:subtotal) %>€
-                </small>
-              </p>
+                <!-- Stats -->
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted small">Total dépenses</span>
+                    <span class="fw-semibold">
+                      <%= number_to_currency(statement.expenses.sum(:subtotal), unit: "€", precision: 0) %>
+                    </span>
+                  </div>
 
-              <%= link_to "Voir le détail", statement_path(statement), class: "btn btn-primary" %>
+                  <% if total_savings > 0 %>
+                    <div class="d-flex justify-content-between">
+                      <span class="text-muted small">
+                        <i class="fas fa-lightbulb me-1" style="color: #9FE870;"></i>
+                        Économies possibles
+                      </span>
+                      <span class="fw-bold" style="color: #9FE870;">
+                        <%= number_to_currency(total_savings, unit: "€", precision: 0) %>
+                      </span>
+                    </div>
+                  <% end %>
+                </div>
+
+                <!-- CTA -->
+                <div class="text-end">
+                  <span class="text-primary small">
+                    Voir le détail <i class="fas fa-arrow-right ms-1"></i>
+                  </span>
+                </div>
+              </div>
             </div>
-          </div>
+          <% end %>
         </div>
       <% end %>
     </div>
   <% else %>
-    <p class="text-muted">Aucun relevé pour le moment.</p>
+    <div class="text-center py-5">
+      <div class="mb-3">
+        <i class="fas fa-inbox fa-3x text-muted"></i>
+      </div>
+      <p class="text-muted">Aucun relevé pour le moment.</p>
+      <p class="text-muted small">Importez votre premier relevé pour commencer à économiser</p>
+    </div>
   <% end %>
 </div>
