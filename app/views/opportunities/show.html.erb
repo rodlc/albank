@@ -15,31 +15,40 @@
         </p>
       </div>
 
-      <!-- Callout Box - Économie Potentielle -->
-      <div class="opportunity-callout">
-        <p class="opportunity-callout__title mb-2">Économie potentielle</p>
-        <div class="opportunity-callout__amount">
-          <%= number_to_currency(@opportunity.savings, unit: "€", precision: 0) %>
+      <!-- Résultat de l'analyse (Style Simulateur URSSAF) -->
+      <div class="bg-light p-4 rounded mb-4">
+        <h2 class="text-center mb-4" style="color: #1E1E1E;">Résultat de l'analyse</h2>
+
+        <!-- Comparaison Avant / Après -->
+        <div class="row g-4 mb-4">
+          <div class="col-md-6">
+            <div class="gov-tile" style="border-bottom: 4px solid #E1000F;">
+              <span class="text-muted text-uppercase small">Ce que vous payez</span>
+              <div class="gov-tile__amount" style="color: #E1000F;">
+                <%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 0) %>
+              </div>
+              <small class="text-muted"><%= @opportunity.standard.unit %></small>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="gov-tile" style="border-bottom: 4px solid #18753C;">
+              <span class="text-muted text-uppercase small">Prix du marché</span>
+              <div class="gov-tile__amount" style="color: #18753C;">
+                <%= number_to_currency(@opportunity.standard.average_amount, unit: "€", precision: 0) %>
+              </div>
+              <small class="text-muted"><%= @opportunity.standard.unit %></small>
+            </div>
+          </div>
         </div>
-        <% savings_percentage = (@opportunity.savings / @opportunity.expense.subtotal * 100).round %>
-        <p class="opportunity-callout__subtitle mb-0">
-          soit <strong><%= savings_percentage %>%</strong> de réduction possible
-        </p>
-      </div>
 
-      <!-- VS Container - Comparaison -->
-      <div class="vs-container">
-        <div class="price-box price-box--current">
-          <label>Ce que vous payez</label>
-          <strong><%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 0) %></strong>
-        </div>
-
-        <div class="text-muted fw-bold">vs</div>
-
-        <div class="price-box price-box--market">
-          <label>Prix du marché</label>
-          <strong><%= number_to_currency(@opportunity.standard.average_amount, unit: "€", precision: 0) %></strong>
-          <small class="text-muted d-block mt-1"><%= @opportunity.standard.unit %></small>
+        <!-- Gain potentiel -->
+        <div class="text-center mt-4">
+          <p class="text-muted text-uppercase mb-2" style="font-size: 0.75rem; letter-spacing: 1px;">Économie potentielle</p>
+          <div style="font-size: 3rem; font-weight: 800; color: #18753C;">
+            <%= number_to_currency(@opportunity.savings, unit: "€", precision: 0) %>
+          </div>
+          <% savings_percentage = (@opportunity.savings / @opportunity.expense.subtotal * 100).round %>
+          <p class="text-muted mt-2">soit <strong><%= savings_percentage %>%</strong> de réduction possible</p>
         </div>
       </div>
 
@@ -61,13 +70,13 @@
               <%= f.button "Marquer comme contacté",
                   name: "opportunity[status]",
                   value: "contacted",
-                  class: "btn btn-outline-primary",
+                  class: "btn-gov-outline",
                   disabled: @opportunity.contacted? || @opportunity.completed? %>
 
               <%= f.button "Marquer comme complété",
                   name: "opportunity[status]",
                   value: "completed",
-                  class: "btn btn-success",
+                  class: "btn-gov-primary",
                   disabled: @opportunity.completed? %>
             </div>
           <% end %>
