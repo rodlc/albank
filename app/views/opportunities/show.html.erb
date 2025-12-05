@@ -77,43 +77,97 @@
           </div>
         </div>
 
-        <!-- Action Footer -->
+        <!-- Action Footer with Stepper -->
         <div class="bg-light border-top p-4">
+          <!-- Stepper -->
           <div
-            class="
-              d-flex flex-column flex-md-row justify-content-between
-              align-items-center gap-3
-            "
+            class="position-relative mb-4 mx-auto mt-2"
+            style="max-width: 500px;"
           >
-            <div class="d-flex align-items-center">
-              <span class="opportunity-badge badge-<%= @opportunity.status %> me-3 fs-6 px-3 py-2">
-                <% status_emoji = case @opportunity.status
-                     when 'pending' then '⚫'
-                     when 'contacted' then '🔵'
-                     when 'completed' then '🟢'
-                     else '⚫'
-                   end %>
+            <div
+              class="position-absolute start-0 w-100 bg-secondary bg-opacity-25"
+              style="height: 2px; top: 16px; z-index: 0;"
+            ></div>
 
-                <%= status_emoji %>
-                <%= @opportunity.status.humanize %>
-              </span>
+            <div
+              class="position-absolute start-0 bg-primary transition-width"
+              style="height: 2px; top: 16px; z-index: 0; width: <%= @opportunity.completed? ? '100%' : (@opportunity.contacted? ? '50%' : '0%') %>;"
+            ></div>
 
-              <span class="text-muted small">
-                <span class="me-1">ℹ️</span> Statut du dossier
-              </span>
+            <div
+              class="d-flex justify-content-between position-relative"
+              style="z-index: 1;"
+            >
+              <!-- Step 1 -->
+              <div class="text-center">
+                <div
+                  class="
+                    rounded-circle bg-primary text-white d-flex
+                    align-items-center justify-content-center mx-auto mb-2
+                    shadow-sm
+                  "
+                  style="width: 32px; height: 32px;"
+                >
+                  <i class="fas fa-search small"></i>
+                </div>
+
+                <span class="small fw-bold text-primary">Détectée</span>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="text-center">
+                <div
+                  class="rounded-circle <%= @opportunity.contacted? || @opportunity.completed? ? 'bg-primary text-white' : 'bg-white border text-muted' %> d-flex align-items-center justify-content-center mx-auto mb-2 shadow-sm"
+                  style="width: 32px; height: 32px;"
+                >
+                  <i class="fas fa-paper-plane small"></i>
+                </div>
+
+                <span class="small fw-bold <%= @opportunity.contacted? || @opportunity.completed? ? 'text-primary' : 'text-muted' %>">
+                  Envoyée
+                </span>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="text-center">
+                <div
+                  class="rounded-circle <%= @opportunity.completed? ? 'bg-primary text-white' : 'bg-white border text-muted' %> d-flex align-items-center justify-content-center mx-auto mb-2 shadow-sm"
+                  style="width: 32px; height: 32px;"
+                >
+                  <i class="fas fa-check small"></i>
+                </div>
+
+                <span class="small fw-bold <%= @opportunity.completed? ? 'text-primary' : 'text-muted' %>">
+                  Validée
+                </span>
+              </div>
             </div>
+          </div>
 
-            <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true, html: { class: "d-flex gap-2" }) do |f| %>
+          <!-- Actions -->
+          <div class="d-flex justify-content-center pt-2">
+            <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true) do |f| %>
               <% unless @opportunity.contacted? || @opportunity.completed? %>
-                <%= f.button name: "opportunity[status]", value: "contacted", class: "btn btn-primary fw-bold px-4" do %>
+                <%= f.button name: "opportunity[status]", value: "contacted", class: "btn btn-primary fw-bold px-5 py-3 rounded-pill shadow-sm" do %>
                   <span class="me-2">📨</span> J'ai envoyé la lettre
                 <% end %>
               <% end %>
 
               <% if @opportunity.contacted? && !@opportunity.completed? %>
-                <%= f.button name: "opportunity[status]", value: "completed", class: "btn btn-primary fw-bold px-4" do %>
-                  <span class="me-2">✅</span> Économie validée!
+                <%= f.button name: "opportunity[status]", value: "completed", class: "btn btn-success fw-bold px-5 py-3 rounded-pill shadow-sm" do %>
+                  <span class="me-2">✅</span> Je confirme l'économie
                 <% end %>
+              <% end %>
+
+              <% if @opportunity.completed? %>
+                <div
+                  class="
+                    text-success fw-bold bg-success bg-opacity-10 px-4 py-2
+                    rounded-pill
+                  "
+                >
+                  <span class="me-2">🎉</span> Dossier clôturé avec succès
+                </div>
               <% end %>
             <% end %>
           </div>
