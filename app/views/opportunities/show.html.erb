@@ -50,7 +50,7 @@
               </div>
 
               <span class="small fw-bold <%= @opportunity.contacted? || @opportunity.completed? ? 'text-primary' : 'text-muted' %>">
-                Envoyée
+                Validée
               </span>
             </div>
 
@@ -64,7 +64,7 @@
               </div>
 
               <span class="small fw-bold <%= @opportunity.completed? ? 'text-primary' : 'text-muted' %>">
-                Validée
+                Clôturée
               </span>
             </div>
           </div>
@@ -92,7 +92,7 @@
 
           <button
             type="button"
-            class="btn btn-outline-dark rounded-pill px-4 py-2"
+            class="btn btn-outline-dark fw-bold rounded-pill px-5 py-3 shadow-sm"
             onclick="window.print()"
           >
             <span class="me-2">🖨️</span> Imprimer
@@ -104,9 +104,12 @@
                 type="submit"
                 name="opportunity[status]"
                 value="contacted"
-                class="btn btn-outline-dark rounded-pill px-4 py-2"
+                class="
+                  btn btn-outline-dark fw-bold rounded-pill px-5 py-3
+                  shadow-sm
+                "
               >
-                <span class="me-2">✉️</span> Envoyer
+                <span class="me-2">✉️</span> Valider
               </button>
             <% end %>
 
@@ -115,9 +118,12 @@
                 type="submit"
                 name="opportunity[status]"
                 value="completed"
-                class="btn btn-outline-dark rounded-pill px-4 py-2"
+                class="
+                  btn btn-outline-dark fw-bold rounded-pill px-5 py-3
+                  shadow-sm
+                "
               >
-                <span class="me-2">🎉</span> Confirmer
+                <span class="me-2">🎉</span> Clôturer
               </button>
             <% end %>
 
