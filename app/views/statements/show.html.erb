@@ -1,51 +1,135 @@
-<div class="container mt-4">
-  <%= link_to "← Retour aux relevés", statements_path, class: "btn btn-link" %>
+<div class="container mt-5">
+  <div class="mb-4">
+    <%= link_to statements_path, class: "text-decoration-none text-muted small fw-bold" do %>
+      <i class="fas fa-arrow-left me-1"></i>
+      RETOUR AUX RELEVÉS
+    <% end %>
+  </div>
 
-  <h1>Relevé du <%= @statement.date.strftime("%B %Y") %></h1>
+  <div class="d-flex justify-content-between align-items-end mb-5">
+    <div>
+      <h1 class="fw-bold mb-1">
+        Relevé de <%= @statement.date.strftime("%B %Y") %>
+      </h1>
 
-  <p class="lead">Total: <strong><%= @expenses.sum(&:subtotal) %>€</strong></p>
+      <p class="text-muted mb-0">Analyse détaillée des transactions</p>
+    </div>
+
+    <div class="text-end">
+      <span class="d-block text-muted small text-uppercase fw-bold">
+        Total Dépenses
+      </span>
+
+      <span class="fs-2 fw-bold">
+        <%= number_to_currency(@expenses.sum(&:subtotal), unit: "€", precision: 0) %>
+      </span>
+    </div>
+  </div>
+
+  <!-- Summary Cards -->
+  <% total_savings = @expenses.joins(:opportunities).sum { |e| e.opportunities.sum(&:savings) } %>
+
+  <% if total_savings > 0 %>
+    <div
+      class="
+        alert alert-success d-flex align-items-center border-0 shadow-sm
+        mb-5
+      "
+      role="alert"
+    >
+      <div class="fs-1 me-3">🎉</div>
+
+      <div>
+        <h4 class="alert-heading fw-bold mb-1">
+          Potentiel d'économie détecté !
+        </h4>
+
+        <p class="mb-0">
+          En optimisant vos contrats, vous pourriez économiser
+          <strong class="fs-5"><%= number_to_currency(total_savings, unit: "€", precision: 0) %> / mois</strong>.
+        </p>
+      </div>
+    </div>
+  <% end %>
 
   <% if @expenses.any? %>
-    <h3 class="mt-4">Dépenses par catégorie</h3>
-    <div class="row">
-      <% @expenses.each do |expense| %>
-        <% category_emoji = case expense.category.name
-             when /électricité|gaz|énergie/i then "⚡"
-             when /internet|box|fibre/i then "📡"
-             when /assurance|habitation|auto/i then "🛡️"
-             when /banque|frais/i then "🏦"
-             else "📋"
-           end %>
-        <div class="col-md-6 mb-3">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">
-                <span class="me-2"><%= category_emoji %></span>
-                <%= expense.category.name %>
-              </h5>
+    <div class="card border shadow-sm">
+      <div class="card-header bg-white py-3 border-bottom">
+        <div class="row align-items-center text-muted small fw-bold text-uppercase">
+          <div class="col-md-6">Catégorie</div>
+          <div class="col-md-3 text-end">Montant</div>
+          <div class="col-md-3 text-end">Analyse</div>
+        </div>
+      </div>
 
-              <p class="card-text"><strong><%= expense.subtotal %>€</strong></p>
+      <div class="list-group list-group-flush">
+        <% @expenses.each do |expense| %>
+          <% category_emoji = case expense.category.name
+               when /électricité|gaz|énergie/i then "⚡"
+               when /internet|box|fibre/i then "📡"
+               when /assurance|habitation|auto/i then "🛡️"
+               when /banque|frais/i then "🏦"
+               else "📋"
+             end %>
 
-              <% if expense.opportunities.any? %>
-                <p class="text-success">
-                  <%= expense.opportunities.count %> opportunité(s) d'économie
-                </p>
-                <% expense.opportunities.each do |opportunity| %>
-                  <%= link_to "Voir l'opportunité",
-                      statement_expense_opportunity_path(@statement, expense, opportunity),
-                      class: "btn btn-sm btn-outline-primary" %>
+          <div class="list-group-item py-3 action-row">
+            <div class="row align-items-center">
+              <!-- Category -->
+              <div class="col-md-6 d-flex align-items-center">
+                <div
+                  class="
+                    rounded-3 bg-light d-flex align-items-center
+                    justify-content-center me-3
+                  "
+                  style="width: 48px; height: 48px; font-size: 1.5rem;"
+                >
+                  <%= category_emoji %>
+                </div>
+
+                <div>
+                  <h6 class="mb-0 fw-bold text-dark">
+                    <%= expense.category.name %>
+                  </h6>
+
+                  <small class="text-muted">Prélèvement mensuel</small>
+                </div>
+              </div>
+
+              <!-- Amount -->
+              <div class="col-md-3 text-end">
+                <span class="fw-bold text-dark">
+                  <%= number_to_currency(expense.subtotal, unit: "€", precision: 2) %>
+                </span>
+              </div>
+
+              <!-- Action -->
+              <div class="col-md-3 text-end">
+                <% if expense.opportunities.any? %>
+                  <% opportunity = expense.opportunities.first %>
+                  <%= link_to statement_expense_opportunity_path(@statement, expense, opportunity), class: "btn btn-sm btn-success text-white fw-bold px-3 rounded-pill" do %>
+                    <i class="fas fa-magic me-1"></i>
+                    Économiser
+                    <%= number_to_currency(opportunity.savings, unit: "€", precision: 0) %>
+                  <% end %>
+                <% else %>
+                  <span class="badge bg-light text-muted border fw-normal">
+                    <i class="fas fa-check me-1"></i>
+                    Optimisé
+                  </span>
                 <% end %>
-              <% else %>
-                <p class="text-muted">Aucune opportunité détectée</p>
-              <% end %>
+              </div>
             </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   <% else %>
-    <div class="alert alert-info">
-      Aucune dépense dans ce relevé.
+    <div class="text-center py-5">
+      <div class="mb-3">
+        <i class="fas fa-receipt fa-3x text-muted opacity-50"></i>
+      </div>
+
+      <p class="text-muted">Aucune dépense trouvée dans ce relevé.</p>
     </div>
   <% end %>
 </div>
