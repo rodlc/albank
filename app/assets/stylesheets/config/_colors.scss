@@ -11,6 +11,7 @@ $primary-hover: #00006b; // Bleu France foncé
 
 // Palette Secondaire (Mon-Entreprise)
 $coral: #e86c72; // Accent chaud
+$coral-text: #be123c; // Accent chaud foncé (Accessible)
 $cyan: #66c2e0; // Secondaire doux
 
 // Neutres Slate (Tailwind)
@@ -52,7 +53,7 @@ $box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 
 // === UTILITIES ===
 .text-coral {
-    color: $coral !important;
+    color: $coral-text !important;
 }
 .bg-coral {
     background-color: $coral !important;

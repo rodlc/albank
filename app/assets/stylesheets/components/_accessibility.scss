@@ -1,0 +1,30 @@
+// === Accessibility Utilities ===
+
+// Global focus styles for better keyboard navigation
+:focus-visible {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+// Ensure buttons have visible focus
+.btn:focus-visible {
+    box-shadow: 0 0 0 4px rgba($primary, 0.25);
+    outline: none;
+}
+
+// Skip to content link (if added later)
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: $primary;
+    color: white;
+    padding: 8px;
+    z-index: 100;
+    transition: top 0.3s;
+
+    &:focus {
+        top: 0;
+    }
+}
