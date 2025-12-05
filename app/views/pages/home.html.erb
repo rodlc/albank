@@ -1,38 +1,31 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
+<div
+  class="container d-flex flex-column justify-content-center"
+  style="min-height: calc(100vh - 100px);"
+>
+  <div class="row justify-content-center w-100">
     <div class="col-md-8 col-lg-6 text-center">
       <!-- Header -->
       <h1 class="display-5 fw-bold mb-3" style="letter-spacing: -0.03em;">
-        Analysez vos frais bancaires
+        Protégez votre argent
         <br>
-        en 30 secondes
+        des fraudes et abus
       </h1>
 
       <p class="lead text-muted mb-5">
-        Déposez votre relevé PDF pour détecter automatiquement les frais cachés
-        et les économies possibles.
+        Déposez votre relevé PDF pour détecter automatiquement les faux débits,
+        abonnements frauduleux et anomalies.
       </p>
 
       <!-- Drop Zone -->
       <div class="file-upload-wrapper mb-4">
         <label
           for="file-input"
-          class="upload-label upload-hero w-100 shadow-sm border-2"
+          class="upload-label upload-hero w-100 shadow-sm border-2 bg-white"
           id="dropZone"
-          style="border-style: dashed;"
+          style="border-style: dashed; cursor: pointer; transition: all 0.2s ease;"
         >
-          <div class="text-center py-4">
-            <div class="mb-4">
-              <div
-                class="
-                  d-inline-flex align-items-center justify-content-center
-                  bg-primary bg-opacity-10 rounded-circle
-                "
-                style="width: 80px; height: 80px;"
-              >
-                <i class="fas fa-file-invoice text-primary fa-2x"></i>
-              </div>
-            </div>
+          <div class="text-center py-5">
+            <div class="mb-3"><span style="font-size: 4rem;">📄</span></div>
 
             <h5 class="fw-bold mb-2">Scanner mon relevé</h5>
 
@@ -54,21 +47,21 @@
       <div class="row g-3 text-center mt-4 mb-5">
         <div class="col-4">
           <div class="p-2">
-            <i class="fas fa-lock text-success mb-2 fs-5"></i>
+            <div class="fs-2 mb-2">🔒</div>
             <p class="small text-muted fw-semibold mb-0">100% Sécurisé</p>
           </div>
         </div>
 
         <div class="col-4">
           <div class="p-2">
-            <i class="fas fa-eye-slash text-primary mb-2 fs-5"></i>
+            <div class="fs-2 mb-2">🙈</div>
             <p class="small text-muted fw-semibold mb-0">Confidentiel</p>
           </div>
         </div>
 
         <div class="col-4">
           <div class="p-2">
-            <i class="fas fa-trash-alt text-muted mb-2 fs-5"></i>
+            <div class="fs-2 mb-2">🗑️</div>
             <p class="small text-muted fw-semibold mb-0">Suppression auto</p>
           </div>
         </div>
@@ -102,15 +95,21 @@
   dropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
     dropZone.classList.add('dragover');
+    dropZone.style.borderColor = '#000091';
+    dropZone.style.backgroundColor = '#F5F5FE';
   });
 
   dropZone.addEventListener('dragleave', () => {
     dropZone.classList.remove('dragover');
+    dropZone.style.borderColor = '';
+    dropZone.style.backgroundColor = '';
   });
 
   dropZone.addEventListener('drop', (e) => {
     e.preventDefault();
     dropZone.classList.remove('dragover');
+    dropZone.style.borderColor = '';
+    dropZone.style.backgroundColor = '';
     const files = e.dataTransfer.files;
     if (files.length > 0) {
       handleFiles(files);
