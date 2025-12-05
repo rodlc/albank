@@ -71,63 +71,6 @@
         </div>
       </div>
 
-      <!-- CTA unifiés -->
-      <div class="d-flex flex-wrap justify-content-center gap-3 mb-5 d-print-none">
-        <button
-          type="button"
-          class="btn btn-outline-dark rounded-pill px-4 py-2 fw-bold"
-          data-clipboard-target="button"
-          data-action="click->clipboard#copy"
-        >
-          <span class="me-2">📋</span> Copier
-        </button>
-
-        <button
-          type="button"
-          class="btn btn-outline-dark rounded-pill px-4 py-2 fw-bold"
-          onclick="window.print()"
-        >
-          <span class="me-2">🖨️</span> Imprimer
-        </button>
-
-        <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true, class: "d-inline") do |f| %>
-          <% unless @opportunity.contacted? || @opportunity.completed? %>
-            <%= f.button name: "opportunity[status]", value: "contacted", class: "btn btn-primary fw-bold px-4 py-2 rounded-pill shadow-sm" do %>
-              <span class="me-2">✅</span> J'ai envoyé la lettre
-            <% end %>
-          <% end %>
-
-          <% if @opportunity.contacted? && !@opportunity.completed? %>
-            <%= f.button name: "opportunity[status]", value: "completed", class: "btn btn-success fw-bold px-4 py-2 rounded-pill shadow-sm" do %>
-              <span class="me-2">🎉</span> Je confirme l'économie
-            <% end %>
-          <% end %>
-
-          <% if @opportunity.completed? %>
-            <div
-              class="
-                text-success fw-bold bg-success bg-opacity-10 px-4 py-2
-                rounded-pill
-              "
-            >
-              <span class="me-2">🎉</span> Dossier clôturé
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-
-      <!-- Feedback copie -->
-      <div
-        data-clipboard-target="feedback"
-        class="
-          alert bg-primary text-white text-center d-none border-0 fw-bold
-          rounded-pill mb-4 d-print-none
-        "
-        role="alert"
-      >
-        <span class="me-2">✅</span> Lettre copiée!
-      </div>
-
       <!-- Intro lettre -->
       <div class="text-center mb-4 d-print-none">
         <h3 class="h5 fw-bold">Modèle de lettre prêt à l'emploi</h3>
