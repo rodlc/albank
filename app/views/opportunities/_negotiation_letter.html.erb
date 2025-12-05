@@ -79,12 +79,18 @@
       </div>
     </div>
 
-    <!-- Boutons d'action flottants -->
-    <div class="letter-actions sticky-bottom pb-4 pt-3 bg-white border-top mt-0">
-      <div class="d-flex gap-3 justify-content-center">
+    <!-- Boutons d'action -->
+    <div class="text-center mt-5 mb-3">
+      <span class="text-muted small fw-bold text-uppercase">
+        Une fois la lettre prête
+      </span>
+    </div>
+
+    <div class="letter-actions pb-5">
+      <div class="d-flex gap-4 justify-content-center">
         <button
           type="button"
-          class="btn btn-outline-dark rounded-pill px-4 fw-bold"
+          class="btn btn-outline-dark rounded-pill px-4 py-2 fw-bold"
           data-clipboard-target="button"
           data-action="click->clipboard#copy"
         >
@@ -93,7 +99,7 @@
 
         <button
           type="button"
-          class="btn btn-primary rounded-pill px-4 fw-bold"
+          class="btn btn-primary rounded-pill px-4 py-2 fw-bold shadow-sm"
           onclick="window.print()"
         >
           <span class="me-2">🖨️</span> Imprimer la lettre
