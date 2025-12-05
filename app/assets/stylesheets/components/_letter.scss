@@ -1,0 +1,93 @@
+// === Negotiation Letter "Paper UI" ===
+// Legalstart-style letter component
+
+.action-section {
+    background-color: #f3f4f6;
+    padding: 3rem 0;
+    border-top: 1px solid #e5e7eb;
+    margin-top: 3rem;
+}
+
+.paper-sheet {
+    background: white;
+    padding: 3rem;
+    max-width: 210mm; // A4 width
+    margin: 0 auto;
+    box-shadow:
+        0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e5e7eb;
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #1f2937;
+    position: relative;
+
+    // Highlight for dynamic values
+    strong {
+        background-color: #fef3c7; // Yellow highlight
+        padding: 0 4px;
+        font-family: "Inter", sans-serif;
+        font-size: 0.95em;
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 1rem;
+
+        li {
+            margin-bottom: 0.5rem;
+
+            &::before {
+                content: "•";
+                color: #059669;
+                font-weight: bold;
+                display: inline-block;
+                width: 1em;
+                margin-left: -1em;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding: 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+.letter-actions {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
+    padding-bottom: 2rem;
+}
+
+@media print {
+    @page {
+        margin: 2cm;
+    }
+
+    body {
+        background: white !important;
+    }
+
+    .action-section {
+        background: white !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .paper-sheet {
+        box-shadow: none !important;
+        border: none !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .letter-actions {
+        display: none !important;
+    }
+}

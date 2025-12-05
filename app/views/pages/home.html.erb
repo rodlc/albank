@@ -1,71 +1,153 @@
-<h1>Pages#home</h1>
+<div
+  class="container d-flex flex-column justify-content-center"
+  style="min-height: calc(100vh - 100px);"
+>
+  <div class="row justify-content-center w-100">
+    <div class="col-md-8 col-lg-6 text-center">
+      <!-- Header -->
+      <h1 class="display-5 fw-bold mb-3" style="letter-spacing: -0.03em;">
+        <span class="underline-cyan">Protégez votre argent</span>
+        <br>
+        des fraudes et abus
+      </h1>
 
-<%# <p>Find me in app/views/pages/home.html.erb</p> %>
+      <p class="lead text-muted mb-5">
+        Déposez votre relevé PDF pour détecter automatiquement les faux débits,
+        abonnements frauduleux et anomalies.
+      </p>
 
-<div class="file-upload-wrapper">
-  <label for="file-input" class="upload-label drop-zone" id="dropZone">
-    <img
-      src="<%= image_path 'logo-cochon.svg' %>"
-      alt="Choisir un fichier"
-      title="Cliquer pour importer"
-      class="upload-label-image"
-    >
-  </label>
+      <!-- Drop Zone -->
+      <div class="file-upload-wrapper mb-4">
+        <label
+          for="file-input"
+          class="upload-label upload-hero w-100 shadow-sm border-2 bg-white"
+          id="dropZone"
+          style="border-style: dashed; cursor: pointer; transition: all 0.2s ease;"
+        >
+          <div class="text-center py-5">
+            <div class="mb-3"><span style="font-size: 4rem;">📄</span></div>
 
-  <input
-    id="file-input"
-    type="file"
-    accept="*"
-    style="visibility:hidden"
-  >
+            <h5 class="fw-bold mb-2">Lancer l'enquête</h5>
+
+            <p class="text-muted small mb-0">
+              Glissez-déposez votre PDF pour démarrer l'analyse
+            </p>
+          </div>
+        </label>
+
+        <input
+          id="file-input"
+          type="file"
+          accept="application/pdf,*"
+          style="display: none;"
+        >
+      </div>
+
+      <!-- Reassurance -->
+      <div class="row g-3 text-center mt-4 mb-5">
+        <div class="col-4">
+          <div class="p-2">
+            <div class="fs-2 mb-2">🔒</div>
+            <p class="small text-muted fw-semibold mb-0">100% Sécurisé</p>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="p-2">
+            <div class="fs-2 mb-2">🙈</div>
+            <p class="small text-muted fw-semibold mb-0">Confidentiel</p>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="p-2">
+            <div class="fs-2 mb-2">🗑️</div>
+            <p class="small text-muted fw-semibold mb-0">Suppression auto</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div id="loading-state" class="d-none mt-4">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Importation en cours...</span>
+        </div>
+
+        <p class="text-muted mt-2 fw-medium">Analyse sécurisée en cours...</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
   const dropZone = document.getElementById('dropZone');
   const fileInput = document.getElementById('file-input');
+  const loadingState = document.getElementById('loading-state');
 
-  // Empêche le comportement par défaut (ouvrir le fichier dans le navigateur)
+  // Click to upload
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+      handleFiles(e.target.files);
+    }
+  });
+
+  // Drag & Drop
   dropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
-    dropZone.classList.add('dragover'); // pour un style visuel
+    dropZone.classList.add('dragover');
+    dropZone.style.borderColor = '#000091';
+    dropZone.style.backgroundColor = '#F5F5FE';
   });
 
   dropZone.addEventListener('dragleave', () => {
     dropZone.classList.remove('dragover');
+    dropZone.style.borderColor = '';
+    dropZone.style.backgroundColor = '';
   });
 
   dropZone.addEventListener('drop', (e) => {
     e.preventDefault();
     dropZone.classList.remove('dragover');
+    dropZone.style.borderColor = '';
+    dropZone.style.backgroundColor = '';
     const files = e.dataTransfer.files;
     if (files.length > 0) {
-      // Ici tu peux soit assigner au input, soit traiter directement
-      // fileInput.files = files; // pas toujours supporté
       handleFiles(files);
     }
   });
 
   function handleFiles(files) {
-    const f = files[0];
-    console.log("Fichier déposé :", f.name, f.size, f.type);
-    // Exemple d’upload avec FormData :
-    // const fd = new FormData();
-    // fd.append('file', f);
-    // fetch('/upload', { method: 'POST', body: fd });
+    const file = files[0];
+    console.log("Fichier déposé :", file.name, file.size, file.type);
+
+    // Show loading state
+    dropZone.classList.add('d-none');
+    loadingState.classList.remove('d-none');
+
+    // Simulate PDF import
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+    fetch('<%= import_pdf_statements_path %>', {
+      method: 'POST',
+      headers: {
+        'X-CSRF-Token': csrfToken,
+        'Accept': 'text/html'
+      }
+    })
+    .then(response => {
+      if (response.redirected) {
+        window.location.href = response.url;
+      } else {
+        return response.text().then(html => {
+          document.body.innerHTML = html;
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Erreur import:', error);
+      alert('Erreur lors de l\'importation. Veuillez réessayer.');
+      dropZone.classList.remove('d-none');
+      loadingState.classList.add('d-none');
+    });
   }
 </script>
-
-<style>
-  .drop-zone.dragover {
-    outline: 3px dashed #4a90e2;
-    opacity: 0.8;
-  }
-  .visually-hidden {
-    position: absolute;
-    left: -9999px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-  }
-
-</style>

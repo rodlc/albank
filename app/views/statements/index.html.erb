@@ -1,34 +1,72 @@
-<div class="container mt-4">
-  <h1>Mes relevés</h1>
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="mb-1">Mes relevés</h1>
 
-  <%= link_to "Nouveau relevé", new_statement_path, class: "btn btn-success mb-3" %>
+      <p class="text-muted mb-0">
+        Suivez vos dépenses et économies potentielles
+      </p>
+    </div>
+
+    <%= link_to new_statement_path, class: "btn btn-gov-primary" do %>
+      <i class="fas fa-plus me-2"></i>
+      Nouveau relevé
+    <% end %>
+  </div>
 
   <% if @statements.any? %>
-    <div class="row">
+    <div class="row g-4">
       <% @statements.each do |statement| %>
-        <div class="col-md-4 mb-3">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">
-                Relevé du <%= statement.date.strftime("%B %Y") %>
-              </h5>
+        <% opportunities_count = statement.expenses.joins(:opportunities).count %>
+        <% total_savings = statement.expenses.joins(:opportunities).includes(:opportunities).sum { |e| e.opportunities.sum(&:savings) } %>
 
-              <p class="card-text">
-                <strong><%= statement.expenses.count %> dépenses</strong>
-                <br>
+        <div class="col-md-6 col-lg-4">
+          <%= link_to statement, class: "text-decoration-none" do %>
+            <div class="smart-card <%= 'has-savings' if total_savings > 0 %>">
+              <div class="d-flex justify-content-between align-items-start">
+                <h3 class="smart-card__title">
+                  <span class="me-2">📄</span>
+                  <%= l(statement.date, format: "%B %Y").capitalize %>
+                </h3>
 
-                <small class="text-muted">
-                  Total: <%= statement.expenses.sum(:subtotal) %>€
-                </small>
-              </p>
+                <% if opportunities_count > 0 %>
+                  <span class="smart-card__tag">
+                    <%= opportunities_count %> détectées
+                  </span>
+                <% end %>
+              </div>
 
-              <%= link_to "Voir le détail", statement_path(statement), class: "btn btn-primary" %>
+              <div class="mt-auto">
+                <div class="smart-card__label">
+                  Économies possibles
+                </div>
+
+                <div class="smart-card__value text-coral">
+                  <%= number_to_currency(total_savings, unit: "€", precision: 0) %>
+                </div>
+
+                <div class="d-flex justify-content-between border-top pt-2 mt-2">
+                  <span class="text-muted small">Dépenses</span>
+
+                  <span class="fw-bold">
+                    <%= number_to_currency(statement.expenses.sum(:subtotal), unit: "€", precision: 0) %>
+                  </span>
+                </div>
+              </div>
             </div>
-          </div>
+          <% end %>
         </div>
       <% end %>
     </div>
   <% else %>
-    <p class="text-muted">Aucun relevé pour le moment.</p>
+    <div class="text-center py-5">
+      <div class="mb-3"><i class="fas fa-inbox fa-3x text-muted"></i></div>
+
+      <p class="text-muted">Aucun relevé pour le moment.</p>
+
+      <p class="text-muted small">
+        Importez votre premier relevé pour commencer à économiser
+      </p>
+    </div>
   <% end %>
 </div>

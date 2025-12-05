@@ -1,95 +1,190 @@
-<div class="container mt-4">
+<div class="container mt-5">
+  <div class="mb-4 d-print-none">
+    <%= link_to @statement, class: "text-decoration-none text-muted small fw-bold" do %>
+      <span class="me-1">←</span> RETOUR AU RELEVÉ
+    <% end %>
+  </div>
+
   <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header bg-success text-white">
-          <h2 class="mb-0">💰 Opportunité d'économie</h2>
-        </div>
+    <div class="col-lg-10">
+      <!-- Main Card -->
+      <div
+        class="card border-0 shadow-lg overflow-hidden mb-5 d-print-none"
+        style="border-radius: 16px;"
+      >
+        <div class="row g-0">
+          <!-- Left: Current Situation -->
+          <div class="col-md-5 bg-light border-end">
+            <div class="p-4 p-md-5 h-100 d-flex flex-column justify-content-center">
+              <span class="text-uppercase text-muted fw-bold small mb-2">
+                Votre situation actuelle
+              </span>
 
-        <div class="card-body">
-          <div class="row mb-4">
-            <div class="col-md-6">
-              <h5>Votre dépense</h5>
+              <div class="d-flex align-items-baseline">
+                <span class="display-5 fw-bold text-muted">
+                  <%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 0) %>
+                </span>
 
-              <p class="lead">
-                <strong>
-                  <%= number_to_currency(@opportunity.expense.subtotal, unit: "€") %>
-                </strong>
+                <span class="text-muted ms-2">/ mois</span>
+              </div>
+
+              <p class="text-muted small mt-2 mb-0">
+                Basé sur votre prélèvement du
+                <%= l(@opportunity.expense.statement.date, format: "%B %Y") %>
               </p>
-
-              <p class="text-muted">
-                <%= @opportunity.expense.category.name %>
-                <br>
-                <%= l(@opportunity.expense.statement.date, format: :long) %>
-              </p>
-            </div>
-
-            <div class="col-md-6">
-              <h5>Moyenne du marché</h5>
-
-              <p class="lead">
-                <strong>
-                  <%= number_to_currency(@opportunity.standard.average_amount, unit: "€") %>
-                </strong>
-              </p>
-
-              <p class="text-muted"><%= @opportunity.standard.unit %></p>
             </div>
           </div>
 
-          <div class="alert alert-success">
-            <h4 class="alert-heading">Économies potentielles</h4>
+          <!-- Right: The Win -->
+          <div class="col-md-7 bg-white">
+            <div
+              class="
+                p-4 p-md-5 h-100 d-flex flex-column justify-content-center
+                position-relative overflow-hidden
+              "
+            >
+              <!-- Background decoration -->
+              <div class="position-absolute top-0 end-0 p-3 opacity-10">
+                <span style="font-size: 10rem;">💰</span>
+              </div>
 
-            <p class="display-4">
-              <strong>
-                <%= number_to_currency(@opportunity.savings, unit: "€") %>
-              </strong>
-            </p>
-
-            <p class="mb-0">
-              En passant à un fournisseur au prix moyen du marché
-            </p>
-          </div>
-
-          <div class="mt-4">
-            <h5>Statut de l'opportunité</h5>
-
-            <p>
               <span
                 class="
-                  badge bg-<%= case @opportunity.status
-                  when 'pending' then 'warning'
-                  when 'contacted' then 'info'
-                  when 'completed' then 'success'
-                  end %>
+                  badge bg-coral-subtle text-coral align-self-start mb-3
+                  px-3 py-2 rounded-pill
                 "
               >
-                <%= @opportunity.status.humanize %>
+                <span class="me-1">✨</span> Recommandé
               </span>
-            </p>
 
-            <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true, class: "d-inline-block") do |f| %>
-              <div class="btn-group" role="group">
-                <%= f.button "Marquer comme contacté",
-                    name: "opportunity[status]",
-                    value: "contacted",
-                    class: "btn btn-info btn-sm",
-                    disabled: @opportunity.contacted? || @opportunity.completed? %>
+              <span class="text-uppercase text-coral fw-bold small mb-2">
+                Économie potentielle
+              </span>
 
-                <%= f.button "Marquer comme complété",
-                    name: "opportunity[status]",
-                    value: "completed",
-                    class: "btn btn-success btn-sm",
-                    disabled: @opportunity.completed? %>
+              <div class="d-flex align-items-baseline position-relative">
+                <span class="display-3 fw-bold text-coral">
+                  <%= number_to_currency(@opportunity.savings, unit: "€", precision: 0) %>
+                </span>
+
+                <span class="text-coral fs-4 ms-2 fw-bold">/ mois</span>
               </div>
-            <% end %>
+
+              <p class="text-muted mt-3 mb-0 position-relative">
+                En passant à une offre moyenne du marché
+                (<%= number_to_currency(@opportunity.standard.average_amount, unit: "€", precision: 0) %>)
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Footer with Stepper -->
+        <div class="bg-light border-top p-4">
+          <!-- Stepper -->
+          <div
+            class="position-relative mb-4 mx-auto mt-2"
+            style="max-width: 500px;"
+          >
+            <div
+              class="position-absolute start-0 w-100 bg-secondary bg-opacity-25"
+              style="height: 2px; top: 16px; z-index: 0;"
+            ></div>
+
+            <div
+              class="position-absolute start-0 bg-primary transition-width"
+              style="height: 2px; top: 16px; z-index: 0; width: <%= @opportunity.completed? ? '100%' : (@opportunity.contacted? ? '50%' : '0%') %>;"
+            ></div>
+
+            <div
+              class="d-flex justify-content-between position-relative"
+              style="z-index: 1;"
+            >
+              <!-- Step 1 -->
+              <div class="text-center">
+                <div
+                  class="
+                    rounded-circle bg-primary text-white d-flex
+                    align-items-center justify-content-center mx-auto mb-2
+                    shadow-sm
+                  "
+                  style="width: 32px; height: 32px; font-size: 1.2rem;"
+                >
+                  🕵️
+                </div>
+
+                <span class="small fw-bold text-primary">Détectée</span>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="text-center">
+                <div
+                  class="rounded-circle <%= @opportunity.contacted? || @opportunity.completed? ? 'bg-primary text-white' : 'bg-white border text-muted' %> d-flex align-items-center justify-content-center mx-auto mb-2 shadow-sm"
+                  style="width: 32px; height: 32px; font-size: 1.2rem;"
+                >
+                  ✅
+                </div>
+
+                <span class="small fw-bold <%= @opportunity.contacted? || @opportunity.completed? ? 'text-primary' : 'text-muted' %>">
+                  Envoyée
+                </span>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="text-center">
+                <div
+                  class="rounded-circle <%= @opportunity.completed? ? 'bg-primary text-white' : 'bg-white border text-muted' %> d-flex align-items-center justify-content-center mx-auto mb-2 shadow-sm"
+                  style="width: 32px; height: 32px; font-size: 1.2rem;"
+                >
+                  🎉
+                </div>
+
+                <span class="small fw-bold <%= @opportunity.completed? ? 'text-primary' : 'text-muted' %>">
+                  Validée
+                </span>
+              </div>
+            </div>
           </div>
 
-          <div class="mt-4">
-            <%= link_to "← Retour au relevé", @statement, class: "btn btn-outline-secondary" %>
+          <!-- Actions -->
+          <div class="d-flex justify-content-center pt-2">
+            <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true) do |f| %>
+              <% unless @opportunity.contacted? || @opportunity.completed? %>
+                <%= f.button name: "opportunity[status]", value: "contacted", class: "btn btn-primary fw-bold px-5 py-3 rounded-pill shadow-sm" do %>
+                  <span class="me-2">✅</span> J'ai envoyé la lettre
+                <% end %>
+              <% end %>
+
+              <% if @opportunity.contacted? && !@opportunity.completed? %>
+                <%= f.button name: "opportunity[status]", value: "completed", class: "btn btn-success fw-bold px-5 py-3 rounded-pill shadow-sm" do %>
+                  <span class="me-2">🎉</span> Je confirme l'économie
+                <% end %>
+              <% end %>
+
+              <% if @opportunity.completed? %>
+                <div
+                  class="
+                    text-success fw-bold bg-success bg-opacity-10 px-4 py-2
+                    rounded-pill
+                  "
+                >
+                  <span class="me-2">🎉</span> Dossier clôturé avec succès
+                </div>
+              <% end %>
+            <% end %>
           </div>
         </div>
       </div>
+
+      <!-- Negotiation Letter Section -->
+      <div class="text-center mb-4 d-print-none">
+        <div class="mb-2">⬇️</div>
+        <h3 class="h5 fw-bold">Modèle de lettre prêt à l'emploi</h3>
+
+        <p class="text-muted small">
+          Utilisez ce modèle pour négocier avec votre fournisseur
+        </p>
+      </div>
+
+      <%= render 'negotiation_letter' %>
     </div>
   </div>
 </div>

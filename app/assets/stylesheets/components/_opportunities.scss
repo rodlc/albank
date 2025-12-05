@@ -1,0 +1,70 @@
+// === Mon-Entreprise/URSSAF Components ===
+// Flat design, bordures visibles, haute lisibilité
+
+// === Expense Card ===
+.expense-card {
+  border-bottom: 1px solid $gray-200;  // Liste façon tableau
+  padding: 1rem 0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &__category {
+    font-weight: 600;
+  }
+
+  &.has-opportunity {
+    border-left: 4px solid $success;
+    padding-left: 1rem;
+  }
+}
+
+// === Opportunity Status Badges ===
+.opportunity-badge {
+  font-size: 0.875rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+
+  &.badge-pending {
+    background: lighten($warning, 35%);
+    color: darken($warning, 10%);
+  }
+
+  &.badge-contacted {
+    background: lighten($info, 35%);
+    color: darken($info, 10%);
+  }
+
+  &.badge-completed {
+    background: lighten($success, 35%);
+    color: darken($success, 15%);
+  }
+}
+
+// Opportunity count indicator
+.opportunities-count {
+  background: $success;
+  color: white;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 12px;
+}
+
+// Category icon styling
+.category-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: $secondary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $primary;
+  font-size: 1.5rem;
+}

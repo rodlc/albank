@@ -1,0 +1,194 @@
+// === Modern Smart Card Component ===
+// Combines institutional trust with modern UX patterns (Shadcn/Linear)
+
+.smart-card {
+    background: $card-bg;
+    border: 1px solid $border-color;
+    border-radius: $border-radius-lg;
+    padding: 1.5rem;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+        border-color: $primary;
+        transform: translateY(-2px);
+        box-shadow: $box-shadow;
+    }
+
+    // Barre latérale de statut (visual cue)
+    &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: $border-color;
+        transition: background 0.2s;
+    }
+
+    &.has-savings::before {
+        background: $coral; // Coral indicator
+    }
+
+    &__label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: #6b7280;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.25rem;
+    }
+
+    &__title {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #111827;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.5rem;
+    }
+
+    &__value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        font-feature-settings: "tnum"; // Tabular numbers
+        letter-spacing: -0.02em;
+
+        &--success {
+            color: $coral;
+        }
+        &--danger {
+            color: #dc2626;
+        }
+        &--primary {
+            color: #000091;
+        }
+    }
+
+    &__tag {
+        align-self: flex-start;
+        background-color: #e8edff;
+        color: #000091;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+}
+
+// === Badge Status Unifié ===
+.badge-status {
+    background: rgba($coral, 0.1);
+    color: $coral;
+    border: 1px solid rgba($coral, 0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+// === Boutons Unifiés (Bleu France) ===
+
+.btn {
+    border-radius: 6px;
+    font-weight: 500;
+    padding: 0.625rem 1.25rem;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+
+    &:focus {
+        box-shadow: 0 0 0 3px rgba(0, 0, 145, 0.15) !important;
+    }
+}
+
+// Action Principale (Bleu France)
+.btn-gov-primary,
+.btn-primary {
+    background-color: #000091;
+    border-color: #000091;
+    color: white;
+
+    &:hover:not(:disabled) {
+        background-color: #00006b;
+        border-color: #00006b;
+        color: white;
+        transform: translateY(-1px);
+    }
+
+    &:disabled {
+        background-color: #9999c4;
+        border-color: #9999c4;
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+// Secondaire (Blanc borduré Slate)
+.btn-gov-outline,
+.btn-outline,
+.btn-light,
+.btn-secondary {
+    background-color: white;
+    border-color: #e2e8f0;
+    color: #0f172a;
+
+    &:hover:not(:disabled) {
+        background-color: #f1f5f9;
+        border-color: #cbd5e1;
+        color: #0f172a;
+    }
+}
+
+// === Comparison Panel (Split-View) ===
+// Modern panel for before/after comparison (Opportunity page)
+
+.comparison-panel {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+
+    &__header {
+        padding: 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        background: #f9fafb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: #111827;
+        }
+
+        p {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin: 0;
+        }
+    }
+
+    &__left {
+        padding: 2rem;
+        border-right: 1px solid #e5e7eb;
+    }
+
+    &__right {
+        padding: 2rem;
+        background: rgba(5, 150, 105, 0.05);
+    }
+
+    &__footer {
+        padding: 1rem 1.5rem;
+        background: #f9fafb;
+        border-top: 1px solid #e5e7eb;
+        text-align: right;
+    }
+}

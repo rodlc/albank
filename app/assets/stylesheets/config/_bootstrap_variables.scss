@@ -7,22 +7,22 @@
 // General style
 $font-family-sans-serif: $body-font;
 $headings-font-family:   $headers-font;
-$body-bg:                $light-gray;
+$body-bg:                $light;
 $font-size-base:         1rem;
 
-// Colors
-$body-color: $gray;
-$primary:    $blue;
-$success:    $green;
-$info:       $yellow;
-$danger:     $red;
-$warning:    $orange;
+// Colors - Public Service Style
+$body-color: $gray-900;
 
-// Buttons & inputs' radius
-$border-radius-sm:            .0625rem;
-$border-radius:               .125rem;
-$border-radius-lg:            .25rem;
-$border-radius-xl:            .5rem;
-$border-radius-xxl:           1rem;
+// Buttons & inputs' radius (style institutionnel - arrondis faibles)
+$border-radius-sm:            .25rem;   // 4px
+$border-radius:               .375rem;  // 6px (Mon-Entreprise standard)
+$border-radius-lg:            .5rem;    // 8px
+$border-radius-xl:            .75rem;   // 12px
+$border-radius-xxl:           1rem;     // 16px
+
+// Shadows (Discrètes, juste pour le relief)
+$box-shadow-sm:               0 1px 2px rgba(0, 0, 0, 0.05);
+$box-shadow:                  0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$box-shadow-lg:               0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
 // Override other variables below!
