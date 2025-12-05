@@ -12,7 +12,7 @@
         <div
           class="
             d-inline-flex align-items-center justify-content-center
-            bg-success bg-opacity-10 text-success rounded-circle mb-3
+            bg-coral-subtle text-coral rounded-circle mb-3
           "
           style="width: 64px; height: 64px;"
         >
@@ -70,23 +70,23 @@
 
               <span
                 class="
-                  badge bg-success bg-opacity-10 text-success
-                  align-self-start mb-3 px-3 py-2 rounded-pill
+                  badge bg-coral-subtle text-coral align-self-start mb-3
+                  px-3 py-2 rounded-pill
                 "
               >
                 <span class="me-1">✨</span> Recommandé
               </span>
 
-              <span class="text-uppercase text-success fw-bold small mb-2">
+              <span class="text-uppercase text-coral fw-bold small mb-2">
                 Économie potentielle
               </span>
 
               <div class="d-flex align-items-baseline position-relative">
-                <span class="display-3 fw-bold text-success">
+                <span class="display-3 fw-bold text-coral">
                   <%= number_to_currency(@opportunity.savings, unit: "€", precision: 0) %>
                 </span>
 
-                <span class="text-success fs-4 ms-2 fw-bold">/ mois</span>
+                <span class="text-coral fs-4 ms-2 fw-bold">/ mois</span>
               </div>
 
               <p class="text-muted mt-3 mb-0 position-relative">
@@ -131,7 +131,7 @@
               <% end %>
 
               <% if @opportunity.contacted? && !@opportunity.completed? %>
-                <%= f.button name: "opportunity[status]", value: "completed", class: "btn btn-success fw-bold px-4" do %>
+                <%= f.button name: "opportunity[status]", value: "completed", class: "btn btn-primary fw-bold px-4" do %>
                   <span class="me-2">✅</span> Économie validée!
                 <% end %>
               <% end %>

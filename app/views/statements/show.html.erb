@@ -31,7 +31,7 @@
   <% if total_savings > 0 %>
     <div
       class="
-        alert alert-success d-flex align-items-center border-0 shadow-sm
+        alert bg-coral-subtle d-flex align-items-center border-0 shadow-sm
         mb-5
       "
       role="alert"
@@ -39,13 +39,13 @@
       <div class="fs-1 me-3">🕵️</div>
 
       <div>
-        <h4 class="alert-heading fw-bold mb-1">
+        <h4 class="alert-heading fw-bold mb-1 text-coral">
           Potentiel d'économie détecté !
         </h4>
 
         <p class="mb-0">
           En optimisant vos contrats, vous pourriez économiser
-          <strong class="fs-5"><%= number_to_currency(total_savings, unit: "€", precision: 0) %> / mois</strong>.
+          <strong class="fs-5 text-coral"><%= number_to_currency(total_savings, unit: "€", precision: 0) %> / mois</strong>.
         </p>
       </div>
     </div>
@@ -105,7 +105,7 @@
               <div class="col-md-3 text-end">
                 <% if expense.opportunities.any? %>
                   <% opportunity = expense.opportunities.first %>
-                  <%= link_to statement_expense_opportunity_path(@statement, expense, opportunity), class: "btn btn-sm btn-success text-white fw-bold px-3" do %>
+                  <%= link_to statement_expense_opportunity_path(@statement, expense, opportunity), class: "btn btn-sm btn-primary text-white fw-bold px-3" do %>
                     <span class="me-1">⚡</span> Économiser
                     <%= number_to_currency(opportunity.savings, unit: "€", precision: 0) %>
                   <% end %>
