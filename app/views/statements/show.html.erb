@@ -109,17 +109,22 @@
               <div class="col-md-3 text-end">
                 <% if expense.opportunities.any? %>
                   <% opportunity = expense.opportunities.first %>
-                  <%= link_to statement_expense_opportunity_path(@statement, expense, opportunity), class: "btn btn-sm btn-primary text-white fw-bold px-3" do %>
-                    <span class="me-1">⚡</span> Économiser
-                    <%= number_to_currency(opportunity.savings, unit: "€", precision: 0) %>
+                  <% if opportunity.completed? %>
+                    <div class="btn disabled border-0 text-success fw-medium px-3">
+                      <span class="me-1">🎉</span> Optimisé
+                    </div>
+                  <% elsif opportunity.contacted? %>
+                    <div class="btn disabled border-0 text-primary fw-medium px-3">
+                      <span class="me-1">✅</span> Contacté
+                    </div>
+                  <% else %>
+                    <%= link_to statement_expense_opportunity_path(@statement, expense, opportunity), class: "btn btn-primary text-white fw-bold px-3" do %>
+                      <span class="me-1">⚡</span> Économiser
+                      <%= number_to_currency(opportunity.savings, unit: "€", precision: 0) %>
+                    <% end %>
                   <% end %>
                 <% else %>
-                  <div
-                    class="
-                      btn btn-sm disabled border-0 text-muted opacity-75
-                      fw-medium px-3
-                    "
-                  >
+                  <div class="btn disabled border-0 text-muted opacity-75 fw-medium px-3">
                     <span class="me-1">☑️</span> Optimisé
                   </div>
                 <% end %>
