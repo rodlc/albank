@@ -1,8 +1,7 @@
 <div class="container mt-5">
   <div class="mb-4">
     <%= link_to statements_path, class: "text-decoration-none text-muted small fw-bold" do %>
-      <i class="fas fa-arrow-left me-1"></i>
-      RETOUR AUX RELEVÉS
+      <span class="me-1">←</span> RETOUR AUX RELEVÉS
     <% end %>
   </div>
 
@@ -37,7 +36,7 @@
       "
       role="alert"
     >
-      <div class="fs-1 me-3">🎉</div>
+      <div class="fs-1 me-3">🐷</div>
 
       <div>
         <h4 class="alert-heading fw-bold mb-1">
@@ -106,15 +105,13 @@
               <div class="col-md-3 text-end">
                 <% if expense.opportunities.any? %>
                   <% opportunity = expense.opportunities.first %>
-                  <%= link_to statement_expense_opportunity_path(@statement, expense, opportunity), class: "btn btn-sm btn-success text-white fw-bold px-3 rounded-pill" do %>
-                    <i class="fas fa-magic me-1"></i>
-                    Économiser
+                  <%= link_to statement_expense_opportunity_path(@statement, expense, opportunity), class: "btn btn-sm btn-success text-white fw-bold px-3" do %>
+                    <span class="me-1">⚡</span> Économiser
                     <%= number_to_currency(opportunity.savings, unit: "€", precision: 0) %>
                   <% end %>
                 <% else %>
                   <span class="badge bg-light text-muted border fw-normal">
-                    <i class="fas fa-check me-1"></i>
-                    Optimisé
+                    <span class="me-1">✅</span> Optimisé
                   </span>
                 <% end %>
               </div>
@@ -125,8 +122,8 @@
     </div>
   <% else %>
     <div class="text-center py-5">
-      <div class="mb-3">
-        <i class="fas fa-receipt fa-3x text-muted opacity-50"></i>
+      <div class="mb-3 fs-1 opacity-50">
+        🧾
       </div>
 
       <p class="text-muted">Aucune dépense trouvée dans ce relevé.</p>
