@@ -1,8 +1,7 @@
 <div class="container mt-5">
   <div class="mb-4">
     <%= link_to @statement, class: "text-decoration-none text-muted small fw-bold" do %>
-      <i class="fas fa-arrow-left me-1"></i>
-      RETOUR AU RELEVÉ
+      <span class="me-1">←</span> RETOUR AU RELEVÉ
     <% end %>
   </div>
 
@@ -17,7 +16,7 @@
           "
           style="width: 64px; height: 64px;"
         >
-          <i class="fas fa-trophy fs-3"></i>
+          <span class="fs-1">🏆</span>
         </div>
 
         <h1 class="fw-bold mb-2">Opportunité détectée</h1>
@@ -66,7 +65,7 @@
             >
               <!-- Background decoration -->
               <div class="position-absolute top-0 end-0 p-3 opacity-10">
-                <i class="fas fa-piggy-bank fa-10x text-success"></i>
+                <span style="font-size: 10rem;">🐷</span>
               </div>
 
               <span
@@ -75,8 +74,7 @@
                   align-self-start mb-3 px-3 py-2 rounded-pill
                 "
               >
-                <i class="fas fa-check-circle me-1"></i>
-                Recommandé
+                <span class="me-1">✨</span> Recommandé
               </span>
 
               <span class="text-uppercase text-success fw-bold small mb-2">
@@ -121,23 +119,20 @@
               </span>
 
               <span class="text-muted small">
-                <i class="fas fa-info-circle me-1"></i>
-                Statut du dossier
+                <span class="me-1">ℹ️</span> Statut du dossier
               </span>
             </div>
 
             <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true, html: { class: "d-flex gap-2" }) do |f| %>
               <% unless @opportunity.contacted? || @opportunity.completed? %>
-                <%= f.button name: "opportunity[status]", value: "contacted", class: "btn btn-primary fw-bold px-4 rounded-pill" do %>
-                  <i class="fas fa-paper-plane me-2"></i>
-                  J'ai envoyé la lettre
+                <%= f.button name: "opportunity[status]", value: "contacted", class: "btn btn-primary fw-bold px-4" do %>
+                  <span class="me-2">📨</span> J'ai envoyé la lettre
                 <% end %>
               <% end %>
 
               <% if @opportunity.contacted? && !@opportunity.completed? %>
-                <%= f.button name: "opportunity[status]", value: "completed", class: "btn btn-success fw-bold px-4 rounded-pill" do %>
-                  <i class="fas fa-check me-2"></i>
-                  Économie validée!
+                <%= f.button name: "opportunity[status]", value: "completed", class: "btn btn-success fw-bold px-4" do %>
+                  <span class="me-2">✅</span> Économie validée!
                 <% end %>
               <% end %>
             <% end %>
@@ -147,7 +142,7 @@
 
       <!-- Negotiation Letter Section -->
       <div class="text-center mb-4">
-        <i class="fas fa-arrow-down text-muted mb-2"></i>
+        <div class="mb-2">⬇️</div>
         <h3 class="h5 fw-bold">Modèle de lettre prêt à l'emploi</h3>
 
         <p class="text-muted small">
