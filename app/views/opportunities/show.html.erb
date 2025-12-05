@@ -80,7 +80,7 @@
         </p>
 
         <!-- CTAs -->
-        <div class="d-flex flex-wrap justify-content-center gap-3">
+        <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
           <button
             type="button"
             class="btn btn-primary fw-bold rounded-pill px-5 py-3 shadow-sm"
@@ -92,34 +92,29 @@
 
           <button
             type="button"
-            class="btn btn-outline-dark rounded-pill px-4 py-2"
+            class="btn btn-outline-secondary rounded-pill px-4 py-2"
             onclick="window.print()"
           >
             <span class="me-2">🖨️</span> Imprimer
           </button>
 
-          <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true, class: "d-inline") do |f| %>
+          <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true, class: "d-inline m-0") do |f| %>
             <% unless @opportunity.contacted? || @opportunity.completed? %>
-              <%= f.button name: "opportunity[status]", value: "contacted", class: "btn btn-outline-dark rounded-pill px-4 py-2" do %>
+              <%= f.button name: "opportunity[status]", value: "contacted", class: "btn btn-outline-secondary rounded-pill px-4 py-2" do %>
                 <span class="me-2">✉️</span> Envoyer
               <% end %>
             <% end %>
 
             <% if @opportunity.contacted? && !@opportunity.completed? %>
-              <%= f.button name: "opportunity[status]", value: "completed", class: "btn btn-success fw-bold px-4 py-2 rounded-pill shadow-sm" do %>
-                <span class="me-2">🎉</span> Je confirme l'économie
+              <%= f.button name: "opportunity[status]", value: "completed", class: "btn btn-outline-secondary rounded-pill px-4 py-2" do %>
+                <span class="me-2">🎉</span> Confirmer
               <% end %>
             <% end %>
 
             <% if @opportunity.completed? %>
-              <div
-                class="
-                  text-success fw-bold bg-success bg-opacity-10 px-4 py-2
-                  rounded-pill
-                "
-              >
-                <span class="me-2">🎉</span> Dossier clôturé
-              </div>
+              <span class="text-success fw-bold">
+                <span class="me-1">✅</span> Clôturé
+              </span>
             <% end %>
           <% end %>
         </div>
