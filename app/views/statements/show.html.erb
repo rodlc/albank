@@ -68,7 +68,9 @@
           <% category_emoji = case expense.category.name
                when /électricité|gaz|énergie/i then "⚡"
                when /internet|box|fibre/i then "📡"
-               when /assurance|habitation|auto/i then "🛡️"
+               when /habitation|logement/i then "🏠"
+               when /auto|voiture/i then "🚗"
+               when /assurance/i then "🛡️"
                when /banque|frais/i then "🏦"
                else "📋"
              end %>
