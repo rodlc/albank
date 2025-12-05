@@ -26,7 +26,7 @@
               <div class="d-flex justify-content-between align-items-start">
                 <h3 class="smart-card__title">
                   <span class="me-2">📄</span>
-                  <%= statement.date.strftime("%B %Y").capitalize %>
+                  <%= l(statement.date, format: "%B %Y").capitalize %>
                 </h3>
 
                 <% if opportunities_count > 0 %>
