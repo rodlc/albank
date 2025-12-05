@@ -1,8 +1,11 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3">
   <div class="container">
     <%= link_to root_path, class: "navbar-brand fw-bold d-flex align-items-center" do %>
-      <i class="fas fa-piggy-bank me-2" style="color: #000091; font-size: 1.5rem;"></i>
-      <span style="color: #000091;">AlBank</span>
+      <i class="fas fa-piggy-bank me-2 text-primary fs-3"></i>
+
+      <span class="text-primary fs-3" style="letter-spacing: -0.03em;">
+        AlBank
+      </span>
     <% end %>
 
     <button
@@ -18,33 +21,40 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav ms-auto align-items-center gap-2">
         <% if user_signed_in? %>
           <li class="nav-item">
             <%= link_to statements_path,
-                class: "nav-link px-3 #{'fw-semibold' if current_page?(statements_path)}" do %>
-              <i class="fas fa-file-invoice me-1"></i>
+                class: "btn #{current_page?(statements_path) ? 'btn-gov-primary' : 'btn-gov-outline border-0'}" do %>
               Mes relevés
             <% end %>
           </li>
-          <li class="nav-item">
+          <li class="nav-item ms-2">
             <%= link_to destroy_user_session_path,
                 data: { turbo_method: :delete },
-                class: "nav-link px-3 text-muted" do %>
-              <i class="fas fa-sign-out-alt me-1"></i>
-              Se déconnecter
+                class: "d-flex align-items-center text-decoration-none",
+                title: "Se déconnecter" do %>
+              <div
+                class="
+                  d-flex align-items-center justify-content-center
+                  bg-primary text-white rounded-circle shadow-sm
+                "
+                style="width: 40px; height: 40px; font-weight: 600;"
+              >
+                <%= current_user.email.first.upcase %>
+              </div>
             <% end %>
           </li>
         <% else %>
           <li class="nav-item">
             <%= link_to new_user_session_path,
-                class: "nav-link px-3" do %>
+                class: "btn btn-gov-outline border-0" do %>
               Se connecter
             <% end %>
           </li>
           <li class="nav-item">
             <%= link_to new_user_registration_path,
-                class: "btn btn-success btn-sm ms-2 px-3" do %>
+                class: "btn btn-gov-primary" do %>
               S'inscrire
             <% end %>
           </li>
