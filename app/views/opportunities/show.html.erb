@@ -67,7 +67,7 @@
             >
               <!-- Background decoration -->
               <div class="position-absolute top-0 end-0 p-3 opacity-10">
-                <span style="font-size: 10rem;">🕵️</span>
+                <span style="font-size: 10rem;">💰</span>
               </div>
 
               <span
@@ -108,7 +108,7 @@
             "
           >
             <div class="d-flex align-items-center">
-              <span class="opportunity-badge badge-<%= @opportunity.status %> me-3">
+              <span class="opportunity-badge badge-<%= @opportunity.status %> me-3 fs-6 px-3 py-2">
                 <% status_emoji = case @opportunity.status
                      when 'pending' then '⚫'
                      when 'contacted' then '🔵'
