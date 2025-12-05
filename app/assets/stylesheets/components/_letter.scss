@@ -1,9 +1,31 @@
 // === Negotiation Letter "Paper UI" ===
 // Legalstart-style letter component
 
+.letter-preview {
+    position: relative;
+    cursor: pointer;
+}
+
+.letter-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.letter-preview:hover .letter-overlay {
+    opacity: 1;
+}
+
 .action-section {
     background-color: #f3f4f6;
-    padding: 3rem 0;
+    padding: 2rem 0;
     border-top: 1px solid #e5e7eb;
     margin-top: 3rem;
 }
