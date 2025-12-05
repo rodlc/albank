@@ -98,17 +98,27 @@
             <span class="me-2">🖨️</span> Imprimer
           </button>
 
-          <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true, class: "d-inline m-0") do |f| %>
+          <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true, class: "d-inline m-0") do %>
             <% unless @opportunity.contacted? || @opportunity.completed? %>
-              <%= f.button name: "opportunity[status]", value: "contacted", class: "btn btn-outline-dark rounded-pill px-4 py-2" do %>
+              <button
+                type="submit"
+                name="opportunity[status]"
+                value="contacted"
+                class="btn btn-outline-dark rounded-pill px-4 py-2"
+              >
                 <span class="me-2">✉️</span> Envoyer
-              <% end %>
+              </button>
             <% end %>
 
             <% if @opportunity.contacted? && !@opportunity.completed? %>
-              <%= f.button name: "opportunity[status]", value: "completed", class: "btn btn-outline-dark rounded-pill px-4 py-2" do %>
+              <button
+                type="submit"
+                name="opportunity[status]"
+                value="completed"
+                class="btn btn-outline-dark rounded-pill px-4 py-2"
+              >
                 <span class="me-2">🎉</span> Confirmer
-              <% end %>
+              </button>
             <% end %>
 
             <% if @opportunity.completed? %>
