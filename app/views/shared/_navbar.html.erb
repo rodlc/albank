@@ -26,7 +26,12 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto align-items-center gap-2">
+      <ul
+        class="
+          navbar-nav ms-auto align-items-center gap-2 flex-column
+          flex-lg-row text-center py-3 py-lg-0
+        "
+      >
         <% if user_signed_in? %>
           <li class="nav-item">
             <%= link_to statements_path,
