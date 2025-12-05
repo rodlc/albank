@@ -114,9 +114,14 @@
                     <%= number_to_currency(opportunity.savings, unit: "€", precision: 0) %>
                   <% end %>
                 <% else %>
-                  <span class="badge bg-light text-muted border fw-normal">
-                    <span class="me-1">✅</span> Optimisé
-                  </span>
+                  <div
+                    class="
+                      btn btn-sm disabled border-0 text-muted opacity-75
+                      fw-medium px-3
+                    "
+                  >
+                    <span class="me-1">☑️</span> Optimisé
+                  </div>
                 <% end %>
               </div>
             </div>
