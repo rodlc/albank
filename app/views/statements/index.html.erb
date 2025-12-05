@@ -2,8 +2,12 @@
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
       <h1 class="mb-1">Mes relevés</h1>
-      <p class="text-muted mb-0">Suivez vos dépenses et économies potentielles</p>
+
+      <p class="text-muted mb-0">
+        Suivez vos dépenses et économies potentielles
+      </p>
     </div>
+
     <%= link_to new_statement_path, class: "btn btn-gov-primary" do %>
       <i class="fas fa-plus me-2"></i>
       Nouveau relevé
@@ -22,24 +26,31 @@
               <div class="d-flex justify-content-between align-items-start">
                 <h3 class="smart-card__title">
                   <span class="me-2">📄</span>
-                  <%= statement.date.strftime("%B %Y").capitalize %>
+                  <%= l(statement.date, format: "%B %Y").capitalize %>
                 </h3>
+
                 <% if opportunities_count > 0 %>
-                  <span class="smart-card__tag"><%= opportunities_count %> détectées</span>
+                  <span class="smart-card__tag">
+                    <%= opportunities_count %> détectées
+                  </span>
                 <% end %>
               </div>
 
               <div class="mt-auto">
                 <div class="smart-card__label">
-                  <span class="me-1">🐷</span>
                   Économies possibles
                 </div>
-                <div class="smart-card__value smart-card__value--success">
+
+                <div class="smart-card__value text-coral">
                   <%= number_to_currency(total_savings, unit: "€", precision: 0) %>
                 </div>
+
                 <div class="d-flex justify-content-between border-top pt-2 mt-2">
                   <span class="text-muted small">Dépenses</span>
-                  <span class="fw-bold"><%= number_to_currency(statement.expenses.sum(:subtotal), unit: "€", precision: 0) %></span>
+
+                  <span class="fw-bold">
+                    <%= number_to_currency(statement.expenses.sum(:subtotal), unit: "€", precision: 0) %>
+                  </span>
                 </div>
               </div>
             </div>
@@ -49,11 +60,13 @@
     </div>
   <% else %>
     <div class="text-center py-5">
-      <div class="mb-3">
-        <i class="fas fa-inbox fa-3x text-muted"></i>
-      </div>
+      <div class="mb-3"><i class="fas fa-inbox fa-3x text-muted"></i></div>
+
       <p class="text-muted">Aucun relevé pour le moment.</p>
-      <p class="text-muted small">Importez votre premier relevé pour commencer à économiser</p>
+
+      <p class="text-muted small">
+        Importez votre premier relevé pour commencer à économiser
+      </p>
     </div>
   <% end %>
 </div>

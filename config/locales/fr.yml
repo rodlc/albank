@@ -1,6 +1,44 @@
 fr:
   hello: "Bonjour"
 
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%d %b"
+      long: "%d %B %Y"
+    day_names: [Dimanche, Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi]
+    abbr_day_names: [Dim, Lun, Mar, Mer, Jeu, Ven, Sam]
+    month_names:
+      [
+        ~,
+        Janvier,
+        Février,
+        Mars,
+        Avril,
+        Mai,
+        Juin,
+        Juillet,
+        Août,
+        Septembre,
+        Octobre,
+        Novembre,
+        Décembre,
+      ]
+    abbr_month_names:
+      [~, Jan, Fév, Mar, Avr, Mai, Juin, Juil, Août, Sep, Oct, Nov, Déc]
+    order:
+      - :day
+      - :month
+      - :year
+
+  time:
+    formats:
+      default: "%d %B %Y à %Hh%M"
+      short: "%d %b %Hh%M"
+      long: "%A %d %B %Y à %Hh%M"
+    am: "am"
+    pm: "pm"
+
   activerecord:
     attributes:
       user:

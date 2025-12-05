@@ -1,26 +1,36 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
+<div
+  class="container d-flex flex-column justify-content-center"
+  style="min-height: calc(100vh - 100px);"
+>
+  <div class="row justify-content-center w-100">
     <div class="col-md-8 col-lg-6 text-center">
       <!-- Header -->
-      <h1 class="mb-3">Importez votre relevé bancaire</h1>
-      <p class="text-muted mb-5">
-        Déposez votre relevé PDF pour détecter les économies possibles sur vos abonnements et assurances.
+      <h1 class="display-5 fw-bold mb-3" style="letter-spacing: -0.03em;">
+        <span class="underline-cyan">Protégez votre argent</span>
+        <br>
+        des fraudes et abus
+      </h1>
+
+      <p class="lead text-muted mb-5">
+        Déposez votre relevé PDF pour détecter automatiquement les faux débits,
+        abonnements frauduleux et anomalies.
       </p>
 
       <!-- Drop Zone -->
       <div class="file-upload-wrapper mb-4">
-        <label for="file-input" class="upload-label upload-hero" id="dropZone">
-          <div class="text-center">
-            <img
-              src="<%= image_path 'logo-cochon.svg' %>"
-              alt="Choisir un fichier"
-              title="Cliquer pour importer"
-              class="upload-label-image mb-3"
-              style="max-width: 250px; margin: 0 auto; display: block; cursor: pointer;"
-            >
-            <p class="text-muted">
-              <i class="fas fa-cloud-upload-alt me-2"></i>
-              Glissez-déposez votre relevé ou cliquez ici
+        <label
+          for="file-input"
+          class="upload-label upload-hero w-100 shadow-sm border-2 bg-white"
+          id="dropZone"
+          style="border-style: dashed; cursor: pointer; transition: all 0.2s ease;"
+        >
+          <div class="text-center py-5">
+            <div class="mb-3"><span style="font-size: 4rem;">📄</span></div>
+
+            <h5 class="fw-bold mb-2">Lancer l'enquête</h5>
+
+            <p class="text-muted small mb-0">
+              Glissez-déposez votre PDF pour démarrer l'analyse
             </p>
           </div>
         </label>
@@ -33,12 +43,37 @@
         >
       </div>
 
+      <!-- Reassurance -->
+      <div class="row g-3 text-center mt-4 mb-5">
+        <div class="col-4">
+          <div class="p-2">
+            <div class="fs-2 mb-2">🔒</div>
+            <p class="small text-muted fw-semibold mb-0">100% Sécurisé</p>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="p-2">
+            <div class="fs-2 mb-2">🙈</div>
+            <p class="small text-muted fw-semibold mb-0">Confidentiel</p>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="p-2">
+            <div class="fs-2 mb-2">🗑️</div>
+            <p class="small text-muted fw-semibold mb-0">Suppression auto</p>
+          </div>
+        </div>
+      </div>
+
       <!-- Loading State -->
-      <div id="loading-state" class="d-none">
+      <div id="loading-state" class="d-none mt-4">
         <div class="spinner-border text-primary" role="status">
           <span class="visually-hidden">Importation en cours...</span>
         </div>
-        <p class="text-muted mt-2">Analyse du relevé en cours...</p>
+
+        <p class="text-muted mt-2 fw-medium">Analyse sécurisée en cours...</p>
       </div>
     </div>
   </div>
@@ -60,15 +95,21 @@
   dropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
     dropZone.classList.add('dragover');
+    dropZone.style.borderColor = '#000091';
+    dropZone.style.backgroundColor = '#F5F5FE';
   });
 
   dropZone.addEventListener('dragleave', () => {
     dropZone.classList.remove('dragover');
+    dropZone.style.borderColor = '';
+    dropZone.style.backgroundColor = '';
   });
 
   dropZone.addEventListener('drop', (e) => {
     e.preventDefault();
     dropZone.classList.remove('dragover');
+    dropZone.style.borderColor = '';
+    dropZone.style.backgroundColor = '';
     const files = e.dataTransfer.files;
     if (files.length > 0) {
       handleFiles(files);
@@ -110,4 +151,3 @@
     });
   }
 </script>
-

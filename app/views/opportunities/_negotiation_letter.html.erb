@@ -1,86 +1,121 @@
-<div class="action-section" data-controller="clipboard">
+<div class="action-section pt-0" data-controller="clipboard">
   <div class="container">
-    <div class="text-center mb-4">
-      <h2 class="h4 fw-bold mb-2">📝 Passez à l'action</h2>
-      <p class="text-muted">Ce modèle a été pré-rempli avec vos données d'analyse</p>
-    </div>
+    <div
+      class="paper-sheet shadow-lg position-relative"
+      id="letter-content"
+      data-clipboard-target="source"
+      style="border: none;"
+    >
+      <!-- Letter Header -->
+      <div class="d-flex justify-content-between mb-5">
+        <div class="text-muted small fst-italic">
+          [Vos Coordonnées]
+        </div>
 
-    <div class="paper-sheet" id="letter-content" data-clipboard-target="source">
-      <p class="mb-5 text-end">
-        Le <%= l(Date.current, format: "%d %B %Y") %>
-      </p>
+        <div class="fw-bold">Le <%= l(Date.current, format: "%d %B %Y") %></div>
+      </div>
 
-      <p class="fw-bold mb-4">
-        Objet : Demande d'alignement tarifaire - Contrat <strong><%= @opportunity.expense.category.name %></strong>
-      </p>
+      <div class="mb-5">
+        <p class="fw-bold mb-4">
+          Objet: Demande d'alignement tarifaire - Contrat
+          <span class="bg-warning bg-opacity-25 px-1"><%= @opportunity.expense.category.name %></span>
+        </p>
 
-      <p>Madame, Monsieur,</p>
+        <p>Madame, Monsieur,</p>
 
-      <p>
-        Titulaire d'un contrat auprès de votre établissement, je viens par la présente solliciter
-        une révision de mes conditions tarifaires.
-      </p>
+        <p>
+          Titulaire d'un contrat auprès de votre établissement, je viens par la
+          présente solliciter une révision de mes conditions tarifaires.
+        </p>
 
-      <p>
-        Une analyse comparative de mes charges, effectuée ce jour, a mis en évidence un décalage
-        significatif entre ma tarification actuelle et la réalité du marché :
-      </p>
+        <p>
+          Une analyse comparative de mes charges, effectuée ce jour, a mis en
+          évidence un décalage significatif entre ma tarification actuelle et la
+          réalité du marché :
+        </p>
 
-      <ul class="my-4">
-        <li>Mon tarif actuel : <strong><%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 2) %></strong> / <%= @opportunity.standard.unit %></li>
-        <li>Moyenne du marché : <strong><%= number_to_currency(@opportunity.standard.average_amount, unit: "€", precision: 2) %></strong> / <%= @opportunity.standard.unit %></li>
-        <li>Écart constaté : <strong>+<%= ((@opportunity.savings / @opportunity.expense.subtotal) * 100).round %>%</strong></li>
-      </ul>
+        <div class="my-4 ps-3 border-start border-3 border-primary bg-light p-3">
+          <ul class="list-unstyled mb-0">
+            <li class="mb-2">
+              Mon tarif actuel:
+              <strong><%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 2) %></strong>
+              / <%= @opportunity.standard.unit %>
+            </li>
 
-      <p>
-        Client fidèle, je privilégie la continuité de nos relations. Toutefois, cet écart n'est plus
-        justifié au regard des offres concurrentes à garanties équivalentes.
-      </p>
+            <li class="mb-2">
+              Moyenne du marché:
+              <strong><%= number_to_currency(@opportunity.standard.average_amount, unit: "€", precision: 2) %></strong>
+              / <%= @opportunity.standard.unit %>
+            </li>
 
-      <p>
-        Je vous invite donc à me faire parvenir une proposition commerciale rectificative sous 10 jours.
-        À défaut d'un alignement concurrentiel de votre part, je me verrais contraint de procéder à la
-        résiliation de ce contrat conformément à la législation en vigueur.
-      </p>
+            <li class="text-danger fw-bold">
+              Écart constaté:
+              +<%= ((@opportunity.savings / @opportunity.expense.subtotal) * 100).round %>%
+            </li>
+          </ul>
+        </div>
 
-      <p class="mt-5">
-        Dans cette attente, je vous prie d'agréer, Madame, Monsieur, mes salutations distinguées.
-      </p>
+        <p>
+          Client fidèle, je privilégie la continuité de nos relations.
+          Toutefois, cet écart n'est plus justifié au regard des offres
+          concurrentes à garanties équivalentes.
+        </p>
 
-      <div class="mt-5 pt-5 fst-italic text-muted">
-        [Votre Signature]
+        <p>
+          Je vous invite donc à me faire parvenir une proposition commerciale
+          rectificative sous 10 jours. À défaut d'un alignement concurrentiel de
+          votre part, je me verrais contraint de procéder à la résiliation de ce
+          contrat conformément à la législation en vigueur.
+        </p>
+
+        <p class="mt-5">
+          Dans cette attente, je vous prie d'agréer, Madame, Monsieur, mes
+          salutations distinguées.
+        </p>
+
+        <div class="mt-5 pt-5 border-top w-25">
+          <small class="text-muted">[Votre Signature]</small>
+        </div>
       </div>
     </div>
 
-    <!-- Boutons d'action flottants -->
-    <div class="letter-actions">
-      <button
-        type="button"
-        class="btn btn-light btn-lg border rounded-pill px-4"
-        data-clipboard-target="button"
-        data-action="click->clipboard#copy"
-      >
-        <span class="me-2">📋</span>
-        Copier le texte
-      </button>
+    <!-- Boutons d'action -->
+    <div class="text-center mt-5 mb-3 d-print-none">
+      <span class="text-muted small fw-bold text-uppercase">
+        Une fois la lettre prête
+      </span>
+    </div>
 
-      <button
-        type="button"
-        class="btn btn-gov-primary btn-lg rounded-pill px-4"
-        onclick="window.print()"
-      >
-        <span class="me-2">🖨️</span>
-        Imprimer
-      </button>
+    <div class="letter-actions pb-5 d-print-none">
+      <div class="d-flex gap-4 justify-content-center">
+        <button
+          type="button"
+          class="btn btn-outline-dark rounded-pill px-4 py-2 fw-bold"
+          data-clipboard-target="button"
+          data-action="click->clipboard#copy"
+        >
+          <span class="me-2">📋</span> Copier le texte
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-primary rounded-pill px-4 py-2 fw-bold shadow-sm"
+          onclick="window.print()"
+        >
+          <span class="me-2">🖨️</span> Imprimer la lettre
+        </button>
+      </div>
     </div>
 
     <div
       data-clipboard-target="feedback"
-      class="alert alert-success mt-3 text-center d-none"
+      class="
+        alert bg-primary text-white mt-3 text-center d-none border-0 fw-bold
+        rounded-pill d-print-none
+      "
       role="alert"
     >
-      <span class="me-2">✅</span>
-      Lettre copiée dans le presse-papiers !
+      <span class="me-2">✅</span> Lettre copiée!
     </div>
   </div>
 </div>
