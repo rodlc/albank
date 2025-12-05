@@ -64,15 +64,27 @@
 }
 
 @media print {
+    @page {
+        margin: 2cm;
+    }
+
+    body {
+        background: white !important;
+    }
+
     .action-section {
         background: white !important;
         border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
     }
 
     .paper-sheet {
         box-shadow: none !important;
         border: none !important;
         max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
     }
 
     .letter-actions {

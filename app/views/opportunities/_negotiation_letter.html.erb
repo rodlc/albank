@@ -1,9 +1,33 @@
-<div class="action-section pt-0" data-controller="clipboard">
+<div class="action-section pt-0" data-controller="clipboard font-picker">
   <div class="container">
+    <!-- Font Picker -->
+    <div class="d-flex justify-content-center mb-4 d-print-none">
+      <div class="bg-white p-1 rounded-pill shadow-sm border d-flex">
+        <button
+          type="button"
+          class="btn btn-sm rounded-pill px-3 border-primary active"
+          data-action="click->font-picker#setFont"
+          data-font="'Georgia', 'Times New Roman', serif"
+        >
+          Serif (Georgia)
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-sm rounded-pill px-3 border-transparent"
+          data-action="click->font-picker#setFont"
+          data-font="'Inter', sans-serif"
+        >
+          Sans (Inter)
+        </button>
+      </div>
+    </div>
+
     <div
       class="paper-sheet shadow-lg position-relative"
       id="letter-content"
       data-clipboard-target="source"
+      data-font-picker-target="content"
       style="border: none;"
     >
       <!-- Letter Header -->
@@ -80,13 +104,13 @@
     </div>
 
     <!-- Boutons d'action -->
-    <div class="text-center mt-5 mb-3">
+    <div class="text-center mt-5 mb-3 d-print-none">
       <span class="text-muted small fw-bold text-uppercase">
         Une fois la lettre prête
       </span>
     </div>
 
-    <div class="letter-actions pb-5">
+    <div class="letter-actions pb-5 d-print-none">
       <div class="d-flex gap-4 justify-content-center">
         <button
           type="button"
@@ -111,7 +135,7 @@
       data-clipboard-target="feedback"
       class="
         alert bg-primary text-white mt-3 text-center d-none border-0 fw-bold
-        rounded-pill
+        rounded-pill d-print-none
       "
       role="alert"
     >
