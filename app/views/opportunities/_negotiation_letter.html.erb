@@ -1,80 +1,140 @@
-<div class="action-section pt-0">
-  <div class="container">
+<div class="letter-preview" data-controller="clipboard">
+  <!-- Overlay au hover -->
+  <div class="letter-overlay d-print-none">
+    <div class="d-flex flex-column gap-3 align-items-center">
+      <button
+        type="button"
+        class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold"
+        data-clipboard-target="button"
+        data-action="click->clipboard#copy"
+      >
+        <span class="me-2">📋</span> Copier
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold"
+        onclick="window.print()"
+      >
+        <span class="me-2">🖨️</span> Imprimer
+      </button>
+
+      <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true, class: "w-100 d-flex justify-content-center") do |f| %>
+        <% unless @opportunity.contacted? || @opportunity.completed? %>
+          <%= f.button name: "opportunity[status]", value: "contacted", class: "btn btn-primary fw-bold px-5 py-3 rounded-pill shadow-lg" do %>
+            <span class="me-2">✅</span> J'ai envoyé la lettre
+          <% end %>
+        <% end %>
+
+        <% if @opportunity.contacted? && !@opportunity.completed? %>
+          <%= f.button name: "opportunity[status]", value: "completed", class: "btn btn-success fw-bold px-5 py-3 rounded-pill shadow-lg" do %>
+            <span class="me-2">🎉</span> Je confirme l'économie
+          <% end %>
+        <% end %>
+
+        <% if @opportunity.completed? %>
+          <div class="text-white fw-bold bg-success px-4 py-2 rounded-pill">
+            <span class="me-2">🎉</span> Dossier clôturé
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+    <!-- Feedback copie -->
     <div
-      class="paper-sheet shadow-lg position-relative"
-      id="letter-content"
-      data-clipboard-target="source"
-      style="border: none;"
+      data-clipboard-target="feedback"
+      class="
+        alert alert-success text-center d-none border-0 fw-bold rounded-pill
+        mt-3 position-absolute
+      "
+      style="top: 1rem; left: 50%; transform: translateX(-50%); min-width: 200px;"
+      role="alert"
     >
-      <!-- Letter Header -->
-      <div class="d-flex justify-content-between mb-5">
-        <div class="text-muted small fst-italic">
-          [Vos Coordonnées]
+      <span class="me-2">✅</span> Copié!
+    </div>
+  </div>
+
+  <!-- Lettre -->
+  <div class="action-section pt-0">
+    <div class="container">
+      <div
+        class="paper-sheet shadow-lg position-relative"
+        id="letter-content"
+        data-clipboard-target="source"
+        style="border: none;"
+      >
+        <!-- Letter Header -->
+        <div class="d-flex justify-content-between mb-5">
+          <div class="text-muted small fst-italic">
+            [Vos Coordonnées]
+          </div>
+
+          <div class="fw-bold">
+            Le <%= l(Date.current, format: "%d %B %Y") %>
+          </div>
         </div>
 
-        <div class="fw-bold">Le <%= l(Date.current, format: "%d %B %Y") %></div>
-      </div>
+        <div class="mb-5">
+          <p class="fw-bold mb-4">
+            Objet: Demande d'alignement tarifaire - Contrat
+            <span class="bg-warning bg-opacity-25 px-1"><%= @opportunity.expense.category.name %></span>
+          </p>
 
-      <div class="mb-5">
-        <p class="fw-bold mb-4">
-          Objet: Demande d'alignement tarifaire - Contrat
-          <span class="bg-warning bg-opacity-25 px-1"><%= @opportunity.expense.category.name %></span>
-        </p>
+          <p>Madame, Monsieur,</p>
 
-        <p>Madame, Monsieur,</p>
+          <p>
+            Titulaire d'un contrat auprès de votre établissement, je viens par
+            la présente solliciter une révision de mes conditions tarifaires.
+          </p>
 
-        <p>
-          Titulaire d'un contrat auprès de votre établissement, je viens par la
-          présente solliciter une révision de mes conditions tarifaires.
-        </p>
+          <p>
+            Une analyse comparative de mes charges, effectuée ce jour, a mis en
+            évidence un décalage significatif entre ma tarification actuelle et
+            la réalité du marché :
+          </p>
 
-        <p>
-          Une analyse comparative de mes charges, effectuée ce jour, a mis en
-          évidence un décalage significatif entre ma tarification actuelle et la
-          réalité du marché :
-        </p>
+          <div class="my-4 ps-3 border-start border-3 border-primary bg-light p-3">
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2">
+                Mon tarif actuel:
+                <strong><%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 2) %></strong>
+                / <%= @opportunity.standard.unit %>
+              </li>
 
-        <div class="my-4 ps-3 border-start border-3 border-primary bg-light p-3">
-          <ul class="list-unstyled mb-0">
-            <li class="mb-2">
-              Mon tarif actuel:
-              <strong><%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 2) %></strong>
-              / <%= @opportunity.standard.unit %>
-            </li>
+              <li class="mb-2">
+                Moyenne du marché:
+                <strong><%= number_to_currency(@opportunity.standard.average_amount, unit: "€", precision: 2) %></strong>
+                / <%= @opportunity.standard.unit %>
+              </li>
 
-            <li class="mb-2">
-              Moyenne du marché:
-              <strong><%= number_to_currency(@opportunity.standard.average_amount, unit: "€", precision: 2) %></strong>
-              / <%= @opportunity.standard.unit %>
-            </li>
+              <li class="text-danger fw-bold">
+                Écart constaté:
+                +<%= ((@opportunity.savings / @opportunity.expense.subtotal) * 100).round %>%
+              </li>
+            </ul>
+          </div>
 
-            <li class="text-danger fw-bold">
-              Écart constaté:
-              +<%= ((@opportunity.savings / @opportunity.expense.subtotal) * 100).round %>%
-            </li>
-          </ul>
-        </div>
+          <p>
+            Client fidèle, je privilégie la continuité de nos relations.
+            Toutefois, cet écart n'est plus justifié au regard des offres
+            concurrentes à garanties équivalentes.
+          </p>
 
-        <p>
-          Client fidèle, je privilégie la continuité de nos relations.
-          Toutefois, cet écart n'est plus justifié au regard des offres
-          concurrentes à garanties équivalentes.
-        </p>
+          <p>
+            Je vous invite donc à me faire parvenir une proposition commerciale
+            rectificative sous 10 jours. À défaut d'un alignement concurrentiel
+            de votre part, je me verrais contraint de procéder à la résiliation
+            de ce contrat conformément à la législation en vigueur.
+          </p>
 
-        <p>
-          Je vous invite donc à me faire parvenir une proposition commerciale
-          rectificative sous 10 jours. À défaut d'un alignement concurrentiel de
-          votre part, je me verrais contraint de procéder à la résiliation de ce
-          contrat conformément à la législation en vigueur.
-        </p>
+          <p class="mt-5">
+            Dans cette attente, je vous prie d'agréer, Madame, Monsieur, mes
+            salutations distinguées.
+          </p>
 
-        <p class="mt-5">
-          Dans cette attente, je vous prie d'agréer, Madame, Monsieur, mes
-          salutations distinguées.
-        </p>
-
-        <div class="mt-5 pt-5 border-top w-25">
-          <small class="text-muted">[Votre Signature]</small>
+          <div class="mt-5 pt-5 border-top w-25">
+            <small class="text-muted">[Votre Signature]</small>
+          </div>
         </div>
       </div>
     </div>
