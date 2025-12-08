@@ -1,72 +1,80 @@
-export default class {
-  connect() {
-    const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('file-input');
-    const loadingState = document.getElementById('loading-state');
+import { Controller } from "@hotwired/stimulus";
 
-  // Click to upload
-    fileInput.addEventListener('change', (e) => {
+export default class extends Controller {
+  static targets = ["dropzone", "input", "loading"];
+  static values = { url: String };
+
+  connect() {
+    this.inputTarget.addEventListener("change", (e) => {
       if (e.target.files.length > 0) {
-        handleFiles(e.target.files);
+        this.handleFiles(e.target.files);
       }
     });
 
-  // Drag & Drop
-  dropZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropZone.classList.add('dragover');
-  });
+    this.dropzoneTarget.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      this.dropzoneTarget.classList.add("dragover");
+    });
 
-  dropZone.addEventListener('dragleave', () => {
-    dropZone.classList.remove('dragover');
-  });
+    this.dropzoneTarget.addEventListener("dragleave", () => {
+      this.dropzoneTarget.classList.remove("dragover");
+    });
 
-  dropZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropZone.classList.remove('dragover');
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      this.handleFiles(files);
-    }
-  });
-}
+    this.dropzoneTarget.addEventListener("drop", (e) => {
+      e.preventDefault();
+      this.dropzoneTarget.classList.remove("dragover");
+      if (e.dataTransfer.files.length > 0) {
+        this.handleFiles(e.dataTransfer.files);
+      }
+    });
+  }
 
   handleFiles(files) {
     const file = files[0];
-    console.log("Fichier déposé :", file.name, file.size, file.type);
 
-    // Show loading state
-    const dropZone = document.getElementById('dropZone');
-    const loadingState = document.getElementById('loading-state');
+    if (file.type !== "application/pdf") {
+      alert("Veuillez importer un fichier PDF.");
+      return;
+    }
 
-    // Simulate PDF import
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+    this.showLoading();
 
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append("file", file);
 
-    fetch('<%= import_pdf_statements_path %>', {
-      method: 'POST',
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+    fetch(this.urlValue, {
+      method: "POST",
       headers: {
-        'X-CSRF-Token': csrfToken,
-        'Accept': 'text/html'
+        "X-CSRF-Token": csrfToken,
+        Accept: "text/html",
       },
-      body: file // gestion FormData
+      body: formData,
     })
-    .then(response => {
-      if (response.redirected) {
-        window.location.href = response.url;
-      } else {
-        return response.text().then(html => {
-          document.body.innerHTML = html;
-        });
-      }
-    })
-    .catch(error => {
-      console.error('Erreur import:', error);
-      alert('Erreur lors de l\'importation. Veuillez réessayer.');
-      dropZone.classList.remove('d-none');
-      loadingState.classList.add('d-none');
-    });
+      .then((response) => {
+        if (response.redirected) {
+          window.location.href = response.url;
+        } else {
+          return response.text().then((html) => {
+            document.body.innerHTML = html;
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Erreur import:", error);
+        alert("Erreur lors de l'importation. Veuillez réessayer.");
+        this.hideLoading();
+      });
+  }
+
+  showLoading() {
+    this.dropzoneTarget.classList.add("d-none");
+    this.loadingTarget.classList.remove("d-none");
+  }
+
+  hideLoading() {
+    this.dropzoneTarget.classList.remove("d-none");
+    this.loadingTarget.classList.add("d-none");
   }
 }

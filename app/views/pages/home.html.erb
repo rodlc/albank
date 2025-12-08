@@ -19,9 +19,10 @@
       </p>
 
       <!-- Drop Zone -->
-      <div data-controller="dropzone" class="mb-4">
+      <div data-controller="dropzone" data-dropzone-url-value="<%= upload_statements_path %>" class="mb-4">
         <label
           for="file-input"
+          data-dropzone-target="dropzone"
           class="file-upload-wrapper w-100 shadow-sm border-2"
           id="dropZone"
         >
@@ -43,8 +44,9 @@
 
         <input
           id="file-input"
+          data-dropzone-target="input"
           type="file"
-          accept="application/pdf,*"
+          accept="application/pdf"
           style="display: none;"
         >
       </div>
@@ -74,7 +76,7 @@
       </div>
 
       <!-- Loading State -->
-      <div id="loading-state" class="d-none mt-4">
+      <div data-dropzone-target="loading" class="d-none mt-4">
         <div class="spinner-border text-primary" role="status">
           <span class="visually-hidden">Importation en cours...</span>
         </div>
