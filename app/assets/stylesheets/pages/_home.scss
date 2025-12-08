@@ -41,6 +41,41 @@
   overflow: hidden;
 }
 
+// Reassurance badges avec couleurs thématiques
+.reassurance-badge {
+  border-radius: 12px;
+  padding: 1rem;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &.reassurance-security {
+    background: rgba($primary, 0.05);
+
+    p {
+      color: $primary !important;
+    }
+  }
+
+  &.reassurance-privacy {
+    background: rgba($cyan, 0.15);
+
+    p {
+      color: darken($cyan, 30%) !important;
+    }
+  }
+
+  &.reassurance-auto {
+    background: rgba($coral, 0.1);
+
+    p {
+      color: $coral-text !important;
+    }
+  }
+}
+
 // Cards pour la section "Comment ça marche"
 .feature-card {
   border: 1px solid $border-color !important;
