@@ -49,15 +49,15 @@
 
 /* Couleur du bouton actif (quand ouvert) */
 .accordion-button:not(.collapsed) {
-  color: #756DF5;              /* texte bleu */
-  background-color: #f0f0ff;   /* fond léger pour contraste, optionnel */
+  color: $primary;
+  background-color: rgba($primary, 0.05);
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
 }
 
 /* Couleur du bouton au focus (quand cliqué) */
 .accordion-button:focus {
-  border-color: #756DF5;
-  box-shadow: 0 0 0 0.25rem rgba(117, 109, 245, 0.25);
+  border-color: $primary;
+  box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
 }
 
 .drop-zone.dragover {
