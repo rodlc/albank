@@ -2,9 +2,10 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
 
-  resources :statements, only: [:index, :show, :new, :create] do
+  resources :statements, only: [:index, :show] do
     collection do
-      post :import_pdf
+      post :upload
+      get :process_upload
     end
 
     resources :expenses, only: [:index, :show] do
