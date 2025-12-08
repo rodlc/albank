@@ -17,17 +17,21 @@
       </p>
 
       <!-- Drop Zone -->
-      <div class="file-upload-wrapper mb-4">
+      <div data-controller="dropzone" class="mb-4">
         <label
           for="file-input"
-          class="upload-label upload-hero w-100 shadow-sm border-2 bg-white"
+          class="file-upload-wrapper w-100 shadow-sm border-2"
           id="dropZone"
-          style="border-style: dashed; cursor: pointer; transition: all 0.2s ease;"
         >
           <div class="text-center py-5">
-            <div class="mb-3"><span style="font-size: 4rem;">📄</span></div>
+            <img
+              src="<%= image_path 'uploading.svg' %>"
+              alt="Choisir un fichier"
+              title="Cliquer pour importer"
+              class="upload-label-image"
+            >
 
-            <h5 class="fw-bold mb-2">Lancer l'enquête</h5>
+            <h5 class="fw-bold mt-3 mb-2">Lancer l'enquête</h5>
 
             <p class="text-muted small mb-0">
               Glissez-déposez votre PDF pour démarrer l'analyse
@@ -79,75 +83,166 @@
   </div>
 </div>
 
-<script>
-  const dropZone = document.getElementById('dropZone');
-  const fileInput = document.getElementById('file-input');
-  const loadingState = document.getElementById('loading-state');
+<div class="container mt-5 mb-5">
+  <div class="row">
+    <div class="col-md-4 d-flex align-items-center">
+      <h1>Faites d'<strong>Albank</strong> votre allié du quotidien</h1>
+    </div>
 
-  // Click to upload
-  fileInput.addEventListener('change', (e) => {
-    if (e.target.files.length > 0) {
-      handleFiles(e.target.files);
-    }
-  });
+    <div class="col md-8">
+      <ul>
+        <li class="list-group-item">
+          <h4><strong>1. Chargez votre relevé bancaire sur Albank</strong></h4>
+        </li>
 
-  // Drag & Drop
-  dropZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropZone.classList.add('dragover');
-    dropZone.style.borderColor = '#000091';
-    dropZone.style.backgroundColor = '#F5F5FE';
-  });
+        <p>
+          Importez facilement vos relevés bancaires sur Albank Grâce à notre
+          interface intuitive, vous pouvez glisser-déposer vos fichiers ou les
+          charger directement depuis votre ordinateur. En quelques secondes, vos
+          données sont prêtes à être analysées.
+        </p>
 
-  dropZone.addEventListener('dragleave', () => {
-    dropZone.classList.remove('dragover');
-    dropZone.style.borderColor = '';
-    dropZone.style.backgroundColor = '';
-  });
+        <li class="list-group-item">
+          <h4>
+            <strong>2. Identifiez les postes de dépenses excessifs </strong>
+          </h4>
+        </li>
 
-  dropZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropZone.classList.remove('dragover');
-    dropZone.style.borderColor = '';
-    dropZone.style.backgroundColor = '';
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      handleFiles(files);
-    }
-  });
+        <p>
+          Analysez vos dépenses automatiquement. Albank classe vos transactions
+          par catégories et met en évidence les postes où vos dépenses dépassent
+          la moyenne. Visualisez rapidement les zones de surconsommation et
+          gagnez en clarté.
+        </p>
 
-  function handleFiles(files) {
-    const file = files[0];
-    console.log("Fichier déposé :", file.name, file.size, file.type);
+        <li class="list-group-item">
+          <h4><strong>3. Reprenez la main sur votre budget</strong></h4>
+        </li>
 
-    // Show loading state
-    dropZone.classList.add('d-none');
-    loadingState.classList.remove('d-none');
+        <p>
+          Grâce à notre analyse avancée, prenez des décisions éclairées et
+          ajustez vos habitudes de consommation.
+        </p>
+      </ul>
+    </div>
+  </div>
+</div>
 
-    // Simulate PDF import
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+<div class="container text-center mt-5 mb-5">
+  <div class="row align-items-start">
+    <div class="col step-box">
+      <h5>Faites des <strong>Economies</strong></h5>
+      <%= image_tag("wallet.svg", alt: "wallet", class: "logo-faq") %>
+    </div>
 
-    fetch('<%= import_pdf_statements_path %>', {
-      method: 'POST',
-      headers: {
-        'X-CSRF-Token': csrfToken,
-        'Accept': 'text/html'
-      }
-    })
-    .then(response => {
-      if (response.redirected) {
-        window.location.href = response.url;
-      } else {
-        return response.text().then(html => {
-          document.body.innerHTML = html;
-        });
-      }
-    })
-    .catch(error => {
-      console.error('Erreur import:', error);
-      alert('Erreur lors de l\'importation. Veuillez réessayer.');
-      dropZone.classList.remove('d-none');
-      loadingState.classList.add('d-none');
-    });
-  }
-</script>
+    <div class="col step-box">
+      <h5>
+        Tout en <strong>Sécurité</strong> et <strong>Confidentialité</strong>
+      </h5>
+
+      <%= image_tag("search.svg", alt: "search", class: "logo-faq") %>
+    </div>
+
+    <div class="col step-box">
+      <h5>Soyez <strong>Alerté</strong> en cas de dépenses suspectes</h5>
+      <%= image_tag("opportunities.svg", alt: "Opportunities", class: "logo-faq") %>
+    </div>
+  </div>
+</div>
+
+<div class="container text-center mt-5 mb-5">
+  <p>
+    Pour importer vos relevés bancaires, vous pouvez généralement les
+    télécharger au format PDF, ou csv, depuis le site web de votre banque.
+    <i>Cliquez</i> sur le logo votre banque pour être redirigé sur la page tuto
+    de téléchargement de vos relevéés bancaires:
+  </p>
+
+  <div class="bank-logos mt-5 mb-5">
+    <%= link_to "https://www.caisse-epargne.fr/rhone-alpes/faq-particuliers/comptes-et-documents/e-documents/comment-imprimer-mes-releves-bancaires/",
+            target: "_blank" do %>
+      <%= image_tag("cde.png", alt: "Caisse d'Epargne", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://www.credit-agricole.fr/particulier/compte/service-bancaire/e-documents.html",
+            target: "_blank" do %>
+      <%= image_tag("ca.jpeg", alt: "Crédit Agricole", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://www.labanquepostale.fr/particulier/faq-centre-aide/espace-client.question.html/comment-imprimer-mon-releve-de-compte-bancaire.html",
+            target: "_blank" do %>
+      <%= image_tag("lbp.png", alt: "Banque Postale", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://www.banquepopulaire.fr/banque-a-distance/e-documents-mes-releves-avis-courriers/#:~:text=sont%20disponibles%20gratuitement.-,Depuis%20votre%20application%20mobile,dans%20le%20menu%20%C2%AB%20Documents%20%C2%BB.",
+            target: "_blank" do %>
+      <%= image_tag("bp.jpeg", alt: "Banque Populaire", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://particuliers.sg.fr/icd/pch/faq/compte-et-budget/mes-comptes-et-operations/comment-acceder-a-mes-releves-de-compte",
+            target: "_blank" do %>
+      <%= image_tag("sg.png", alt: "Société Générale", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://mabanque.bnpparibas/fr/gerer/services-lies-compte/options-et-services/telecharger-vos-releves-d-operation",
+            target: "_blank" do %>
+      <%= image_tag("bnp.png", alt: "BNP Paribas", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://www.creditmutuel.fr/fr/search_engine.html?pQuery=t%C3%A9l%C3%A9chargement%20relev%C3%A9%20bancaires&pSpace=Particulier/",
+            target: "_blank" do %>
+      <%= image_tag("cm.png", alt: "Crédit Mutuel", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://www.cic.fr/fr/particuliers/comptes/documents-dematerialises.html",
+            target: "_blank" do %>
+      <%= image_tag("cic.png", alt: "CIC", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://www.monabanq.com/fr/services-bancaires/application-mobile.html",
+            target: "_blank" do %>
+      <%= image_tag("monabanq.jpeg", alt: "Mona Banq", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://www.fortuneo.fr/faq/comment-telecharger-mon-releve-de-compte-ou-de-carte-bancaire",
+            target: "_blank" do %>
+      <%= image_tag("fortuneo.png", alt: "Fortuneo", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://www.boursobank.com/aide-en-ligne/banque/releves-et-documents-bancaires/question/comment-telecharger-mon-releve-de-compte-ou-de-carte-bancaire-144",
+                target: "_blank" do %>
+      <%= image_tag("boursorama.png", alt: "Boursorama Banque", class: "bank-logo") %>
+    <% end %>
+  </div>
+</div>
+
+<div class="container mt-5 mb-5">
+  <h1 class="text-center"><strong>Des réponses à vos questions</strong></h1>
+
+  <div class="accordion" id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button
+          class="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#panelsStayOpen-collapseOne"
+          aria-expanded="true"
+          aria-controls="panelsStayOpen-collapseOne"
+        >
+          les formats acceptés
+        </button>
+      </h2>
+
+      <div
+        id="panelsStayOpen-collapseOne"
+        class="accordion-collapse collapse show"
+      >
+        <div class="accordion-body">
+          <li>format PDF</li>
+          <li>format CSV</li>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
