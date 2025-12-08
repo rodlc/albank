@@ -26,6 +26,7 @@ class StatementsController < ApplicationController
     end
   end
 
+<<<<<<< HEAD
   def process_upload
     cache_key = session.delete(:pending_pdf_key)
 
@@ -50,6 +51,17 @@ class StatementsController < ApplicationController
     create_simulated_expenses(statement)
 
     redirect_to statement, notice: "Relevé importé avec succès ! #{statement.expenses.count} dépenses détectées."
+=======
+  def import_pdf
+    # upload du PDF
+    pdf = params[:pdf_file]
+    if pdf.present?
+      StatementImporter.new(pdf, current_user).import # lecture du service StatementImporter
+      redirect_to statements_path, notice: "Relevé importé avec succès !"
+    else
+      redirect_to new_statements_path, alert: "Veuillez sélectionner un fichier PDF."
+    end
+>>>>>>> 7a53f43 (.)
   end
 
   def create_simulated_expenses(statement)

@@ -5,6 +5,15 @@ ruby "3.3.5"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.6"
 
+# Ouvre le PDF en mémoire pour extraction de texte
+gem "pdf-reader"
+
+# Gem pour interagir avec les API OpenAI
+gem 'ruby-openai'
+
+# Gem pour interagir avec des LLMs génériques
+gem "ruby_llm", "~> 1.2.0"
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
