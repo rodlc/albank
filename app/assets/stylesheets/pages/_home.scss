@@ -41,6 +41,27 @@
 }
 
 // Cards pour la section "Comment ça marche"
+.feature-card {
+  border: 1px solid $border-color !important;
+  box-shadow: $box-shadow-sm !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $box-shadow !important;
+  }
+}
+
+.feature-badge {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
 .card-illustration {
   height: 120px;
   width: auto;
