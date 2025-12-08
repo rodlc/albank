@@ -68,17 +68,43 @@
   object-fit: contain;
 }
 
-/* Couleur du bouton actif (quand ouvert) */
-.accordion-button:not(.collapsed) {
-  color: $primary;
-  background-color: rgba($primary, 0.05);
-  box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
-}
+// FAQ section - flat modern design
+.faq-section {
+  .accordion-item {
+    border: none;
+    border-bottom: 1px solid $border-color;
+    background: transparent;
 
-/* Couleur du bouton au focus (quand cliqué) */
-.accordion-button:focus {
-  border-color: $primary;
-  box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .accordion-button {
+    background: transparent;
+    font-weight: 600;
+    padding: 1.25rem 0;
+    border: none;
+
+    &:not(.collapsed) {
+      color: $primary;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    &:focus {
+      box-shadow: none;
+      border-color: transparent;
+    }
+
+    &::after {
+      filter: brightness(0) saturate(100%) invert(14%) sepia(72%) saturate(4715%) hue-rotate(236deg) brightness(94%) contrast(101%);
+    }
+  }
+
+  .accordion-body {
+    padding: 0 0 1.25rem 0;
+  }
 }
 
 .drop-zone.dragover {
