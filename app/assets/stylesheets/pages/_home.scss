@@ -13,16 +13,17 @@
   width: 90%;              /* largeur à 80% de la page */
   margin: 50px auto;
   border: 2px dashed $primary;
-  background-color: $gray-50;
+  background: linear-gradient(135deg, rgba($cyan, 0.03) 0%, rgba($primary, 0.02) 100%);
   border-radius: 12px;   /* coins arrondis pour un rendu plus doux */
   padding: 15px;
   cursor: pointer;
-  transition: box-shadow 180ms ease, transform 120ms ease, border-color 120ms ease;
+  transition: box-shadow 180ms ease, transform 120ms ease, border-color 120ms ease, background 180ms ease;
   box-sizing: border-box;
 
   &:hover, &.dragover {
     border-color: $coral;
-    background: rgba($primary, 0.02);
+    background: linear-gradient(135deg, rgba($coral, 0.05) 0%, rgba($cyan, 0.08) 100%);
+    box-shadow: 0 8px 16px rgba($coral, 0.15);
   }
 
   &.dragover {
