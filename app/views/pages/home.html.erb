@@ -49,6 +49,15 @@
           accept="application/pdf"
           style="display: none;"
         >
+
+        <!-- Loading State (must be inside dropzone controller) -->
+        <div data-dropzone-target="loading" class="d-none mt-4">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Importation en cours...</span>
+          </div>
+
+          <p class="text-muted mt-2 fw-medium">Analyse sécurisée en cours...</p>
+        </div>
       </div>
 
       <!-- Reassurance -->
@@ -73,15 +82,6 @@
             <p class="small text-muted fw-semibold mb-0">Suppression auto</p>
           </div>
         </div>
-      </div>
-
-      <!-- Loading State -->
-      <div data-dropzone-target="loading" class="d-none mt-4">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Importation en cours...</span>
-        </div>
-
-        <p class="text-muted mt-2 fw-medium">Analyse sécurisée en cours...</p>
       </div>
     </div>
   </div>
