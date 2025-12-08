@@ -79,10 +79,11 @@ $box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         left: 0;
         bottom: 0;
         width: 100%;
-        height: 6px;
+        height: 8px;                // Increased from 6px (mon-entreprise style)
         background-color: $cyan;
-        opacity: 0.4;
+        opacity: 0.6;               // Increased from 0.4 (more visible)
         z-index: -1;
         transform: translateY(-20%);
+        border-radius: 2px;         // Soft corners
     }
 }
