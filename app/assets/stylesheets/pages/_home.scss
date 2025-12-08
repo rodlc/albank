@@ -86,3 +86,15 @@
   transform: scale(1.05);      /* zoom léger au survol */
   box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* ombre pour l'effet de mouvement */
 }
+
+// Scroll hint animation
+.scroll-hint {
+  i {
+    animation: bounce 2s ease-in-out infinite;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
