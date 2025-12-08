@@ -12,23 +12,8 @@
         AlBank
       </span>
     <% end %>
-<nav
-  class="
-    navbar navbar-expand-lg navbar-light bg-white border-bottom py-3
-    d-print-none
-  "
->
-  <div class="container">
-    <%= link_to root_path, class: "navbar-brand fw-bold d-flex align-items-center" do %>
-      <span class="fs-2 me-2">🕵️</span>
-
-      <span class="text-primary fs-3" style="letter-spacing: -0.03em;">
-        AlBank
-      </span>
-    <% end %>
 
     <button
-      class="navbar-toggler border-0"
       class="navbar-toggler border-0"
       type="button"
       data-bs-toggle="collapse"
@@ -41,58 +26,19 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto align-items-center gap-2">
+      <ul
+        class="
+          navbar-nav ms-auto align-items-center gap-2 flex-column
+          flex-lg-row text-center py-3 py-lg-0
+        "
+      >
         <% if user_signed_in? %>
           <li class="nav-item">
             <%= link_to statements_path,
                 class: "btn #{current_page?(statements_path) ? 'btn-gov-primary' : 'btn-gov-outline border-0'}" do %>
               Mes relevés
             <% end %>
-            <%= link_to statements_path,
-                class: "btn #{current_page?(statements_path) ? 'btn-gov-primary' : 'btn-gov-outline border-0'}" do %>
-              Mes relevés
-            <% end %>
           </li>
-          <li class="nav-item dropdown ms-2">
-            <a
-              href="#"
-              class="d-flex align-items-center text-decoration-none"
-              id="navbarDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <div
-                class="
-                  d-flex align-items-center justify-content-center
-                  bg-primary text-white rounded-circle shadow-sm
-                "
-                style="width: 40px; height: 40px; font-weight: 600;"
-              >
-                <%= current_user.email.first.upcase %>
-              </div>
-            </a>
-
-            <ul
-              class="dropdown-menu dropdown-menu-end border-0 shadow-lg"
-              aria-labelledby="navbarDropdown"
-            >
-              <li>
-                <span class="dropdown-item-text text-muted small">
-                  <%= current_user.email %>
-                </span>
-              </li>
-
-              <li><hr class="dropdown-divider"></li>
-
-              <li>
-                <%= link_to destroy_user_session_path,
-                    data: { turbo_method: :delete },
-                    class: "dropdown-item text-danger" do %>
-                  <span class="me-2">🚪</span> Se déconnecter
-                <% end %>
-              </li>
-            </ul>
           <li class="nav-item dropdown ms-2">
             <a
               href="#"
@@ -140,16 +86,8 @@
                 class: "btn btn-gov-outline border-0" do %>
               Se connecter
             <% end %>
-            <%= link_to new_user_session_path,
-                class: "btn btn-gov-outline border-0" do %>
-              Se connecter
-            <% end %>
           </li>
           <li class="nav-item">
-            <%= link_to new_user_registration_path,
-                class: "btn btn-gov-primary" do %>
-              S'inscrire
-            <% end %>
             <%= link_to new_user_registration_path,
                 class: "btn btn-gov-primary" do %>
               S'inscrire
