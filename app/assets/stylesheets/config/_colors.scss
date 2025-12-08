@@ -87,3 +87,22 @@ $box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         border-radius: 2px;         // Soft corners
     }
 }
+
+// Cyan bullet points (mon-entreprise style)
+.cyan-bullets {
+    list-style: none;
+    padding-left: 1.5rem;
+
+    li {
+        position: relative;
+        margin-bottom: 0.5rem;
+
+        &::before {
+            content: '●';
+            position: absolute;
+            left: -1.5rem;
+            color: $cyan;
+            font-size: 80%;
+        }
+    }
+}
