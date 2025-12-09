@@ -22,10 +22,18 @@ class Opportunity < ApplicationRecord
   private
 
   def danger_detected?
-    label = expense.label.to_s.upcase
+    normalized_label = normalize_for_matching(expense.label.to_s)
+
     # Data-driven via Category.keywords
     Category.blacklist.any? do |cat|
-      cat.keywords.to_s.upcase.split(/[\s,]+/).any? { |pattern| label.include?(pattern) }
+      cat.keywords.to_s.split(/[\s,]+/).any? do |pattern|
+        normalized_label.include?(normalize_for_matching(pattern))
+      end
     end || expense.category.blacklist?
+  end
+
+  def normalize_for_matching(text)
+    # Supprime espaces, points, tirets, *, _ pour matcher "HPY*BESTPDF" et "H.P.Y."
+    text.upcase.gsub(/[\s.\-*_]/, '')
   end
 end
