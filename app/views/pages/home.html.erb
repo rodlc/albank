@@ -63,96 +63,86 @@
       <!-- Reassurance -->
       <div class="row g-3 text-center mt-4 mb-5">
         <div class="col-4">
-          <div class="p-2">
+          <div class="reassurance-badge reassurance-security">
             <div class="fs-2 mb-2">🔒</div>
-            <p class="small text-muted fw-semibold mb-0">100% Sécurisé</p>
+            <p class="small fw-semibold mb-0">100% Sécurisé</p>
           </div>
         </div>
 
         <div class="col-4">
-          <div class="p-2">
+          <div class="reassurance-badge reassurance-privacy">
             <div class="fs-2 mb-2">🙈</div>
-            <p class="small text-muted fw-semibold mb-0">Confidentiel</p>
+            <p class="small fw-semibold mb-0">Confidentiel</p>
           </div>
         </div>
 
         <div class="col-4">
-          <div class="p-2">
+          <div class="reassurance-badge reassurance-auto">
             <div class="fs-2 mb-2">🗑️</div>
-            <p class="small text-muted fw-semibold mb-0">Suppression auto</p>
+            <p class="small fw-semibold mb-0">Aucun stockage</p>
           </div>
         </div>
+      </div>
+
+      <!-- Scroll invitation -->
+      <div class="text-center mt-5">
+        <a href="#explications" class="scroll-hint text-decoration-none">
+          <small class="d-block mb-2 text-muted">En savoir plus</small>
+          <i class="fas fa-chevron-down text-muted"></i>
+        </a>
       </div>
     </div>
   </div>
 </div>
 
-<div class="container mt-5 mb-5">
-  <div class="row">
-    <div class="col-md-4 d-flex align-items-center">
-      <h1>Faites d'<strong>Albank</strong> votre allié du quotidien</h1>
-    </div>
+<section id="explications" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-5">
+      Faites d'<strong>Albank</strong> votre allié du quotidien
+    </h2>
 
-    <div class="col md-8">
-      <ul>
-        <li class="list-group-item">
-          <h4><strong>1. Chargez votre relevé bancaire sur Albank</strong></h4>
-        </li>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card feature-card h-100 text-center p-4">
+          <div class="feature-badge bg-primary text-white rounded-circle mx-auto mb-3">1</div>
+          <%= image_tag("wallet.svg", class: "card-illustration mb-3", alt: "Économies") %>
+          <h5 class="card-title fw-bold">Importez votre relevé</h5>
+          <p class="card-text text-muted">
+            Glissez-déposez votre PDF en quelques secondes. Vos données sont
+            prêtes à être analysées instantanément.
+          </p>
+          <p class="text-coral fw-semibold small mt-auto">→ Faites des économies</p>
+        </div>
+      </div>
 
-        <p>
-          Importez facilement vos relevés bancaires sur Albank Grâce à notre
-          interface intuitive, vous pouvez glisser-déposer vos fichiers ou les
-          charger directement depuis votre ordinateur. En quelques secondes, vos
-          données sont prêtes à être analysées.
-        </p>
+      <div class="col-md-4">
+        <div class="card feature-card h-100 text-center p-4">
+          <div class="feature-badge bg-primary text-white rounded-circle mx-auto mb-3">2</div>
+          <%= image_tag("search.svg", class: "card-illustration mb-3", alt: "Analyse sécurisée") %>
+          <h5 class="card-title fw-bold">On analyse vos dépenses</h5>
+          <p class="card-text text-muted">
+            Albank classe vos transactions et identifie automatiquement les
+            postes excessifs et les anomalies.
+          </p>
+          <p class="text-coral fw-semibold small mt-auto">→ En toute sécurité</p>
+        </div>
+      </div>
 
-        <li class="list-group-item">
-          <h4>
-            <strong>2. Identifiez les postes de dépenses excessifs </strong>
-          </h4>
-        </li>
-
-        <p>
-          Analysez vos dépenses automatiquement. Albank classe vos transactions
-          par catégories et met en évidence les postes où vos dépenses dépassent
-          la moyenne. Visualisez rapidement les zones de surconsommation et
-          gagnez en clarté.
-        </p>
-
-        <li class="list-group-item">
-          <h4><strong>3. Reprenez la main sur votre budget</strong></h4>
-        </li>
-
-        <p>
-          Grâce à notre analyse avancée, prenez des décisions éclairées et
-          ajustez vos habitudes de consommation.
-        </p>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<div class="container text-center mt-5 mb-5">
-  <div class="row align-items-start">
-    <div class="col step-box">
-      <h5>Faites des <strong>Economies</strong></h5>
-      <%= image_tag("wallet.svg", alt: "wallet", class: "logo-faq") %>
-    </div>
-
-    <div class="col step-box">
-      <h5>
-        Tout en <strong>Sécurité</strong> et <strong>Confidentialité</strong>
-      </h5>
-
-      <%= image_tag("search.svg", alt: "search", class: "logo-faq") %>
-    </div>
-
-    <div class="col step-box">
-      <h5>Soyez <strong>Alerté</strong> en cas de dépenses suspectes</h5>
-      <%= image_tag("opportunities.svg", alt: "Opportunities", class: "logo-faq") %>
+      <div class="col-md-4">
+        <div class="card feature-card h-100 text-center p-4">
+          <div class="feature-badge bg-primary text-white rounded-circle mx-auto mb-3">3</div>
+          <%= image_tag("opportunities.svg", class: "card-illustration mb-3", alt: "Alertes") %>
+          <h5 class="card-title fw-bold">Reprenez la main</h5>
+          <p class="card-text text-muted">
+            Prenez des décisions éclairées et agissez sur les prélèvements
+            abusifs détectés.
+          </p>
+          <p class="text-coral fw-semibold small mt-auto">→ Soyez alerté des abus</p>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
 <div class="container text-center mt-5 mb-5">
   <p>
@@ -220,8 +210,8 @@
   </div>
 </div>
 
-<div class="container mt-5 mb-5">
-  <h1 class="text-center"><strong>Des réponses à vos questions</strong></h1>
+<div class="container mt-5 mb-5 faq-section">
+  <h1 class="text-center mb-5"><strong>Des réponses à vos questions</strong></h1>
 
   <div class="accordion" id="accordionPanelsStayOpenExample">
     <div class="accordion-item">
@@ -234,7 +224,7 @@
           aria-expanded="true"
           aria-controls="panelsStayOpen-collapseOne"
         >
-          les formats acceptés
+          Quels formats de relevés sont acceptés ?
         </button>
       </h2>
 
@@ -243,8 +233,86 @@
         class="accordion-collapse collapse show"
       >
         <div class="accordion-body">
-          <li>format PDF</li>
-          <li>format CSV</li>
+          Albank accepte les relevés bancaires aux formats <strong>PDF</strong> et <strong>CSV</strong>.
+          Vous pouvez les télécharger directement depuis votre espace client en ligne.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#panelsStayOpen-collapseTwo"
+          aria-expanded="false"
+          aria-controls="panelsStayOpen-collapseTwo"
+        >
+          Mes données sont-elles sécurisées ?
+        </button>
+      </h2>
+
+      <div
+        id="panelsStayOpen-collapseTwo"
+        class="accordion-collapse collapse"
+      >
+        <div class="accordion-body">
+          Absolument. Vos données sont <strong>chiffrées de bout en bout</strong> et analysées
+          automatiquement sans aucune intervention humaine. Elles ne sont <strong>jamais stockées</strong>
+          sur nos serveurs et sont <strong>supprimées automatiquement</strong> après l'analyse.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#panelsStayOpen-collapseThree"
+          aria-expanded="false"
+          aria-controls="panelsStayOpen-collapseThree"
+        >
+          Combien de temps prend l'analyse ?
+        </button>
+      </h2>
+
+      <div
+        id="panelsStayOpen-collapseThree"
+        class="accordion-collapse collapse"
+      >
+        <div class="accordion-body">
+          L'analyse de votre relevé bancaire est <strong>quasi-instantanée</strong>. En quelques secondes,
+          vous obtenez un rapport complet identifiant les anomalies, prélèvements abusifs et opportunités
+          d'économies.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#panelsStayOpen-collapseFour"
+          aria-expanded="false"
+          aria-controls="panelsStayOpen-collapseFour"
+        >
+          Que faire si mon relevé n'est pas reconnu ?
+        </button>
+      </h2>
+
+      <div
+        id="panelsStayOpen-collapseFour"
+        class="accordion-collapse collapse"
+      >
+        <div class="accordion-body">
+          Si votre relevé n'est pas reconnu, vérifiez qu'il est bien au format <strong>PDF ou CSV</strong>.
+          Certaines banques utilisent des formats protégés : essayez de le ré-exporter sans protection.
+          Si le problème persiste, contactez-nous à <a href="mailto:support@albank.fr">support@albank.fr</a>.
         </div>
       </div>
     </div>
