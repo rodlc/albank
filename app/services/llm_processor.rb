@@ -1,8 +1,14 @@
 class LlmProcessor
+  # Triumvirat de résilience : Google → Meta → Microsoft
   FALLBACK_MODELS = [
-    { model: "gemini-flash-lite-latest", provider: :gemini },
-    { model: "gemini-flash-latest", provider: :gemini },
+    # Google Gemini (primary, GCP credits)
+    { model: "gemini-flash-lite-latest", provider: :gemini },  # Rapide & économique
+    { model: "gemini-flash-latest", provider: :gemini },       # Intelligent
+
+    # Meta Llama (fallback, OpenRouter free tier)
     { model: "meta-llama/llama-3.3-70b-instruct:free", provider: :openrouter },
+
+    # Azure OpenAI (last resort, GitHub Models)
     { model: "gpt-4o", provider: :openai },
   ].freeze
 
