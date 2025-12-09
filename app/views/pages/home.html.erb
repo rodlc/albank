@@ -1,5 +1,5 @@
 <div
-  class="container d-flex flex-column justify-content-center"
+  class="container d-flex flex-column justify-content-center pt-4 pt-lg-0"
   style="min-height: calc(100vh - 100px);"
 >
   <div class="row justify-content-center w-100">
@@ -12,14 +12,17 @@
       </h1>
 
       <p class="lead text-muted mb-5">
-        Déposez votre relevé PDF pour détecter automatiquement les faux débits,
-        abonnements frauduleux et anomalies.
+        Les prélèvements abusifs ont <strong class="text-dark">doublé en 10 ans</strong>.
+        <strong class="text-dark">1 Français sur 10</strong> est concerné. Et vous ?
+        <br>
+        <a href="https://www.banque-france.fr/fr/publications-et-statistiques/publications/rapport-de-lobservatoire-de-la-securite-des-moyens-de-paiement-2023" target="_blank" class="text-muted small" style="text-decoration: underline;">Source: Banque de France 2023</a>
       </p>
 
       <!-- Drop Zone -->
-      <div data-controller="dropzone" class="mb-4">
+      <div data-controller="dropzone" data-dropzone-url-value="<%= upload_statements_path %>" class="mb-4">
         <label
           for="file-input"
+          data-dropzone-target="dropzone"
           class="file-upload-wrapper w-100 shadow-sm border-2"
           id="dropZone"
         >
@@ -31,20 +34,30 @@
               class="upload-label-image"
             >
 
-            <h5 class="fw-bold mt-3 mb-2">Lancer l'enquête</h5>
+            <h5 class="fw-bold mt-3 mb-2">Importez votre relevé PDF</h5>
 
             <p class="text-muted small mb-0">
-              Glissez-déposez votre PDF pour démarrer l'analyse
+              pour lancer la vérification
             </p>
           </div>
         </label>
 
         <input
           id="file-input"
+          data-dropzone-target="input"
           type="file"
-          accept="application/pdf,*"
+          accept="application/pdf"
           style="display: none;"
         >
+
+        <!-- Loading State (must be inside dropzone controller) -->
+        <div data-dropzone-target="loading" class="d-none mt-4">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Importation en cours...</span>
+          </div>
+
+          <p class="text-muted mt-2 fw-medium">Analyse sécurisée en cours...</p>
+        </div>
       </div>
 
       <!-- Reassurance -->
@@ -69,15 +82,6 @@
             <p class="small text-muted fw-semibold mb-0">Suppression auto</p>
           </div>
         </div>
-      </div>
-
-      <!-- Loading State -->
-      <div id="loading-state" class="d-none mt-4">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Importation en cours...</span>
-        </div>
-
-        <p class="text-muted mt-2 fw-medium">Analyse sécurisée en cours...</p>
       </div>
     </div>
   </div>

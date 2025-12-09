@@ -1,4 +1,4 @@
-<div class="action-section pt-0" data-controller="clipboard">
+<div class="action-section">
   <div class="container">
     <div
       class="paper-sheet shadow-lg position-relative"
@@ -77,45 +77,6 @@
           <small class="text-muted">[Votre Signature]</small>
         </div>
       </div>
-    </div>
-
-    <!-- Boutons d'action -->
-    <div class="text-center mt-5 mb-3 d-print-none">
-      <span class="text-muted small fw-bold text-uppercase">
-        Une fois la lettre prête
-      </span>
-    </div>
-
-    <div class="letter-actions pb-5 d-print-none">
-      <div class="d-flex gap-4 justify-content-center">
-        <button
-          type="button"
-          class="btn btn-outline-dark rounded-pill px-4 py-2 fw-bold"
-          data-clipboard-target="button"
-          data-action="click->clipboard#copy"
-        >
-          <span class="me-2">📋</span> Copier le texte
-        </button>
-
-        <button
-          type="button"
-          class="btn btn-primary rounded-pill px-4 py-2 fw-bold shadow-sm"
-          onclick="window.print()"
-        >
-          <span class="me-2">🖨️</span> Imprimer la lettre
-        </button>
-      </div>
-    </div>
-
-    <div
-      data-clipboard-target="feedback"
-      class="
-        alert bg-primary text-white mt-3 text-center d-none border-0 fw-bold
-        rounded-pill d-print-none
-      "
-      role="alert"
-    >
-      <span class="me-2">✅</span> Lettre copiée!
     </div>
   </div>
 </div>
