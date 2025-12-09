@@ -1,24 +1,47 @@
-<div class="card mb-3">
+<div class="card mb-3 <%= 'border-danger' if opportunity.danger? %> <%= 'border-success' if opportunity.success? %>">
   <div class="card-body">
     <div class="row align-items-center">
       <div class="col-md-4">
-        <h5 class="card-title mb-1">💡 Opportunité détectée</h5>
+        <h5 class="card-title mb-1">
+          <% if opportunity.danger? %>
+            ⚠️ <span class="text-danger">Alerte Fraude</span>
+          <% elsif opportunity.opportunity? %>
+            💡 Opportunité détectée
+          <% elsif opportunity.success? %>
+            ✅ <span class="text-success">Tarif Optimisé</span>
+          <% end %>
+        </h5>
 
         <p class="text-muted mb-0">
           <small>
-            Moyenne du marché:
-            <%= number_to_currency(opportunity.standard.average_amount, unit: "€") %>
+            <% if opportunity.danger? %>
+              Prélèvement suspect - <%= opportunity.expense.category.name %>
+            <% else %>
+              Moyenne du marché:
+              <%= number_to_currency(opportunity.standard.average_amount, unit: "€") %>
+            <% end %>
           </small>
         </p>
       </div>
 
       <div class="col-md-4 text-center">
         <div class="d-flex flex-column">
-          <span class="text-muted small">Économies potentielles</span>
-
-          <span class="h3 text-success mb-0">
-            <%= number_to_currency(opportunity.savings, unit: "€") %>
-          </span>
+          <% if opportunity.danger? %>
+            <span class="text-danger small">Action urgente requise</span>
+            <span class="h3 text-danger mb-0">
+              <%= number_to_currency(opportunity.expense.subtotal, unit: "€") %>/mois
+            </span>
+          <% elsif opportunity.opportunity? %>
+            <span class="text-muted small">Économies potentielles</span>
+            <span class="h3 text-success mb-0">
+              <%= number_to_currency(opportunity.savings, unit: "€") %>
+            </span>
+          <% else %>
+            <span class="text-success small">Vous payez</span>
+            <span class="h3 text-success mb-0">
+              <%= number_to_currency(opportunity.expense.subtotal, unit: "€") %>
+            </span>
+          <% end %>
         </div>
       </div>
 
@@ -36,7 +59,11 @@
         </span>
 
         <br>
-        <%= link_to "Voir les détails →", opportunity, class: "btn btn-primary btn-sm" %>
+        <% if opportunity.danger? %>
+          <%= link_to "Signaler maintenant →", opportunity, class: "btn btn-danger btn-sm" %>
+        <% else %>
+          <%= link_to "Voir les détails →", opportunity, class: "btn btn-primary btn-sm" %>
+        <% end %>
       </div>
     </div>
   </div>
