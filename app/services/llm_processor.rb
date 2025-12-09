@@ -14,9 +14,27 @@ class LlmProcessor
       Libellé: #{@libelle}
       Montant: #{@montant}
 
+      Reformule le libellé en clair et attribue une catégorie parmi :
+      - energie
+      - internet
+      - auto
+      - habitation
+      - banque
+      - autres
+
+      Réponds uniquement en JSON avec les clés :
+      {
+        "libelle": "...",
+        "categorie": "...",
+        "montant": ...
+      }
+
     PROMPT
 
-    response = @client.chat()
+  response = LLM.call(prompt)
+  t[:libelle_clair] = response[:libelle]
+  t[:category] = response[:category]
 
+    # A faire !!
   end
 end
