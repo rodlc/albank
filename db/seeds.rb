@@ -26,6 +26,7 @@ arnaque_pdf = Category.create!(name: "Arnaque PDF", keywords: "hpy bestpdf flash
 arnaque_admin = Category.create!(name: "Arnaque Admin", keywords: "hpy kbis proregistre a-verif verifau auto-code pro-ent", category_type: "blacklist")
 arnaque_courrier = Category.create!(name: "Arnaque Courrier", keywords: "hpy lettre-m envoi-courrier", category_type: "blacklist")
 arnaque_tel = Category.create!(name: "Arnaque Téléphone", keywords: "hpy helpnumber info-perso infonet hipay xp", category_type: "blacklist")
+arnaque_abonnement = Category.create!(name: "Arnaque Abonnement", keywords: "cblm straceo medialump reducpriv infopresse", category_type: "blacklist")
 
 puts "Creating standards with scraped data..."
 Standard.create!(category: auto, average_amount: 80.5, min_amount: 62.33, unit: "€/mois", source: "LesFurets", source_url: "https://www.lesfurets.com/assurance-auto", scraped_at: Time.current)
