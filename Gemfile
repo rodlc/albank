@@ -8,9 +8,6 @@ gem "rails", "~> 7.1.6"
 # Ouvre le PDF en mémoire pour extraction de texte
 gem "pdf-reader"
 
-# Gem pour interagir avec les API OpenAI
-gem 'ruby-openai'
-
 # Gem pour interagir avec des LLMs génériques
 gem "ruby_llm", "~> 1.2.0"
 

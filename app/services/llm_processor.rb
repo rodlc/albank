@@ -1,13 +1,10 @@
-require 'openai'  # gem 'ruby-openai' dans ton Gemfile
-
 class LlmProcessor
   def initialize(text)
     @text = text
-    @chat =  RubyLLM.chat(model: "gpt-4o")
+    @chat = RubyLLM.chat(model: "gpt-4o")
   end
 
   def process
-    # Simuler un appel à un LLM pour enrichir les données
     prompt = <<~PROMPT
     Voici le contenu de mon relevé bancaire :
       #{@text}
@@ -35,14 +32,22 @@ class LlmProcessor
       }
     PROMPT
 
-    response = @chat.ask prompt
+    response = @chat.ask(prompt)
+    parse_response(response.content)
+  rescue JSON::ParserError
+    Rails.logger.warn("[LLM] JSON invalide, retry...")
+    retry_response = @chat.ask("#{prompt}\n\nIMPORTANT: Réponds UNIQUEMENT en JSON valide.")
+    parse_response(retry_response.content)
+  rescue JSON::ParserError => e
+    Rails.logger.error("[LLM] Échec après retry: #{e.message}")
+    { transactions: [] }
+  end
 
-    content = response.content.gsub("```json", "").gsub("```", "").strip
-    json = JSON.parse(content, symbolize_names: true)
-    data = { transactions: json[:transactions] || [] }
+  private
 
-    puts "[LLM CLEANED RESPONSE] #{data}"
-
-    return data
+  def parse_response(content)
+    cleaned = content.gsub(/```json|```/, "").strip
+    json = JSON.parse(cleaned, symbolize_names: true)
+    { transactions: json[:transactions] || [] }
   end
 end

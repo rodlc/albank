@@ -44,7 +44,7 @@ class StatementsController < ApplicationController
   def process_upload
     cache_key = session.delete(:pending_pdf_key)
 
-    if cache_key && (data = Rails.cache.exist?(cache_key))
+    if cache_key && (data = Rails.cache.read(cache_key))
       Rails.cache.delete(cache_key)
       process_pdf_import(StringIO.new(data))
     else
@@ -62,35 +62,36 @@ class StatementsController < ApplicationController
 
   # file_io doit être un IO-like (StringIO, Tempfile, ...)
   def process_pdf_import(file_io)
-    # audit minimal : hash du binaire (pas le contenu)
+    # Extraction du texte brut du PDF
     file_io.rewind
     text = PDF::Reader.new(file_io).pages.map(&:text).join("\n")
-    # méthode qui masque IBAN, numéros, etc.
-    # clean_text = anonymize_text(text)
 
-    # instanciation et injection de dépendance
+    # Appel du LLM pour extraire et catégoriser les transactions
     data = LlmProcessor.new(text).process
     transactions = data[:transactions] || []
 
-
-
-    # appel de l’extraction
-    # transactions = llm.extract_expenses_from_text(StringIO.new(text))
-
+    # Création du relevé et des dépenses associées
     statement = current_user.statements.create(date: Date.today)
 
     transactions.each do |transaction|
       category = Category.find_by(name: transaction[:category])
-      p category ||= Category.find_or_create_by(name: "autres")
-      p transaction[:amount]
-      Expense.create!(category: category, subtotal: transaction[:amount].abs, statement: statement)
+      unless category
+        Rails.logger.warn("[PDF IMPORT] Catégorie inconnue ignorée: #{transaction[:category]}")
+        next
+      end
+
+      Expense.create!(
+        category: category,
+        subtotal: transaction[:amount].abs,
+        label: transaction[:label],
+        statement: statement
+      )
     end
 
     redirect_to statement, notice: "Relevé importé avec succès ! #{statement.expenses.count} dépenses détectées."
   rescue StandardError => e
     Rails.logger.error("[PDF IMPORT] #{e.class}: #{e.message}")
     redirect_to root_path, alert: "Erreur lors de l'import du relevé."
-
   end
 
   def create_simulated_expenses(statement)
