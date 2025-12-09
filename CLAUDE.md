@@ -48,3 +48,22 @@ User -> Statement -> Expense -> Opportunity
 ## Routes
 
 Nested: `statements/:statement_id/expenses/:expense_id/opportunities/:id`
+
+## UX & Copy Guidelines
+
+**Ton général :**
+- Franco-français, concis, centré sur l'utilisateur
+- Pas de jargon technique (éviter "patterns", "scraping", etc.)
+- Rassurer sans alarmer
+
+**Sources de données :**
+- Ne JAMAIS afficher les sources (source, source_url) → recette secrète 🤫
+- Utiliser des formulations génériques : "nos standards", "données du marché"
+
+**Exemples de formulations :**
+| ❌ Éviter | ✅ Préférer |
+|----------|------------|
+| "Pattern détecté" | "Prélèvement suspect identifié" |
+| "Basé sur Signal-Arnaques" | "Détection calculée à partir de nos standards" |
+| "Données scrapées il y a 3 mois" | "Estimation basée sur des données récentes du marché" |
+| "Vérifiez vos relevés avant toute action" | "Vérifiez vos relevés pour le détail" |

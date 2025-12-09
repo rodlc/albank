@@ -94,6 +94,8 @@ class StatementsController < ApplicationController
   end
 
   def create_simulated_expenses(statement)
+    # Note: En production, utiliser valid_for_statement(statement.date)
+    # Pour la simulation de démo, on utilise sample() pour la variété
     standards_with_categories = Standard.includes(:category).sample(rand(3..4))
 
     standards_with_categories.each do |standard|
@@ -102,14 +104,16 @@ class StatementsController < ApplicationController
 
       expense = statement.expenses.create!(
         category: standard.category,
-        subtotal: realistic_amount.round(2)
+        subtotal: realistic_amount.round(2),
+        label: "SIMULATION #{standard.category.name.upcase}"
       )
 
-      Opportunity.create!(
+      opportunity = Opportunity.create!(
         expense: expense,
         standard: standard,
         status: "pending"
       )
+      opportunity.classify!
     end
   end
 end
