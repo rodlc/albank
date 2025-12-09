@@ -1,8 +1,9 @@
 class LlmProcessor
-  MODELS = %w[
-    google/gemini-2.0-flash-exp:free
-    meta-llama/llama-3.3-70b-instruct:free
-    deepseek/deepseek-chat-v3-0324:free
+  FALLBACK_MODELS = [
+    { model: "gemini-flash-lite-latest", provider: :gemini },
+    { model: "gemini-flash-latest", provider: :gemini },
+    { model: "meta-llama/llama-3.3-70b-instruct:free", provider: :openrouter },
+    { model: "gpt-4o", provider: :openai },
   ].freeze
 
   def initialize(text)
@@ -11,10 +12,8 @@ class LlmProcessor
   end
 
   def process
-    models_to_try = ENV["LLM_MODEL"] ? [ENV["LLM_MODEL"]] + MODELS : MODELS
-
-    models_to_try.each do |model|
-      result = try_model(model)
+    models_to_try.each do |config|
+      result = try_model(config[:model], config[:provider])
       return result if result[:transactions].any?
     end
 
@@ -24,9 +23,17 @@ class LlmProcessor
 
   private
 
-  def try_model(model)
-    Rails.logger.info("[LLM] Essai avec #{model}")
-    chat = RubyLLM.chat(model: model, provider: :openrouter)
+  def models_to_try
+    if ENV["LLM_MODEL"]
+      [{ model: ENV["LLM_MODEL"], provider: :gemini }] + FALLBACK_MODELS
+    else
+      FALLBACK_MODELS
+    end
+  end
+
+  def try_model(model, provider)
+    Rails.logger.info("[LLM] Essai avec #{model} (#{provider})")
+    chat = RubyLLM.chat(model: model, provider: provider)
     response = chat.ask(prompt)
     parse_response(response.content)
   rescue StandardError => e
