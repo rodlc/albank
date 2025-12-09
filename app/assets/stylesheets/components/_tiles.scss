@@ -62,17 +62,17 @@
             color: $coral;
         }
         &--danger {
-            color: #dc2626;
+            color: $danger;
         }
         &--primary {
-            color: #000091;
+            color: $primary;
         }
     }
 
     &__tag {
         align-self: flex-start;
-        background-color: #e8edff;
-        color: #000091;
+        background-color: rgba($primary, 0.1);
+        color: $primary;
         padding: 4px 12px;
         border-radius: 12px;
         font-size: 0.75rem;
@@ -101,27 +101,27 @@
     border: 1px solid transparent;
 
     &:focus {
-        box-shadow: 0 0 0 3px rgba(0, 0, 145, 0.15) !important;
+        box-shadow: 0 0 0 3px rgba($primary, 0.15) !important;
     }
 }
 
-// Action Principale (Bleu France)
+// Action Principale (Mon-Entreprise Blue)
 .btn-gov-primary,
 .btn-primary {
-    background-color: #000091;
-    border-color: #000091;
+    background-color: $primary;
+    border-color: $primary;
     color: white;
 
     &:hover:not(:disabled) {
-        background-color: #00006b;
-        border-color: #00006b;
+        background-color: $primary-hover;
+        border-color: $primary-hover;
         color: white;
         transform: translateY(-1px);
     }
 
     &:disabled {
-        background-color: #9999c4;
-        border-color: #9999c4;
+        background-color: lighten($primary, 30%);
+        border-color: lighten($primary, 30%);
         opacity: 0.6;
         cursor: not-allowed;
     }

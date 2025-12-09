@@ -1,11 +1,10 @@
 // conteneur
-// le logo-cochon
+// illustration upload
 .upload-label-image {
   display: block;          /* évite le décalage baseline */
   max-width: 200px;
   margin: 0 auto;
   height: auto;
-  animation: float 3s ease-in-out infinite
 }
 .file-upload-wrapper {
   display: grid;
@@ -13,17 +12,18 @@
   height: 500px;
   width: 90%;              /* largeur à 80% de la page */
   margin: 50px auto;
-  border: 1px dashed #756DF5;
-  background-color: #f2f1f7;
+  border: 2px dashed $primary;
+  background: linear-gradient(135deg, rgba($cyan, 0.03) 0%, rgba($primary, 0.02) 100%);
   border-radius: 12px;   /* coins arrondis pour un rendu plus doux */
   padding: 15px;
   cursor: pointer;
-  transition: box-shadow 180ms ease, transform 120ms ease, border-color 120ms ease;
+  transition: box-shadow 180ms ease, transform 120ms ease, border-color 120ms ease, background 180ms ease;
   box-sizing: border-box;
 
   &:hover, &.dragover {
-    border-color: $primary;
-    background: #F5F5FE; // Bleu France très pâle
+    border-color: $coral;
+    background: linear-gradient(135deg, rgba($coral, 0.05) 0%, rgba($cyan, 0.08) 100%);
+    box-shadow: 0 8px 16px rgba($coral, 0.15);
   }
 
   &.dragover {
@@ -41,47 +41,108 @@
   overflow: hidden;
 }
 
-.step-box {
+// Reassurance badges avec couleurs thématiques
+.reassurance-badge {
+  border-radius: 12px;
+  padding: 1rem;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &.reassurance-security {
+    background: rgba($primary, 0.05);
+
+    p {
+      color: $primary !important;
+    }
+  }
+
+  &.reassurance-privacy {
+    background: rgba($cyan, 0.15);
+
+    p {
+      color: darken($cyan, 30%) !important;
+    }
+  }
+
+  &.reassurance-auto {
+    background: rgba($coral, 0.1);
+
+    p {
+      color: $coral-text !important;
+    }
+  }
+}
+
+// Cards pour la section "Comment ça marche"
+.feature-card {
+  border: 1px solid $border-color !important;
+  box-shadow: $box-shadow-sm !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $box-shadow !important;
+    background-color: rgba($cyan, 0.08); // Mon-entreprise style (#E0FDFF equivalent)
+    border-color: $cyan;
+  }
+}
+
+.feature-badge {
+  width: 48px;
+  height: 48px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  border: 2px solid #756DF5;
-  background-color: #f2f1f7;
-  border-radius: 8px;   /* coins arrondis pour un rendu plus doux */
-  padding: 15px;
-  margin: 10px;
-  animation: float 3s ease-in-out infinite;
+  font-weight: 700;
+  font-size: 1.25rem;
 }
 
-.row.align-items-start {
-  align-items: stretch !important; /* force toutes les colonnes à la même hauteur */
-}
-.logo-faq {
-  display: flex;              /* aligne les logos côte à côte */
-  justify-content: center;
-  width: 80%;
-  font-size: 14px;
-  gap: 10px;
-  height: 400px;
+.card-illustration {
+  height: 120px;
+  width: auto;
+  object-fit: contain;
 }
 
-@keyframes float {
-  0%   { transform: translateY(0px); }
-  50%  { transform: translateY(-5px); }
-  100% { transform: translateY(0px); }
-}
+// FAQ section - flat modern design
+.faq-section {
+  .accordion-item {
+    border: none;
+    border-bottom: 1px solid $border-color;
+    background: transparent;
 
-/* Couleur du bouton actif (quand ouvert) */
-.accordion-button:not(.collapsed) {
-  color: #756DF5;              /* texte bleu */
-  background-color: #f0f0ff;   /* fond léger pour contraste, optionnel */
-  box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
-}
+    &:last-child {
+      border-bottom: none;
+    }
+  }
 
-/* Couleur du bouton au focus (quand cliqué) */
-.accordion-button:focus {
-  border-color: #756DF5;
-  box-shadow: 0 0 0 0.25rem rgba(117, 109, 245, 0.25);
+  .accordion-button {
+    background: transparent;
+    font-weight: 600;
+    padding: 1.25rem 0;
+    border: none;
+
+    &:not(.collapsed) {
+      color: $primary;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    &:focus {
+      box-shadow: none;
+      border-color: transparent;
+    }
+
+    &::after {
+      filter: brightness(0) saturate(100%) invert(14%) sepia(72%) saturate(4715%) hue-rotate(236deg) brightness(94%) contrast(101%);
+    }
+  }
+
+  .accordion-body {
+    padding: 0 0 1.25rem 0;
+  }
 }
 
 .drop-zone.dragover {
@@ -91,18 +152,34 @@
 
 .bank-logos {
   display: flex;              /* aligne les logos côte à côte */
-  justify-content: center;    /* centre l’ensemble */
+  justify-content: center;    /* centre l'ensemble */
   gap: 30px;                  /* espace entre chaque logo */
   flex-wrap: wrap;            /* permet de passer à la ligne si trop de logos */
 }
 
 .bank-logo {
   height: 70px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* effet fluide */
-  cursor: pointer;            /* indique que c’est cliquable */
+  filter: grayscale(100%);
+  opacity: 0.6;
+  transition: all 0.3s ease; /* effet fluide */
+  cursor: pointer;            /* indique que c'est cliquable */
 }
 
 .bank-logo:hover {
-  transform: scale(1.1);      /* zoom léger au survol */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* ombre pour l’effet de mouvement */
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.05);      /* zoom léger au survol */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* ombre pour l'effet de mouvement */
+}
+
+// Scroll hint animation
+.scroll-hint {
+  i {
+    animation: bounce 2s ease-in-out infinite;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
 }
