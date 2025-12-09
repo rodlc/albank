@@ -16,9 +16,20 @@
           <small>
             <% if opportunity.danger? %>
               Prélèvement suspect - <%= opportunity.expense.category.name %>
+              <br>
+              <span class="d-block mt-1">
+                Détection calculée à partir de nos standards. Vérifiez vos relevés pour le détail.
+              </span>
             <% else %>
               Moyenne du marché:
               <%= number_to_currency(opportunity.standard.average_amount, unit: "€") %>
+              <% freshness = opportunity.standard.freshness_for(opportunity.expense.statement.date) %>
+              <% if freshness == :stale %>
+                <br>
+                <span class="d-block mt-1">
+                  <i class="fa fa-clock"></i> Estimation basée sur des données récentes du marché
+                </span>
+              <% end %>
             <% end %>
           </small>
         </p>
