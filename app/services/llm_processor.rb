@@ -1,7 +1,7 @@
 class LlmProcessor
   def initialize(text)
     @text = text
-    @chat = RubyLLM.chat(model: "gpt-4o")
+    @chat = RubyLLM.chat(model: ENV["GITHUB_MODEL"])
   end
 
   def process
