@@ -33,6 +33,15 @@ Standard.create!(category: habitation, average_amount: 16.33, min_amount: 9.50, 
 Standard.create!(category: moto, average_amount: 58.7, min_amount: 37.75, max_amount: 69.3, unit: "€/mois", source: "LesFurets", source_url: "https://www.lesfurets.com/assurance-moto", scraped_at: Time.current)
 Standard.create!(category: mutuelle, average_amount: 135.0, min_amount: 100.0, max_amount: 180.0, unit: "€/mois", source: "LesFurets", source_url: "https://www.lesfurets.com/mutuelle-sante", scraped_at: Time.current)
 Standard.create!(category: internet, average_amount: 25.0, min_amount: 9.99, max_amount: 49.99, unit: "€/mois", source: "LesFurets", source_url: "https://www.lesfurets.com/box-internet", scraped_at: Time.current)
+Standard.create!(category: energie, average_amount: 200.0, min_amount: 150.0, max_amount: 250.0, unit: "€/mois", source: "LesFurets", source_url: "https://www.lesfurets.com/energie", scraped_at: Time.current)
+Standard.create!(category: banque, average_amount: 17.0, min_amount: 0.0, max_amount: 30.0, unit: "€/mois", source: "LesFurets", source_url: "https://www.lesfurets.com/banque", scraped_at: Time.current)
+Standard.create!(category: animaux, average_amount: 40.0, min_amount: 20.0, max_amount: 80.0, unit: "€/mois", source: "LesFurets", source_url: "https://www.lesfurets.com/assurance-animaux", scraped_at: Time.current)
+Standard.create!(category: velo, average_amount: 10.0, min_amount: 5.0, max_amount: 20.0, unit: "€/mois", source: "LesFurets", source_url: "https://www.lesfurets.com/assurance-velo", scraped_at: Time.current)
+Standard.create!(category: trottinette, average_amount: 15.0, min_amount: 8.0, max_amount: 25.0, unit: "€/mois", source: "LesFurets", source_url: "https://www.lesfurets.com/assurance-trottinette-electrique", scraped_at: Time.current)
+Standard.create!(category: smartphone, average_amount: 10.0, min_amount: 5.0, max_amount: 15.0, unit: "€/mois", source: "LesFurets", source_url: "https://www.lesfurets.com/assurance-smartphone", scraped_at: Time.current)
+Standard.create!(category: emprunteur, average_amount: 30.0, min_amount: 10.0, max_amount: 80.0, unit: "€/mois", source: "LesFurets", source_url: "https://www.lesfurets.com/assurance-emprunteur", scraped_at: Time.current)
+Standard.create!(category: credit_conso, average_amount: 5.0, min_amount: 3.0, max_amount: 8.0, unit: "% TAEG", source: "LesFurets", source_url: "https://www.lesfurets.com/credit-conso", scraped_at: Time.current)
+Standard.create!(category: rachat, average_amount: 4.0, min_amount: 2.5, max_amount: 6.0, unit: "% TAEG", source: "LesFurets", source_url: "https://www.lesfurets.com/rachat-de-credits", scraped_at: Time.current)
 
 puts "Creating demo user..."
 user = User.find_or_create_by!(email: "demo@albank.bot") do |u|
