@@ -76,7 +76,8 @@ class LlmProcessor
 
       Retourne aussi le total des dépenses du relevé.
 
-      JSON : {"total": montant_total, "transactions": [{"label": "...", "category": "...", "amount": ...}]}
+      IMPORTANT : Réponds UNIQUEMENT avec le JSON, sans aucun texte avant ou après.
+      Format : {"total": montant_total, "transactions": [{"label": "...", "category": "...", "amount": ...}]}
     PROMPT
   end
 
