@@ -66,10 +66,15 @@ expense_auto_dec = statement_dec.expenses.create!(category: auto, subtotal: 65.0
 expense_fraud_admin = statement_dec.expenses.create!(category: arnaque_admin, subtotal: 39.0, label: "HPY KBIS PROREGISTRE")
 
 puts "Creating opportunities and classifying..."
-standard_auto = Standard.find_by(category: auto)
-standard_internet = Standard.find_by(category: internet)
-standard_mutuelle = Standard.find_by(category: mutuelle)
-standard_habitation = Standard.find_by(category: habitation)
+# Utilise valid_for_statement avec fallback sur le plus récent
+standard_auto = Standard.where(category: auto).valid_for_statement(statement_nov.date).first ||
+                Standard.where(category: auto).order(scraped_at: :desc).first
+standard_internet = Standard.where(category: internet).valid_for_statement(statement_nov.date).first ||
+                    Standard.where(category: internet).order(scraped_at: :desc).first
+standard_mutuelle = Standard.where(category: mutuelle).valid_for_statement(statement_nov.date).first ||
+                    Standard.where(category: mutuelle).order(scraped_at: :desc).first
+standard_habitation = Standard.where(category: habitation).valid_for_statement(statement_dec.date).first ||
+                      Standard.where(category: habitation).order(scraped_at: :desc).first
 
 opp1 = Opportunity.create!(expense: expense_auto_nov, standard: standard_auto, status: "pending")
 opp1.classify!
