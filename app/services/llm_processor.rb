@@ -1,40 +1,48 @@
 require 'openai'  # gem 'ruby-openai' dans ton Gemfile
 
 class LlmProcessor
-  def initialize(libelle, montant)
-    @libelle = libelle
-    @montant = montant
-    @client = OpenAI::Client.new
+  def initialize(text)
+    @text = text
+    @chat =  RubyLLM.chat(model: "gpt-4o")
   end
 
   def process
     # Simuler un appel à un LLM pour enrichir les données
     prompt = <<~PROMPT
-      Catégorise la dépense suivante et enrichis le libellé.
-      Libellé: #{@libelle}
-      Montant: #{@montant}
+    Voici le contenu de mon relevé bancaire :
+      #{@text}
 
-      Reformule le libellé en clair et attribue une catégorie parmi :
-      - energie
-      - internet
-      - auto
-      - habitation
-      - banque
-      - autres
+      Catégorise les dépenses suivantes et enrichis chaque libellé.
 
-      Réponds uniquement en JSON avec les clés :
+      Attribue une catégorie parmi :
+      #{Category.pluck(:name).join(", ")}
+
+      Réponds uniquement en JSON avec les clés, en reprenant toutes les lignes de dépenses, avec cette forme  :
       {
-        "libelle": "...",
-        "categorie": "...",
-        "montant": ...
+        "transactions":
+        [
+          {
+            "label": "...",
+            "category": "...",
+            "amount": ...
+          },
+          {
+            "label": "...",
+            "category": "...",
+            "amount": ...
+          }
+        ]
       }
-
     PROMPT
 
-  response = LLM.call(prompt)
-  t[:libelle_clair] = response[:libelle]
-  t[:category] = response[:category]
+    response = @chat.ask prompt
 
-    # A faire !!
+    content = response.content.gsub("```json", "").gsub("```", "").strip
+    json = JSON.parse(content, symbolize_names: true)
+    data = { transactions: json[:transactions] || [] }
+
+    puts "[LLM CLEANED RESPONSE] #{data}"
+
+    return data
   end
 end
