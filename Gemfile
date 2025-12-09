@@ -9,7 +9,7 @@ gem "rails", "~> 7.1.6"
 gem "pdf-reader"
 
 # Gem pour interagir avec des LLMs génériques
-gem "ruby_llm", "~> 1.2.0"
+gem "ruby_llm", "~> 1.3.0"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
