@@ -18,8 +18,8 @@
     >
       <span class="section-emoji"><%= config[:emoji] %></span>
       <span class="section-label"><%= config[:label] %></span>
+      <span class="badge badge-<%= config[:color] %> ms-2"><%= expenses.count %></span>
       <span class="section-totals ms-auto">
-        <span class="badge badge-<%= config[:color] %> me-2"><%= expenses.count %></span>
         <span class="<%= 'text-danger' if result_type == :danger %>">
           <%= number_to_currency(totals[:total], unit: "€", precision: 0) %>
         </span>
