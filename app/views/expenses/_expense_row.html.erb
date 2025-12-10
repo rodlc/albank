@@ -17,6 +17,9 @@
 
     <div class="text-muted small mb-2">
       <%= expense.label %>
+      <% if expense.respond_to?(:grouped?) && expense.grouped? %>
+        <span class="badge bg-secondary ms-1">×<%= expense.grouped_expenses.size %></span>
+      <% end %>
     </div>
 
     <div class="d-flex justify-content-between align-items-center">
@@ -73,6 +76,9 @@
     <div class="expense-row-label">
       <span class="expense-label text-muted">
         <%= expense.label %>
+        <% if expense.respond_to?(:grouped?) && expense.grouped? %>
+          <span class="badge bg-secondary ms-1">×<%= expense.grouped_expenses.size %></span>
+        <% end %>
       </span>
     </div>
 
