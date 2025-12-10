@@ -1,0 +1,34 @@
+<%
+  config = result_type_config(result_type)
+  section_id = "section-#{result_type}-#{index}"
+  show_class = index == 0 ? "show" : ""
+%>
+
+<div class="accordion-item accordion-<%= config[:color] %>">
+  <h2 class="accordion-header">
+    <button
+      class="accordion-button <%= 'collapsed' unless index == 0 %>"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#<%= section_id %>"
+      aria-expanded="<%= index == 0 ? 'true' : 'false' %>"
+      aria-controls="<%= section_id %>"
+    >
+      <span class="section-emoji"><%= config[:emoji] %></span>
+      <span class="section-label"><%= config[:label] %></span>
+      <span class="section-count">(<%= expenses.count %>)</span>
+    </button>
+  </h2>
+
+  <div
+    id="<%= section_id %>"
+    class="accordion-collapse collapse <%= show_class %>"
+    data-bs-parent="#expensesAccordion"
+  >
+    <div class="accordion-body">
+      <% expenses.each do |expense| %>
+        <%= render "expenses/expense_row", expense: expense, statement: statement %>
+      <% end %>
+    </div>
+  </div>
+</div>
