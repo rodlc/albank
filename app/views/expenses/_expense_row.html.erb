@@ -26,7 +26,7 @@
         </span>
 
         <% if opportunity&.opportunity? && opportunity.savings > 0 %>
-          <span class="expense-savings text-success ms-2">
+          <span class="expense-savings text-primary ms-2">
             -<%= number_to_currency(opportunity.savings, unit: "€", precision: 0) %>
           </span>
         <% end %>
@@ -37,7 +37,7 @@
           <span class="btn btn-sm btn-outline-success disabled">🎉 Optimisé</span>
         <% elsif opportunity&.contacted? %>
           <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
-                      class: "btn btn-sm btn-outline-primary" do %>
+                      class: "btn btn-sm btn-light" do %>
             ✅ Archiver
           <% end %>
         <% elsif opportunity&.danger? %>
@@ -84,7 +84,7 @@
       </div>
 
       <% if opportunity&.opportunity? && opportunity.savings > 0 %>
-        <div class="expense-savings text-success small">
+        <div class="expense-savings text-primary small">
           -<%= number_to_currency(opportunity.savings, unit: "€", precision: 0) %>
         </div>
       <% end %>
@@ -99,7 +99,7 @@
         <span class="btn btn-sm btn-outline-success disabled">🎉 Optimisé</span>
       <% elsif opportunity&.contacted? %>
         <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
-                    class: "btn btn-sm btn-outline-primary" do %>
+                    class: "btn btn-sm btn-light" do %>
           ✅ Archiver
         <% end %>
       <% elsif opportunity&.danger? %>

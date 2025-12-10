@@ -22,7 +22,7 @@
       <span class="section-totals ms-auto me-3">
         <%= number_to_currency(totals[:total], unit: "€", precision: 0) %>
         <% if totals[:savings] > 0 %>
-          <span class="text-success">· -<%= number_to_currency(totals[:savings], unit: "€", precision: 0) %></span>
+          <span class="text-primary">· -<%= number_to_currency(totals[:savings], unit: "€", precision: 0) %></span>
         <% end %>
       </span>
     </button>
