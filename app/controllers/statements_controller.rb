@@ -74,12 +74,21 @@ class StatementsController < ApplicationController
         next
       end
 
-      Expense.create!(
+      expense = Expense.create!(
         category: category,
-        subtotal: transaction[:amount].abs,
+        subtotal: transaction[:amount].to_f.abs,
         label: transaction[:label],
         statement: statement
       )
+
+      # Auto-création des Opportunities si Standard disponible
+      standard = Standard.where(category: category)
+                         .valid_for_statement(statement.date)
+                         .first
+      if standard
+        opp = Opportunity.create!(expense: expense, standard: standard, status: :pending)
+        opp.classify!
+      end
     end
 
     redirect_to statement, notice: "Relevé importé avec succès ! #{statement.expenses.count} dépenses détectées."
