@@ -25,7 +25,7 @@
         <div class="text-end">
           <div class="text-uppercase text-muted small fw-semibold mb-1">Total</div>
           <div class="h3 fw-bold mb-0">
-            <%= number_to_currency(@expenses.sum(&:subtotal), unit: "€", precision: 0, separator: " ", delimiter: " ") %>
+            <%= number_to_currency(@expenses.sum(&:subtotal), unit: "€", precision: 0, separator: ",", delimiter: " ") %>
           </div>
         </div>
 
@@ -33,7 +33,7 @@
           <div class="text-end">
             <div class="text-uppercase text-danger small fw-semibold mb-1">Fraudes</div>
             <div class="h3 fw-bold text-danger mb-0">
-              <%= number_to_currency(total_dangers, unit: "€", precision: 0, separator: " ", delimiter: " ") %>
+              <%= number_to_currency(total_dangers, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
             </div>
           </div>
         <% end %>
@@ -42,7 +42,7 @@
           <div class="text-end">
             <div class="text-uppercase text-primary small fw-semibold mb-1">Économies</div>
             <div class="h3 fw-bold text-primary mb-0">
-              <%= number_to_currency(total_savings, unit: "€", precision: 0, separator: " ", delimiter: " ") %>
+              <%= number_to_currency(total_savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
             </div>
           </div>
         <% end %>
@@ -95,14 +95,14 @@
               data-bs-target="#collapseAutres"
               aria-expanded="false"
               aria-controls="collapseAutres"
-              aria-label="Dépenses non ciblées : total <%= number_to_currency(autres_amount, unit: '€') %>"
+              aria-label="Dépenses non ciblées : total <%= number_to_currency(autres_amount, unit: '€', precision: 0, separator: ',', delimiter: ' ') %>"
             >
               <div class="d-flex align-items-center gap-2 flex-grow-1">
                 <span class="section-emoji">💳</span>
                 <span class="section-label">Dépenses non ciblées</span>
               </div>
               <span class="section-totals ms-auto">
-                <%= number_to_currency(autres_amount, unit: "€", precision: 0) %>
+                <%= number_to_currency(autres_amount, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
               </span>
               <span class="section-action d-none d-md-inline">Voir</span>
             </button>

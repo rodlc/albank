@@ -25,12 +25,12 @@
     <div class="d-flex justify-content-between align-items-center">
       <div>
         <span class="expense-amount fw-bold">
-          <%= number_to_currency(expense.subtotal, unit: "€", precision: 2) %>
+          <%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
         </span>
 
         <% if opportunity&.opportunity? && opportunity.savings > 0 %>
           <span class="expense-savings text-primary ms-2">
-            -<%= number_to_currency(opportunity.savings, unit: "€", precision: 0) %>
+            -<%= number_to_currency(opportunity.savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
           </span>
         <% end %>
       </div>
@@ -85,12 +85,12 @@
     <!-- Amount + Savings (Fixed right) -->
     <div class="expense-row-amount">
       <div class="expense-amount">
-        <%= number_to_currency(expense.subtotal, unit: "€", precision: 2) %>
+        <%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
       </div>
 
       <% if opportunity&.opportunity? && opportunity.savings > 0 %>
         <div class="expense-savings">
-          -<%= number_to_currency(opportunity.savings, unit: "€", precision: 0) %>
+          -<%= number_to_currency(opportunity.savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
         </div>
       <% end %>
     </div>
