@@ -5,26 +5,26 @@
     position: relative;
     max-width: 500px;
     margin: 0 auto;
-    padding: 1rem 0;
+    padding: 2rem 0;
 
     @media (max-width: 767px) {
         max-width: 100%;
-        padding: 1rem 1rem;
+        padding: 1.5rem 1rem;
     }
 }
 
 // Track (ligne de fond)
 .stepper-track {
     position: absolute;
-    top: 20px;
+    top: 50%;
     left: 0;
     right: 0;
     height: 3px;
     background-color: #e8e8e8;
     z-index: 0;
+    transform: translateY(-50%);
 
     @media (max-width: 767px) {
-        top: 18px;
         height: 2px;
     }
 }
@@ -32,15 +32,15 @@
 // Progress (ligne colorée)
 .stepper-progress {
     position: absolute;
-    top: 20px;
+    top: 50%;
     left: 0;
     height: 3px;
     background-color: #000091;
     z-index: 1;
+    transform: translateY(-50%);
     transition: width 0.4s ease-in-out;
 
     @media (max-width: 767px) {
-        top: 18px;
         height: 2px;
     }
 }
@@ -50,6 +50,7 @@
     position: relative;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     z-index: 2;
 }
 
@@ -58,8 +59,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
     flex: 1;
+
+    @media (max-width: 767px) {
+        gap: 0.5rem;
+    }
 
     &.active {
         .stepper-label {
@@ -102,10 +107,13 @@
     font-weight: 500;
     color: #6e6e6e;
     text-align: center;
+    line-height: 1.2;
     transition: all 0.2s ease;
+    margin-top: 0.125rem;
 
     @media (max-width: 767px) {
         font-size: 0.75rem;
+        margin-top: 0;
     }
 }
 
