@@ -1,5 +1,15 @@
 // === Homepage Mobile First ===
 
+// Hero container with full viewport height
+.home-hero-container {
+    min-height: calc(100vh - 100px);
+}
+
+// Display title with extra-tight letter spacing
+.display-tight {
+    letter-spacing: -0.03em;
+}
+
 // Hero Section
 .hero-section {
     min-height: auto;
