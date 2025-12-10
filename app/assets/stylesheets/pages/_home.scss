@@ -129,14 +129,19 @@
 .reassurance-badge {
     border-radius: $border-radius-lg;
     padding: 1rem 0.75rem;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     transition:
         transform 0.2s ease,
         background-color 0.2s ease;
-    text-align: center;
 
     @media (min-width: 768px) {
         padding: 1.25rem 1rem;
     }
+}
 
     &:hover {
         transform: translateY(-2px);
