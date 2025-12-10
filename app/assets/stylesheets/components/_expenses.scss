@@ -161,8 +161,11 @@
 }
 
 .accordion-secondary {
+    border-left: 4px solid #6e6e6e !important;
+
     .accordion-button:not(.collapsed) {
         background-color: #fafafa;
+        border-bottom-color: rgba(110, 110, 110, 0.15);
     }
 }
 
