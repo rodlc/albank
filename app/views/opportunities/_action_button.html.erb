@@ -1,0 +1,20 @@
+<% if opportunity&.completed? %>
+  <span class="btn btn-sm btn-outline-success disabled">🎉 Optimisé</span>
+<% elsif opportunity&.contacted? %>
+  <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
+              class: "btn btn-sm btn-outline-primary" do %>
+    ✅ Archiver
+  <% end %>
+<% elsif opportunity&.danger? %>
+  <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
+              class: "btn btn-sm btn-danger text-white" do %>
+    🚨 Alerter
+  <% end %>
+<% elsif opportunity %>
+  <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
+              class: "btn btn-sm btn-primary text-white" do %>
+    ✉️ Contacter
+  <% end %>
+<% else %>
+  <span class="btn btn-sm btn-light disabled">☑️ OK</span>
+<% end %>
