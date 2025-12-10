@@ -1,6 +1,166 @@
+// === Flash Messages / Alerts (Mobile First) ===
+
+.flash-messages-container {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    z-index: 1050;
+    pointer-events: none;
+
+    @media (min-width: 768px) {
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 600px;
+    }
+
+    .alert {
+        pointer-events: auto;
+        border-radius: 12px;
+        border: none;
+        padding: 1rem 1.25rem;
+        font-size: 0.9375rem;
+        line-height: 1.5;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+        @media (max-width: 767px) {
+            border-radius: 8px;
+            margin: 0.75rem !important;
+        }
+    }
+}
+
+// Alert Success
+.alert-success {
+    background-color: #e8ffed;
+    color: #18753c;
+    border-left: 4px solid #18753c;
+
+    .btn-close {
+        filter: brightness(0) saturate(100%) invert(33%) sepia(33%)
+            saturate(2095%) hue-rotate(95deg) brightness(92%) contrast(93%);
+    }
+}
+
+// Alert Warning
+.alert-warning {
+    background-color: #fff5e6;
+    color: #b34000;
+    border-left: 4px solid #b34000;
+
+    .btn-close {
+        filter: brightness(0) saturate(100%) invert(28%) sepia(88%)
+            saturate(1729%) hue-rotate(13deg) brightness(93%) contrast(95%);
+    }
+}
+
+// Alert Danger
+.alert-danger {
+    background-color: #fff5f5;
+    color: #ce0500;
+    border-left: 4px solid #ce0500;
+
+    .btn-close {
+        filter: brightness(0) saturate(100%) invert(11%) sepia(91%)
+            saturate(7497%) hue-rotate(359deg) brightness(98%) contrast(118%);
+    }
+}
+
+// Alert Info
+.alert-info {
+    background-color: #f0f6ff;
+    color: #0063cb;
+    border-left: 4px solid #0063cb;
+
+    .btn-close {
+        filter: brightness(0) saturate(100%) invert(24%) sepia(97%)
+            saturate(2278%) hue-rotate(203deg) brightness(94%) contrast(101%);
+    }
+}
+
+// Alert dismissible
+.alert-dismissible {
+    .btn-close {
+        padding: 0.75rem;
+        background-size: 0.875rem;
+        opacity: 0.6;
+        transition: opacity 0.2s ease;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 0, 145, 0.25);
+            border-radius: 4px;
+        }
+    }
+}
+
+// Icônes dans alerts
 .alert {
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
-  z-index: 1000;
+    .flex-shrink-0 {
+        font-size: 1.25rem;
+        line-height: 1;
+    }
+
+    a {
+        color: inherit;
+        font-weight: 600;
+        text-decoration: underline;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    strong {
+        font-weight: 600;
+    }
+}
+
+// Animation d'entrée
+.alert.fade {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.alert.show {
+    animation: slideInDown 0.3s ease-out;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Alert statique (non-fixed, dans le flow)
+.alert-static {
+    position: static;
+    transform: none;
+    margin: 1rem 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+// Alert inline (dans formulaire)
+.alert-inline {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+// Print: masquer les alerts
+@media print {
+    .flash-messages-container,
+    .alert {
+        display: none !important;
+    }
 }
