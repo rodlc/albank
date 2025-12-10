@@ -54,144 +54,25 @@
   <% end %>
 
   <% if @expenses.any? %>
-    <div class="card border shadow-sm">
-      <div class="card-header bg-white py-3 border-bottom">
-        <div class="row align-items-center text-muted small fw-bold text-uppercase">
-          <div class="col-md-3">Catégorie</div>
-          <div class="col-md-3">Libellé</div>
-          <div class="col-md-3 text-end">Montant</div>
-          <div class="col-md-3 text-end">Analyse</div>
-        </div>
-      </div>
+    <div class="accordion expenses-accordion" id="expensesAccordion">
+      <% grouped = @expenses.group_by { |e| e.opportunities.first&.result_type } %>
 
-      <div class="list-group list-group-flush">
-        <% @expenses.each do |expense| %>
-          <% category_emoji = case expense.category.name
-               when /électricité|gaz|énergie/i then "⚡"
-               when /internet|box|fibre/i then "📡"
-               when /habitation|logement/i then "🏠"
-               when /auto|voiture/i then "🚗"
-               when /assurance/i then "🛡️"
-               when /banque|frais/i then "🏦"
-               else "📋"
-             end %>
+      <% [:danger, :opportunity, :success].each_with_index do |type, i| %>
+        <% next unless (expenses = grouped[type.to_s])&.any? %>
+        <%= render "expenses/accordion_section",
+                   result_type: type,
+                   expenses: expenses,
+                   statement: @statement,
+                   index: i %>
+      <% end %>
 
-          <div class="list-group-item py-3 action-row">
-            <div class="row align-items-center">
-              <!-- Category -->
-              <div class="col-md-3 d-flex align-items-center">
-                <div
-                  class="
-                    rounded-3 bg-light d-flex align-items-center
-                    justify-content-center me-3
-                  "
-                  style="width: 48px; height: 48px; font-size: 1.5rem;"
-                >
-                  <%= category_emoji %>
-                </div>
-
-                <div>
-                  <h6 class="mb-0 fw-bold text-dark">
-                    <%= expense.category.name %>
-                  </h6>
-
-                  <small class="text-muted">Prélèvement mensuel</small>
-                </div>
-              </div>
-
-              <!-- Label -->
-              <div class="col-md-3">
-                <span class="text-muted small">
-                  <%= expense.label %>
-                </span>
-              </div>
-
-              <!-- Amount -->
-              <div class="col-md-3 text-end">
-                <span class="fw-bold text-dark">
-                  <%= number_to_currency(expense.subtotal, unit: "€", precision: 2) %>
-                </span>
-              </div>
-
-              <!-- Action -->
-              <div class="col-md-3 text-end">
-                <% if expense.opportunities.any? %>
-                  <% opportunity = expense.opportunities.first %>
-                  <% if opportunity.completed? %>
-                    <div class="btn disabled border-0 text-success fw-medium px-3">
-                      <span class="me-1">🎉</span> Optimisé
-                    </div>
-                  <% elsif opportunity.contacted? %>
-                    <div class="btn disabled border-0 text-primary fw-medium px-3">
-                      <span class="me-1">✅</span> Contacté
-                    </div>
-                  <% else %>
-                    <%= link_to statement_expense_opportunity_path(@statement, expense, opportunity), class: "btn btn-primary text-white fw-bold px-3" do %>
-                      <span class="me-1">⚡</span> Économiser
-                      <%= number_to_currency(opportunity.savings, unit: "€", precision: 0) %>
-                    <% end %>
-                  <% end %>
-                <% else %>
-                  <div class="btn disabled border-0 text-muted opacity-75 fw-medium px-3">
-                    <span class="me-1">☑️</span> Optimisé
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        <% end %>
-
-        <% if @statement.total.present? %>
-          <% autres_depenses = @statement.total - @expenses.sum(&:subtotal) %>
-          <% if autres_depenses > 0 %>
-            <div class="list-group-item py-3 bg-light">
-              <div class="row align-items-center">
-                <!-- Category -->
-                <div class="col-md-3 d-flex align-items-center">
-                  <div
-                    class="
-                      rounded-3 bg-white d-flex align-items-center
-                      justify-content-center me-3
-                    "
-                    style="width: 48px; height: 48px; font-size: 1.5rem;"
-                  >
-                    📋
-                  </div>
-
-                  <div>
-                    <h6 class="mb-0 fw-bold text-muted">
-                      Autres dépenses
-                    </h6>
-
-                    <small class="text-muted">Non catégorisé</small>
-                  </div>
-                </div>
-
-                <!-- Label -->
-                <div class="col-md-3">
-                  <span class="text-muted small fst-italic">
-                    Dépenses non reconnues
-                  </span>
-                </div>
-
-                <!-- Amount -->
-                <div class="col-md-3 text-end">
-                  <span class="fw-bold text-muted">
-                    <%= number_to_currency(autres_depenses, unit: "€", precision: 2) %>
-                  </span>
-                </div>
-
-                <!-- Action -->
-                <div class="col-md-3 text-end">
-                  <div class="btn disabled border-0 text-muted opacity-50 fw-medium px-3">
-                    <span class="me-1">—</span> Aucune action
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
+      <% if (autres = grouped[nil])&.any? %>
+        <%= render "expenses/accordion_section",
+                   result_type: nil,
+                   expenses: autres,
+                   statement: @statement,
+                   index: 3 %>
+      <% end %>
     </div>
   <% else %>
     <div class="text-center py-5">
