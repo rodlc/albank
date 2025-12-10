@@ -5,54 +5,66 @@
     <% end %>
   </div>
 
-  <div class="d-flex justify-content-between align-items-end mb-5">
-    <div>
-      <h1 class="fw-bold mb-1">
-        <span class="underline-cyan">
-          Relevé de <%= l(@statement.date, format: "%B %Y").capitalize %>
-        </span>
-      </h1>
+  <!-- Header -->
+  <div class="mb-4">
+    <h1 class="fw-bold mb-2">
+      <span class="underline-cyan">
+        Relevé de <%= l(@statement.date, format: "%B %Y").capitalize %>
+      </span>
+    </h1>
+    <p class="text-muted mb-0">Analyse détaillée des transactions</p>
+  </div>
 
-      <p class="text-muted mb-0">Analyse détaillée des transactions</p>
-    </div>
+  <!-- Synthèse responsive -->
+  <% total_dangers = @expenses.select { |e| e.opportunities.first&.result_type == "danger" }.sum(&:subtotal) %>
+  <% total_savings = @expenses.joins(:opportunities).sum { |e| e.opportunities.sum(&:savings) } %>
 
-    <div class="d-flex gap-4">
-      <div class="text-end">
-        <span class="d-block text-muted small text-uppercase fw-bold">
-          Total
-        </span>
-
-        <span class="fs-2 fw-bold">
-          <%= number_to_currency(@expenses.sum(&:subtotal), unit: "€", precision: 0) %>
-        </span>
+  <div class="row g-3 mb-4">
+    <!-- Total -->
+    <div class="col-12 col-md-4">
+      <div class="card border-0 shadow-soft h-100">
+        <div class="card-body text-center">
+          <div class="text-muted small text-uppercase fw-semibold mb-2">
+            <span aria-hidden="true">💰</span> Total
+          </div>
+          <div class="fs-2 fw-bold text-dark">
+            <%= number_to_currency(@expenses.sum(&:subtotal), unit: "€", precision: 0, separator: " ", delimiter: " ") %>
+          </div>
+        </div>
       </div>
-
-      <% total_dangers = @expenses.select { |e| e.opportunities.first&.result_type == "danger" }.sum(&:subtotal) %>
-      <% if total_dangers > 0 %>
-        <div class="text-end">
-          <span class="d-block text-muted small text-uppercase fw-bold">
-            Fraudes
-          </span>
-
-          <span class="fs-2 fw-bold text-danger">
-            <%= number_to_currency(total_dangers, unit: "€", precision: 0) %>
-          </span>
-        </div>
-      <% end %>
-
-      <% total_savings = @expenses.joins(:opportunities).sum { |e| e.opportunities.sum(&:savings) } %>
-      <% if total_savings > 0 %>
-        <div class="text-end">
-          <span class="d-block text-muted small text-uppercase fw-bold">
-            Économies
-          </span>
-
-          <span class="fs-2 fw-bold text-primary">
-            <%= number_to_currency(total_savings, unit: "€", precision: 0) %>
-          </span>
-        </div>
-      <% end %>
     </div>
+
+    <!-- Fraudes -->
+    <% if total_dangers > 0 %>
+      <div class="col-12 col-md-4">
+        <div class="card border-0 shadow-soft h-100 bg-danger-light">
+          <div class="card-body text-center">
+            <div class="text-danger small text-uppercase fw-semibold mb-2">
+              <span aria-hidden="true">⚠️</span> Fraudes détectées
+            </div>
+            <div class="fs-2 fw-bold text-danger">
+              <%= number_to_currency(total_dangers, unit: "€", precision: 0, separator: " ", delimiter: " ") %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Économies potentielles -->
+    <% if total_savings > 0 %>
+      <div class="col-12 col-md-4">
+        <div class="card border-0 shadow-soft h-100 bg-success-light">
+          <div class="card-body text-center">
+            <div class="text-success small text-uppercase fw-semibold mb-2">
+              <span aria-hidden="true">💡</span> Économies possibles
+            </div>
+            <div class="fs-2 fw-bold text-success">
+              <%= number_to_currency(total_savings, unit: "€", precision: 0, separator: " ", delimiter: " ") %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
 
   <% if @expenses.any? %>
