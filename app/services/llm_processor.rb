@@ -15,6 +15,33 @@ class LlmProcessor
   def initialize(text)
     @text = text
     @categories_with_keywords = Category.pluck(:name, :keywords)
+    @example_transactions = fetch_example_transactions
+  end
+
+  def llm_logger
+    @llm_logger ||= Logger.new(Rails.root.join("log", "llm.log"))
+  end
+
+  def fetch_example_transactions
+    # Récupère des exemples de transactions déjà catégorisées
+    return [] if Expense.count.zero?
+
+    Expense.joins(:category)
+           .includes(:category)
+           .order("RANDOM()")
+           .limit(20)
+           .map { |e| { label: e.label, category: e.category.name } }
+  rescue StandardError => e
+    llm_logger.warn("Impossible de récupérer les exemples: #{e.message}")
+    []
+  end
+
+  def examples_list
+    return "Aucun exemple disponible." if @example_transactions.empty?
+
+    @example_transactions.map do |ex|
+      "- \"#{ex[:label]}\" → #{ex[:category]}"
+    end.join("\n")
   end
 
   def process
@@ -23,7 +50,7 @@ class LlmProcessor
       return result if result[:transactions].any?
     end
 
-    Rails.logger.error("[LLM] Tous les modèles ont échoué")
+    llm_logger.error("Tous les modèles ont échoué")
     { total: nil, transactions: [] }
   end
 
@@ -39,16 +66,16 @@ class LlmProcessor
   end
 
   def try_model(model, provider)
-    Rails.logger.info("[LLM] Essai avec #{model} (#{provider})")
-    Rails.logger.info("[LLM] Prompt: #{prompt.truncate(500)}")
+    llm_logger.info("Essai avec #{model} (#{provider})")
+    llm_logger.info("Prompt:\n#{prompt}")
 
     chat = RubyLLM.chat(model: model, provider: provider)
     response = chat.ask(prompt)
 
-    Rails.logger.info("[LLM] Response: #{response.content.truncate(1000)}")
+    llm_logger.info("Response:\n#{response.content}")
     parse_response(response.content)
   rescue StandardError => e
-    Rails.logger.warn("[LLM] #{model} échoué: #{e.message}")
+    llm_logger.warn("#{model} échoué: #{e.message}")
     { total: nil, transactions: [] }
   end
 

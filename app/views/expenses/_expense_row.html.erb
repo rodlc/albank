@@ -1,0 +1,120 @@
+<% opportunity = expense.opportunities.first %>
+
+<div class="expense-row">
+  <!-- Mobile: Stack vertical -->
+  <div class="d-md-none">
+    <div class="d-flex align-items-center mb-2">
+      <div class="expense-icon me-2">
+        <%= category_emoji(expense.category) %>
+      </div>
+
+      <div class="flex-grow-1">
+        <div class="expense-category fw-bold">
+          <%= expense.category.name %>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-muted small mb-2">
+      <%= expense.label %>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <span class="expense-amount fw-bold">
+          <%= number_to_currency(expense.subtotal, unit: "€", precision: 2) %>
+        </span>
+
+        <% if opportunity&.opportunity? && opportunity.savings > 0 %>
+          <span class="expense-savings text-primary ms-2">
+            -<%= number_to_currency(opportunity.savings, unit: "€", precision: 0) %>
+          </span>
+        <% end %>
+      </div>
+
+      <div>
+        <% if opportunity&.completed? %>
+          <span class="btn btn-sm btn-outline-success disabled">🎉 Optimisé</span>
+        <% elsif opportunity&.contacted? %>
+          <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
+                      class: "btn btn-sm btn-outline-primary" do %>
+            ✅ Archiver
+          <% end %>
+        <% elsif opportunity&.danger? %>
+          <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
+                      class: "btn btn-sm btn-danger text-white" do %>
+            🚨 Alerter
+          <% end %>
+        <% elsif opportunity %>
+          <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
+                      class: "btn btn-sm btn-primary text-white" do %>
+            ✉️ Contacter
+          <% end %>
+        <% else %>
+          <span class="btn btn-sm btn-light disabled">☑️ OK</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop: Colonnes horizontales -->
+  <div class="d-none d-md-flex row align-items-center">
+    <!-- Category -->
+    <div class="col-3 d-flex align-items-center">
+      <div class="expense-icon me-2">
+        <%= category_emoji(expense.category) %>
+      </div>
+
+      <div class="expense-category">
+        <%= expense.category.name %>
+      </div>
+    </div>
+
+    <!-- Label -->
+    <div class="col-3">
+      <span class="expense-label">
+        <%= expense.label %>
+      </span>
+    </div>
+
+    <!-- Amount -->
+    <div class="col-2 text-end">
+      <div class="expense-amount">
+        <%= number_to_currency(expense.subtotal, unit: "€", precision: 2) %>
+      </div>
+
+      <% if opportunity&.opportunity? && opportunity.savings > 0 %>
+        <div class="expense-savings text-primary small">
+          -<%= number_to_currency(opportunity.savings, unit: "€", precision: 0) %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Spacer -->
+    <div class="col-2"></div>
+
+    <!-- Action -->
+    <div class="col-2 text-end">
+      <% if opportunity&.completed? %>
+        <span class="btn btn-sm btn-outline-success disabled">🎉 Optimisé</span>
+      <% elsif opportunity&.contacted? %>
+        <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
+                    class: "btn btn-sm btn-outline-primary" do %>
+          ✅ Archiver
+        <% end %>
+      <% elsif opportunity&.danger? %>
+        <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
+                    class: "btn btn-sm btn-danger text-white" do %>
+          🚨 Alerter
+        <% end %>
+      <% elsif opportunity %>
+        <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
+                    class: "btn btn-sm btn-primary text-white" do %>
+          ✉️ Contacter
+        <% end %>
+      <% else %>
+        <span class="btn btn-sm btn-light disabled">☑️ OK</span>
+      <% end %>
+    </div>
+  </div>
+</div>
