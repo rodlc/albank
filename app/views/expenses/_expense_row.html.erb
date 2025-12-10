@@ -37,7 +37,7 @@
           <span class="btn btn-sm btn-outline-success disabled">🎉 Optimisé</span>
         <% elsif opportunity&.contacted? %>
           <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
-                      class: "btn btn-sm btn-light" do %>
+                      class: "btn btn-sm btn-outline-primary" do %>
             ✅ Archiver
           <% end %>
         <% elsif opportunity&.danger? %>
@@ -99,7 +99,7 @@
         <span class="btn btn-sm btn-outline-success disabled">🎉 Optimisé</span>
       <% elsif opportunity&.contacted? %>
         <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
-                    class: "btn btn-sm btn-light" do %>
+                    class: "btn btn-sm btn-outline-primary" do %>
           ✅ Archiver
         <% end %>
       <% elsif opportunity&.danger? %>
