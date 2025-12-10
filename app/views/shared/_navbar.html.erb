@@ -1,95 +1,87 @@
-<nav
-  class="
-    navbar navbar-expand-lg navbar-light bg-white border-bottom py-3
-    d-print-none
-  "
->
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-soft d-print-none">
   <div class="container">
     <%= link_to root_path, class: "navbar-brand fw-bold d-flex align-items-center" do %>
-      <span class="fs-2 me-2">🕵️</span>
-
-      <span class="text-primary fs-3" style="letter-spacing: -0.03em;">
+      <span class="fs-2 me-2" aria-hidden="true">🕵️</span>
+      <span class="text-primary fs-4 fs-lg-3 letter-spacing-tight">
         AlBank
       </span>
     <% end %>
 
     <button
-      class="navbar-toggler border-0"
+      class="navbar-toggler border-0 shadow-none"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#navbarNav"
       aria-controls="navbarNav"
       aria-expanded="false"
-      aria-label="Toggle navigation"
+      aria-label="Ouvrir le menu de navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul
-        class="
-          navbar-nav ms-auto align-items-center gap-2 flex-column
-          flex-lg-row text-center py-3 py-lg-0
-        "
-      >
+      <ul class="navbar-nav ms-auto align-items-center gap-3 gap-lg-2 mt-3 mt-lg-0">
         <% if user_signed_in? %>
-          <li class="nav-item">
+          <li class="nav-item w-100 w-lg-auto">
             <%= link_to statements_path,
-                class: "btn #{current_page?(statements_path) ? 'btn-gov-primary' : 'btn-gov-outline border-0'}" do %>
+                class: "btn #{current_page?(statements_path) ? 'btn-gov-primary' : 'btn-gov-outline'} w-100 w-lg-auto" do %>
+              <span class="me-1" aria-hidden="true">📊</span>
               Mes relevés
             <% end %>
           </li>
-          <li class="nav-item dropdown ms-2">
-            <a
-              href="#"
-              class="d-flex align-items-center text-decoration-none"
+
+          <li class="nav-item dropdown w-100 w-lg-auto">
+            <button
+              class="btn btn-ghost d-flex align-items-center justify-content-center w-100 w-lg-auto gap-2"
               id="navbarDropdown"
-              role="button"
+              type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
+              aria-label="Menu utilisateur"
             >
               <div
-                class="
-                  d-flex align-items-center justify-content-center
-                  bg-primary text-white rounded-circle shadow-sm
-                "
-                style="width: 40px; height: 40px; font-weight: 600;"
+                class="d-flex align-items-center justify-content-center bg-primary text-white rounded-circle"
+                style="width: 32px; height: 32px; font-weight: 600; font-size: 0.875rem;"
+                aria-hidden="true"
               >
                 <%= current_user.email.first.upcase %>
               </div>
-            </a>
+              <span class="d-lg-none text-semibold">Mon compte</span>
+            </button>
 
             <ul
-              class="dropdown-menu dropdown-menu-end border-0 shadow-lg"
+              class="dropdown-menu dropdown-menu-end border-0 shadow-card mt-2"
               aria-labelledby="navbarDropdown"
             >
               <li>
                 <span class="dropdown-item-text text-muted small">
-                  <%= current_user.email %>
+                  <%= truncate(current_user.email, length: 30) %>
                 </span>
               </li>
 
-              <li><hr class="dropdown-divider"></li>
+              <li><hr class="dropdown-divider my-2"></li>
 
               <li>
                 <%= link_to destroy_user_session_path,
                     data: { turbo_method: :delete },
-                    class: "dropdown-item text-danger" do %>
-                  <span class="me-2">🚪</span> Se déconnecter
+                    class: "dropdown-item text-danger d-flex align-items-center gap-2" do %>
+                  <span aria-hidden="true">🚪</span>
+                  Se déconnecter
                 <% end %>
               </li>
             </ul>
           </li>
         <% else %>
-          <li class="nav-item">
+          <li class="nav-item w-100 w-lg-auto">
             <%= link_to new_user_session_path,
-                class: "btn btn-gov-outline border-0" do %>
+                class: "btn btn-gov-outline w-100 w-lg-auto" do %>
               Se connecter
             <% end %>
           </li>
-          <li class="nav-item">
+
+          <li class="nav-item w-100 w-lg-auto">
             <%= link_to new_user_registration_path,
-                class: "btn btn-gov-primary" do %>
+                class: "btn btn-gov-primary w-100 w-lg-auto" do %>
               S'inscrire
             <% end %>
           </li>
