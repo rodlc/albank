@@ -31,12 +31,12 @@
     width: 100%;
     margin: 0 auto 2rem;
     padding: 2rem 1rem;
-    border: 3px dashed #000091;
-    border-radius: 12px;
+    border: 3px dashed $primary;
+    border-radius: $border-radius-lg;
     background: linear-gradient(
         135deg,
-        rgba(83, 193, 222, 0.04) 0%,
-        rgba(0, 0, 145, 0.02) 100%
+        rgba($cyan, 0.04) 0%,
+        rgba($primary, 0.02) 100%
     );
     cursor: pointer;
     transition: all 0.2s ease-in-out;
@@ -50,13 +50,13 @@
 
     // États interactifs
     &:hover {
-        border-color: #53c1de;
+        border-color: $cyan;
         background: linear-gradient(
             135deg,
-            rgba(83, 193, 222, 0.08) 0%,
-            rgba(0, 0, 145, 0.04) 100%
+            rgba($cyan, 0.08) 0%,
+            rgba($primary, 0.04) 100%
         );
-        box-shadow: 0 8px 20px rgba(0, 0, 145, 0.12);
+        box-shadow: 0 8px 20px rgba($primary, 0.12);
         transform: translateY(-2px);
     }
 
@@ -65,14 +65,14 @@
     }
 
     &.dragover {
-        border-color: #0055ff;
+        border-color: $link-hover-color;
         border-width: 3px;
         background: linear-gradient(
             135deg,
-            rgba(0, 85, 255, 0.08) 0%,
-            rgba(83, 193, 222, 0.08) 100%
+            rgba($link-hover-color, 0.08) 0%,
+            rgba($cyan, 0.08) 100%
         );
-        box-shadow: 0 12px 24px rgba(0, 85, 255, 0.2);
+        box-shadow: 0 12px 24px rgba($link-hover-color, 0.2);
         transform: scale(1.02);
     }
 
@@ -84,7 +84,7 @@
     h5 {
         font-size: 1.125rem;
         font-weight: 600;
-        color: #161616;
+        color: $body-color;
         margin-top: 1rem;
         margin-bottom: 0.5rem;
 
@@ -95,7 +95,7 @@
 
     p {
         font-size: 0.875rem;
-        color: #6e6e6e;
+        color: $text-muted;
 
         @media (min-width: 768px) {
             font-size: 1rem;
@@ -127,7 +127,7 @@
 
 // Reassurance badges
 .reassurance-badge {
-    border-radius: 12px;
+    border-radius: $border-radius-lg;
     padding: 1rem 0.75rem;
     transition:
         transform 0.2s ease,
@@ -155,26 +155,26 @@
     }
 
     &.reassurance-security {
-        background: rgba(0, 0, 145, 0.06);
+        background: rgba($primary, 0.06);
 
         p {
-            color: #000091 !important;
+            color: $primary !important;
         }
     }
 
     &.reassurance-privacy {
-        background: rgba(83, 193, 222, 0.12);
+        background: rgba($cyan, 0.12);
 
         p {
-            color: #2891b8 !important;
+            color: $cyan-dark !important;
         }
     }
 
     &.reassurance-auto {
-        background: rgba(255, 94, 108, 0.1);
+        background: rgba($coral, 0.1);
 
         p {
-            color: #c9191e !important;
+            color: $danger !important;
         }
     }
 }
@@ -182,7 +182,7 @@
 // Section explicative
 #explications {
     padding: 3rem 0;
-    background-color: #fafafa;
+    background-color: $bg-lighter;
 
     @media (min-width: 768px) {
         padding: 5rem 0;
@@ -196,11 +196,11 @@
 
 // Cards pour la section "Comment ça marche"
 .feature-card {
-    border: 1px solid #e8e8e8 !important;
-    border-radius: 12px !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+    border: 1px solid $border-color !important;
+    border-radius: $border-radius-lg !important;
+    box-shadow: $box-shadow-sm !important;
     transition: all 0.2s ease-in-out;
-    background-color: #ffffff;
+    background-color: $white;
     padding: 1.5rem !important;
 
     @media (min-width: 768px) {
@@ -209,22 +209,22 @@
 
     &:hover {
         transform: translateY(-4px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
-        background-color: rgba(83, 193, 222, 0.04);
-        border-color: #53c1de !important;
+        box-shadow: $box-shadow-lg !important;
+        background-color: rgba($cyan, 0.04);
+        border-color: $cyan !important;
     }
 
     .card-title {
         font-size: 1.125rem;
         font-weight: 600;
         margin-bottom: 1rem;
-        color: #161616;
+        color: $body-color;
     }
 
     .card-text {
         font-size: 0.9375rem;
         line-height: 1.6;
-        color: #6e6e6e;
+        color: $text-muted;
     }
 }
 
@@ -236,8 +236,8 @@
     justify-content: center;
     font-weight: 700;
     font-size: 1.25rem;
-    background-color: #000091;
-    color: #ffffff;
+    background-color: $primary;
+    color: $white;
     border-radius: 50%;
 }
 
@@ -283,9 +283,8 @@
         }
 
         &::after {
-            filter: brightness(0) saturate(100%) invert(14%) sepia(72%)
-                saturate(4715%) hue-rotate(236deg) brightness(94%)
-                contrast(101%);
+            // Filtre SVG pour primary color
+            opacity: 1;
         }
     }
 
@@ -295,7 +294,7 @@
 }
 
 .drop-zone.dragover {
-    outline: 3px dashed #4a90e2;
+    outline: 3px dashed $primary;
     opacity: 0.8;
 }
 
@@ -365,18 +364,18 @@
     }
 
     small {
-        color: #929292;
+        color: $input-placeholder-color;
         font-size: 0.875rem;
     }
 
     i {
-        color: #929292;
+        color: $input-placeholder-color;
         animation: bounce 2s ease-in-out infinite;
     }
 
     &:hover {
         i {
-            color: #000091;
+            color: $primary;
         }
     }
 }

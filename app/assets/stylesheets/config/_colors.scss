@@ -4,6 +4,7 @@
 // === COULEURS PRIMAIRES ===
 // Bleu Confiance (inspiré service public français)
 $primary: #000091; // Bleu France (Marianne)
+$primary-rgb: 0, 0, 145; // RGB pour rgba()
 $primary-light: #6a6af4; // Bleu France clair
 $primary-lighter: #e3e3fd; // Bleu France très pâle
 $primary-dark: #000074; // Bleu France foncé
@@ -11,20 +12,25 @@ $primary-hover: #1212ff; // Hover accessible
 
 // === COULEURS D'ACTION ===
 $action: #0055ff; // Bleu électrique pour CTA
+$action-rgb: 0, 85, 255; // RGB pour rgba()
 $action-hover: #0044cc; // Hover CTA
 
 // === COULEURS SECONDAIRES ===
 $coral: #ff5e6c; // Accent chaleureux
+$coral-rgb: 255, 94, 108; // RGB pour rgba()
 $coral-text: #c9191e; // Texte rouge accessible (ratio 4.5:1)
 $coral-light: #ffe5e7; // Fond coral pâle
 
 $cyan: #53c1de; // Accent frais
+$cyan-rgb: 83, 193, 222; // RGB pour rgba()
 $cyan-dark: #2891b8; // Cyan foncé accessible
 $cyan-light: #e0f7ff; // Fond cyan pâle
 
 // === PALETTE NEUTRE (Slate) ===
 $body-bg: #f6f6f6; // Gris très clair (fond page)
+$bg-lighter: #fafafa; // Surface secondaire
 $card-bg: #ffffff; // Blanc pur (composants)
+$white: #ffffff; // Blanc pur
 $surface-bg: #fafafa; // Surface secondaire
 
 // Textes
@@ -72,6 +78,8 @@ $light: #ffffff;
 $dark: $text-primary;
 $secondary: $gray-100;
 $body-color: $text-primary;
+$link-hover-color: $primary-hover;
+$link-hover-color-rgb: 18, 18, 255; // RGB pour rgba()
 
 // === OMBRES ===
 $shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
