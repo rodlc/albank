@@ -30,12 +30,23 @@ class StatementsController < ApplicationController
     end
 
     if user_signed_in?
-      # traiter immédiatement : on passe le binaire en mémoire
-      process_pdf_import(StringIO.new(uploaded.read))
+      # Créer un fichier persistant (pas Tempfile qui sera supprimé)
+      file_path = Rails.root.join("tmp", "upload-#{SecureRandom.uuid}.pdf")
+      File.open(file_path, "wb") do |f|
+        f.write(uploaded.read)
+      end
+
+      # Créer statement en processing
+      statement = current_user.statements.create!(date: Date.today, status: :processing)
+
+      # Lancer job background
+      ProcessStatementJob.perform_later(statement.id, file_path.to_s)
+
+      redirect_to statement, notice: "Analyse en cours..."
     else
       # stocker temporairement le binaire dans le cache (pas sur disque)
       cache_key = "pending_pdf:#{SecureRandom.uuid}"
-      Rails.cache.write(cache_key, uploaded.read, expires_in: 15.minutes)
+      Rails.cache.write(cache_key, { data: uploaded.read, filename: uploaded.original_filename }, expires_in: 15.minutes)
       session[:pending_pdf_key] = cache_key
       redirect_to new_user_session_path, notice: "Connectez-vous pour accéder à vos résultats !"
     end
@@ -44,9 +55,21 @@ class StatementsController < ApplicationController
   def process_upload
     cache_key = session.delete(:pending_pdf_key)
 
-    if cache_key && (data = Rails.cache.read(cache_key))
+    if cache_key && (cached = Rails.cache.read(cache_key))
       Rails.cache.delete(cache_key)
-      process_pdf_import(StringIO.new(data))
+      # Créer un fichier persistant (pas Tempfile qui sera supprimé)
+      file_path = Rails.root.join("tmp", "cached-#{SecureRandom.uuid}.pdf")
+      File.open(file_path, "wb") do |f|
+        f.write(cached[:data])
+      end
+
+      # Créer statement en processing
+      statement = current_user.statements.create!(date: Date.today, status: :processing)
+
+      # Lancer job background
+      ProcessStatementJob.perform_later(statement.id, file_path.to_s)
+
+      redirect_to statement, notice: "Analyse en cours..."
     else
       redirect_to root_path, alert: "Session expirée ! Réimportez votre relevé."
     end
@@ -54,18 +77,22 @@ class StatementsController < ApplicationController
 
   private
 
-  # file_io doit être un IO-like (StringIO, Tempfile, ...)
-  def process_pdf_import(file_io)
-    # Extraction du texte brut du PDF
-    file_io.rewind
-    text = PDF::Reader.new(file_io).pages.map(&:text).join("\n")
-
+  # file_path doit être un chemin de fichier string (.pdf)
+  def process_pdf_import(file_path, filename = nil)
     # Appel du LLM pour extraire et catégoriser les transactions
-    data = LlmProcessor.new(text).process
+    Rails.logger.info("[PDF IMPORT] Processing #{filename || 'uploaded PDF'}")
+    data = LlmProcessor.new.process(file_path)
     transactions = data[:transactions] || []
 
+    # Vérifier si le LLM a échoué
+    if data[:error]
+      Rails.logger.error("[PDF IMPORT] LLM failed: #{data[:error]}")
+      redirect_to root_path, alert: "Impossible d'analyser le relevé. Consultez log/llm.log pour les détails."
+      return
+    end
+
     # Création du relevé et des dépenses associées
-    statement = current_user.statements.create(date: Date.today, total: data[:total])
+    statement = current_user.statements.create!(date: Date.today, total: data[:total])
 
     transactions.each do |transaction|
       category = Category.find_by(name: transaction[:category])
@@ -74,17 +101,35 @@ class StatementsController < ApplicationController
         next
       end
 
-      Expense.create!(
+      expense = Expense.create!(
         category: category,
-        subtotal: transaction[:amount].abs,
+        subtotal: parse_amount(transaction[:amount]),
         label: transaction[:label],
         statement: statement
       )
+
+      # Auto-création des Opportunities si Standard disponible
+      standard = Standard.where(category: category)
+                         .valid_for_statement(statement.date)
+                         .first
+      if standard
+        opp = Opportunity.create!(expense: expense, standard: standard, status: :pending)
+        opp.classify!
+      end
     end
 
-    redirect_to statement, notice: "Relevé importé avec succès ! #{statement.expenses.count} dépenses détectées."
+    if statement.expenses.count.zero?
+      redirect_to statement, alert: "Relevé importé mais aucune dépense récurrente détectée. Vérifiez le format du PDF."
+    else
+      redirect_to statement, notice: "Relevé importé avec succès ! #{statement.expenses.count} dépenses détectées."
+    end
   rescue StandardError => e
     Rails.logger.error("[PDF IMPORT] #{e.class}: #{e.message}")
-    redirect_to root_path, alert: "Erreur lors de l'import du relevé."
+    Rails.logger.error(e.backtrace.first(10).join("\n"))
+    redirect_to root_path, alert: "Erreur lors de l'import du relevé : #{e.message}"
+  end
+
+  def parse_amount(value)
+    value.to_s.gsub(/[^\d.,\-]/, "").gsub(",", ".").to_f.abs
   end
 end

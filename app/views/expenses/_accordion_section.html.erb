@@ -37,7 +37,7 @@
     data-bs-parent="#expensesAccordion"
   >
     <div class="accordion-body">
-      <% expenses.each do |expense| %>
+      <% group_expenses(expenses).each do |expense| %>
         <%= render "expenses/expense_row", expense: expense, statement: statement %>
       <% end %>
     </div>

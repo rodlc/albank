@@ -1,0 +1,16 @@
+<div class="text-center py-5">
+  <div class="mb-3 fs-1 text-danger">
+    ⚠️
+  </div>
+  <h4 class="fw-bold mb-2">Erreur lors de l'analyse</h4>
+  <p class="text-muted mb-4">Impossible de traiter votre relevé bancaire.</p>
+
+  <div class="d-flex justify-content-center gap-3">
+    <%= link_to "Réessayer", root_path, class: "btn btn-primary" %>
+    <%= link_to "Mes relevés", statements_path, class: "btn btn-outline-secondary" %>
+  </div>
+
+  <small class="text-muted d-block mt-4">
+    Si le problème persiste, vérifiez que le PDF est un relevé bancaire français valide.
+  </small>
+</div>
