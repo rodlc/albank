@@ -34,6 +34,7 @@ class LlmProcessor
       [{ model: ENV["LLM_MODEL"], provider: :gemini }] + FALLBACK_MODELS
     else
       FALLBACK_MODELS
+
     end
   end
 
@@ -56,29 +57,45 @@ class LlmProcessor
       "- #{name} (ex: #{keywords})"
     end.join("\n")
 
-    <<~PROMPT
-      Tu es un expert en analyse de relevés bancaires français.
+<<~PROMPT
+Tu es un **Expert-Comptable Senior** spécialisé dans l'**analyse des relevés bancaires de particuliers français**
+et l'**identification des frais potentiellement excessifs**. Ton rôle est de fournir une analyse extrêmement précise et fiable.
 
-      RELEVÉ :
-      #{@text}
+**1. DONNÉES À ANALYSER (Relevé Client) :**
+---
+RELEVÉ BRUT :
+#{@text}
 
-      CATÉGORIES CONNUES (avec exemples de mots-clés) :
-      #{categories_list}
+**2. CATALOGUE DE CATÉGORIES (Le Stock de la Boutique) :**
+---
+Voici la liste des catégories de dépenses connues (avec des mots-clés typiques pour t'aider) :
+#{categories_list}
 
-      MISSION :
-      Pour chaque ligne du relevé, identifie :
-      - Le libellé original (tel qu'il apparaît)
-      - La catégorie la plus probable
-      - Le montant
+**3. MISSION PRINCIPALE (Le Service Client) :**
+---
+Pour **chaque transaction** dans le RELEVÉ BRUT, tu dois effectuer deux actions essentielles :
+a) **Catégorisation Rigoureuse :** Identifier la **catégorie** la plus pertinente pour chaque libellé. Fais preuve de jugement même si le libellé est tronqué ou inhabituel.
+b) **Détection d'Alertes :** Identifier si la transaction représente un **frais bancaire** ou une **dépense récurrente suspecte** (comme un abonnement potentiel non souhaité). Ajoute une alerte (`"is_fee": true` ou `"is_alert": true`) si tu as une forte suspicion d'un frais bancaire ou d'un abonnement difficile à annuler, **en particulier** dans la catégorie "Frais Bancaires".
 
-      Les mots-clés sont des indices, pas des règles strictes.
-      Utilise ton intelligence pour déduire la catégorie même si le libellé est abrégé ou cryptique.
+**4. LIVRABLE ATTENDU (Le Bon de Commande Final) :**
+---
+Tu dois **STRICTEMENT** retourner le résultat au format **JSON**, et ce JSON doit être le seul et unique contenu de ta réponse.
 
-      Retourne aussi le total des dépenses du relevé.
-
-      IMPORTANT : Réponds UNIQUEMENT avec le JSON, sans aucun texte avant ou après.
-      Format : {"total": montant_total, "transactions": [{"label": "...", "category": "...", "amount": ...}]}
-    PROMPT
+Format JSON requis :
+{
+  "total_depenses": Montant_Total_des_dépenses_uniquement,
+  "transactions": [
+    {
+      "label": "Libellé original exact",
+      "category": "Catégorie déduite",
+      "amount": Montant numérique (toujours négatif pour les dépenses, positif pour les revenus),
+      "is_fee": true/false,  // Vrai si c'est un frais bancaire clair (ex: Agio, frais de tenue de compte, commission)
+      "is_alert": true/false // Vrai si c'est un abonnement potentiel suspect ou un frais inhabituel
+    }
+    // ... autres transactions
+  ]
+}
+PROMPT
   end
 
   def parse_response(content)
