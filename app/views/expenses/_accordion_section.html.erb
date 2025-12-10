@@ -2,6 +2,7 @@
   config = result_type_config(result_type)
   section_id = "section-#{result_type}-#{index}"
   show_class = index == 0 ? "show" : ""
+  totals = section_totals(expenses)
 %>
 
 <div class="accordion-item accordion-<%= config[:color] %>">
@@ -13,10 +14,17 @@
       data-bs-target="#<%= section_id %>"
       aria-expanded="<%= index == 0 ? 'true' : 'false' %>"
       aria-controls="<%= section_id %>"
+      aria-label="<%= config[:label] %> : <%= expenses.count %> dépense(s), total <%= number_to_currency(totals[:total], unit: '€') %><%= ", économies potentielles #{number_to_currency(totals[:savings], unit: '€')}" if totals[:savings] > 0 %>"
     >
       <span class="section-emoji"><%= config[:emoji] %></span>
       <span class="section-label"><%= config[:label] %></span>
       <span class="section-count">(<%= expenses.count %>)</span>
+      <span class="section-totals ms-auto me-3">
+        <%= number_to_currency(totals[:total], unit: "€", precision: 0) %>
+        <% if totals[:savings] > 0 %>
+          <span class="text-success">· -<%= number_to_currency(totals[:savings], unit: "€", precision: 0) %></span>
+        <% end %>
+      </span>
     </button>
   </h2>
 

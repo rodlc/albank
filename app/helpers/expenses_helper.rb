@@ -27,4 +27,10 @@ module ExpensesHelper
       { emoji: "💳", label: "Autres", color: "secondary" }
     end
   end
+
+  def section_totals(expenses)
+    total = expenses.sum(&:subtotal)
+    savings = expenses.sum { |e| e.opportunities.first&.savings.to_f }
+    { total: total, savings: savings }
+  end
 end
