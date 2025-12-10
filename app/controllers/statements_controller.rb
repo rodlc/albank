@@ -54,12 +54,6 @@ class StatementsController < ApplicationController
 
   private
 
-  def store_pending_pdf(file)
-    cache_key = "pending_pdf:#{SecureRandom.uuid}"
-    Rails.cache.write(cache_key, file.read, expires_in: 15.minutes)
-    session[:pending_pdf_key] = cache_key
-  end
-
   # file_io doit être un IO-like (StringIO, Tempfile, ...)
   def process_pdf_import(file_io)
     # Extraction du texte brut du PDF
@@ -71,7 +65,7 @@ class StatementsController < ApplicationController
     transactions = data[:transactions] || []
 
     # Création du relevé et des dépenses associées
-    statement = current_user.statements.create(date: Date.today)
+    statement = current_user.statements.create(date: Date.today, total: data[:total])
 
     transactions.each do |transaction|
       category = Category.find_by(name: transaction[:category])
@@ -92,29 +86,5 @@ class StatementsController < ApplicationController
   rescue StandardError => e
     Rails.logger.error("[PDF IMPORT] #{e.class}: #{e.message}")
     redirect_to root_path, alert: "Erreur lors de l'import du relevé."
-  end
-
-  def create_simulated_expenses(statement)
-    # Note: En production, utiliser valid_for_statement(statement.date)
-    # Pour la simulation de démo, on utilise sample() pour la variété
-    standards_with_categories = Standard.includes(:category).sample(rand(3..4))
-
-    standards_with_categories.each do |standard|
-      amount_above_avg = standard.average_amount + rand(10.0..30.0)
-      realistic_amount = [amount_above_avg, standard.max_amount + 10].min
-
-      expense = statement.expenses.create!(
-        category: standard.category,
-        subtotal: realistic_amount.round(2),
-        label: "SIMULATION #{standard.category.name.upcase}"
-      )
-
-      opportunity = Opportunity.create!(
-        expense: expense,
-        standard: standard,
-        status: "pending"
-      )
-      opportunity.classify!
-    end
   end
 end
