@@ -1,18 +1,84 @@
 // Import Google fonts - Modern UI (Inter)
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 // Define fonts for body and headers
 $body-font: "Inter", sans-serif;
 $headers-font: "Inter", sans-serif;
 
-// Modern typography settings
+// Modern typography settings (Mobile First)
 body {
-  letter-spacing: -0.015em;  // Tight tracking for modern "Tech" look
+    letter-spacing: -0.01em; // Léger resserrement pour lisibilité moderne
+    font-size: 1rem; // 16px base (mobile)
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  letter-spacing: -0.03em;   // Very tight for headings
-  font-weight: 600;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    letter-spacing: -0.02em; // Resserrement modéré pour les titres
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 0.5em;
+}
+
+// Responsive headings
+h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem); // 28px → 40px
+}
+
+h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem); // 24px → 32px
+}
+
+h3 {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem); // 20px → 28px
+}
+
+h4 {
+    font-size: 1.125rem; // 18px
+}
+
+h5,
+h6 {
+    font-size: 1rem; // 16px
+}
+
+// Amélioration de la lisibilité
+p {
+    margin-bottom: 1rem;
+}
+
+small,
+.small {
+    font-size: 0.875rem; // 14px
+    line-height: 1.4;
+}
+
+strong,
+b {
+    font-weight: 600;
+}
+
+// Classes utilitaires typographie
+.text-semibold {
+    font-weight: 600;
+}
+
+.text-medium {
+    font-weight: 500;
+}
+
+.letter-spacing-tight {
+    letter-spacing: -0.02em;
+}
+
+.letter-spacing-normal {
+    letter-spacing: 0;
 }
 
 // To use a font file (.woff) uncomment following lines
