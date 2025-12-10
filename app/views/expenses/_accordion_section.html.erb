@@ -16,9 +16,11 @@
       aria-controls="<%= section_id %>"
       aria-label="<%= config[:label] %> : <%= expenses.count %> dépense(s), total <%= number_to_currency(totals[:total], unit: '€') %><%= ", économies potentielles #{number_to_currency(totals[:savings], unit: '€')}" if totals[:savings] > 0 %>"
     >
-      <span class="section-emoji"><%= config[:emoji] %></span>
-      <span class="section-label"><%= config[:label] %></span>
-      <span class="badge badge-<%= config[:color] %> ms-2"><%= expenses.count %></span>
+      <div class="d-flex align-items-center gap-2 flex-grow-1">
+        <span class="section-emoji"><%= config[:emoji] %></span>
+        <span class="section-label"><%= config[:label] %></span>
+        <span class="badge badge-<%= config[:color] %>"><%= expenses.count %></span>
+      </div>
       <span class="section-totals ms-auto">
         <span class="<%= 'text-danger' if result_type == :danger %>">
           <%= number_to_currency(totals[:total], unit: "€", precision: 0) %>
@@ -27,7 +29,7 @@
           <span class="text-primary"> · <%= number_to_currency(totals[:savings], unit: "€", precision: 0) %></span>
         <% end %>
       </span>
-      <span class="section-action">Voir</span>
+      <span class="section-action d-none d-md-inline">Voir</span>
     </button>
   </h2>
 

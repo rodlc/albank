@@ -5,14 +5,27 @@
     <% end %>
   </div>
 
-  <!-- Header -->
-  <div class="mb-4">
-    <h1 class="fw-bold mb-2">
-      <span class="underline-cyan">
-        Relevé de <%= l(@statement.date, format: "%B %Y").capitalize %>
-      </span>
-    </h1>
-    <p class="text-muted mb-0">Analyse détaillée des transactions</p>
+  <!-- Header amélioré -->
+  <div class="statement-header mb-4 p-3 p-md-4 bg-white rounded-3 shadow-soft">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+      <div>
+        <h1 class="h3 h2-md fw-bold mb-1">
+          <span class="underline-cyan">
+            Relevé de <%= l(@statement.date, format: "%B %Y").capitalize %>
+          </span>
+        </h1>
+        <p class="text-muted mb-0 small">Analyse détaillée des transactions</p>
+      </div>
+
+      <div class="d-flex gap-2 align-items-center">
+        <% total_opportunities = @expenses.joins(:opportunities).count %>
+        <% if total_opportunities > 0 %>
+          <span class="badge bg-primary rounded-pill px-3 py-2">
+            <span aria-hidden="true">💡</span> <%= total_opportunities %> opportunité<%= total_opportunities > 1 ? 's' : '' %>
+          </span>
+        <% end %>
+      </div>
+    </div>
   </div>
 
   <!-- Synthèse responsive -->
