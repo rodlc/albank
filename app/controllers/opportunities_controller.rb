@@ -8,10 +8,10 @@ class OpportunitiesController < ApplicationController
   def update
     if @opportunity.update(opportunity_params)
       redirect_to statement_expense_opportunity_path(@statement, @expense, @opportunity),
-                  notice: "Opportunity status updated successfully."
+                  notice: "Statut mis à jour avec succès."
     else
       redirect_to statement_expense_opportunity_path(@statement, @expense, @opportunity),
-                  alert: "Failed to update opportunity status."
+                  alert: "Impossible de mettre à jour le statut."
     end
   end
 

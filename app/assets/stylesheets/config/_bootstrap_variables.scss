@@ -1,28 +1,248 @@
-// This is where you override default Bootstrap variables
-// 1. Find all Bootstrap variables that you can override at the end of each component's documentation under the `Sass variables` anchor
-// e.g. here are the ones you can override for the navbar https://getbootstrap.com/docs/5.3/components/navbar/#sass-variables
-// 2. These variables are defined with default value (see https://robots.thoughtbot.com/sass-default)
-// 3. You can override them below!
+// === AlBank Bootstrap Variables Override ===
+// Ce fichier surcharge les variables par défaut de Bootstrap 5
+// pour garantir la cohérence avec notre palette de couleurs
 
-// General style
-$font-family-sans-serif: $body-font;
-$headings-font-family:   $headers-font;
-$body-bg:                $light;
-$font-size-base:         1rem;
+// === TYPOGRAPHIE ===
+$font-family-sans-serif:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+$font-family-base: $font-family-sans-serif;
+$headings-font-family: $font-family-sans-serif;
 
-// Colors - Public Service Style
-$body-color: $gray-900;
+// Tailles de police (mobile-first)
+$font-size-base: 1rem; // 16px
+$font-size-sm: 0.875rem; // 14px
+$font-size-lg: 1.125rem; // 18px
 
-// Buttons & inputs' radius (style institutionnel - arrondis faibles)
-$border-radius-sm:            .25rem;   // 4px
-$border-radius:               .375rem;  // 6px (Mon-Entreprise standard)
-$border-radius-lg:            .5rem;    // 8px
-$border-radius-xl:            .75rem;   // 12px
-$border-radius-xxl:           1rem;     // 16px
+$h1-font-size: 2rem; // 32px mobile
+$h2-font-size: 1.5rem; // 24px mobile
+$h3-font-size: 1.25rem; // 20px mobile
+$h4-font-size: 1.125rem; // 18px mobile
+$h5-font-size: 1rem; // 16px
+$h6-font-size: 0.875rem; // 14px
 
-// Shadows (Discrètes, juste pour le relief)
-$box-shadow-sm:               0 1px 2px rgba(0, 0, 0, 0.05);
-$box-shadow:                  0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-$box-shadow-lg:               0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+// Letter spacing
+$headings-letter-spacing: -0.02em;
+$body-letter-spacing: -0.01em;
 
-// Override other variables below!
+// Line height
+$line-height-base: 1.6;
+$headings-line-height: 1.2;
+
+// Poids de police
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+$headings-font-weight: $font-weight-semibold;
+
+// === COULEURS BOOTSTRAP ===
+// Mapper nos couleurs sur les variables Bootstrap
+$primary: #000091;
+$secondary: #e8e8e8;
+$success: #18753c;
+$info: #0063cb;
+$warning: #b34000;
+$danger: #ce0500;
+$light: #f6f6f6;
+$dark: #161616;
+
+// Couleurs de texte
+$body-color: #161616;
+$body-bg: #f6f6f6;
+$text-muted: #6e6e6e;
+
+// Couleurs de liens
+$link-color: #000091;
+$link-hover-color: #1212ff;
+$link-decoration: none;
+$link-hover-decoration: underline;
+
+// === ESPACEMENTS ===
+$spacer: 1rem;
+$spacers: (
+    0: 0,
+    1: $spacer * 0.25,
+    // 4px
+    2: $spacer * 0.5,
+    // 8px
+    3: $spacer * 1,
+    // 16px
+    4: $spacer * 1.5,
+    // 24px
+    5: $spacer * 3,
+    // 48px
+    6: $spacer * 4, // 64px
+);
+
+// === BORDURES ===
+$border-width: 1px;
+$border-color: #dddddd;
+$border-radius: 8px;
+$border-radius-sm: 4px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$border-radius-xxl: 24px;
+$border-radius-pill: 50rem;
+
+// === OMBRES ===
+$box-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+$box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+$box-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+// === COMPOSANTS ===
+
+// Boutons
+$btn-padding-y: 0.75rem; // 12px (44px min avec texte)
+$btn-padding-x: 1.5rem; // 24px
+$btn-font-size: 1rem;
+$btn-font-weight: $font-weight-semibold;
+$btn-line-height: 1.4;
+$btn-border-radius: $border-radius;
+$btn-border-width: 2px;
+$btn-box-shadow: none;
+$btn-active-box-shadow: none;
+$btn-focus-box-shadow: 0 0 0 3px rgba(0, 0, 145, 0.25);
+
+// Tailles de boutons
+$btn-padding-y-sm: 0.5rem;
+$btn-padding-x-sm: 1rem;
+$btn-font-size-sm: 0.875rem;
+
+$btn-padding-y-lg: 1rem;
+$btn-padding-x-lg: 2rem;
+$btn-font-size-lg: 1.125rem;
+
+// Inputs & Forms
+$input-padding-y: 0.75rem;
+$input-padding-x: 1rem;
+$input-font-size: 1rem;
+$input-border-color: #dddddd;
+$input-border-radius: $border-radius;
+$input-focus-border-color: #000091;
+$input-focus-box-shadow: 0 0 0 3px rgba(0, 0, 145, 0.15);
+$input-placeholder-color: #929292;
+
+// Cartes
+$card-spacer-y: 1.5rem;
+$card-spacer-x: 1.5rem;
+$card-border-width: 1px;
+$card-border-color: #e8e8e8;
+$card-border-radius: $border-radius-lg;
+$card-box-shadow: $box-shadow-sm;
+$card-bg: #ffffff;
+
+// Navbar
+$navbar-padding-y: 1rem;
+$navbar-padding-x: 0;
+$navbar-brand-font-size: 1.5rem;
+$navbar-brand-font-weight: $font-weight-bold;
+$navbar-toggler-padding-y: 0.5rem;
+$navbar-toggler-padding-x: 0.75rem;
+$navbar-toggler-border-radius: $border-radius;
+
+// Accordéon
+$accordion-padding-y: 1.25rem;
+$accordion-padding-x: 1.5rem;
+$accordion-border-color: #e8e8e8;
+$accordion-button-active-bg: transparent;
+$accordion-button-active-color: #000091;
+$accordion-button-focus-border-color: transparent;
+$accordion-button-focus-box-shadow: none;
+$accordion-icon-color: #000091;
+$accordion-icon-active-color: #000091;
+
+// Alerts
+$alert-padding-y: 1rem;
+$alert-padding-x: 1.25rem;
+$alert-border-radius: $border-radius;
+$alert-border-width: 1px;
+
+// Modal
+$modal-content-border-radius: $border-radius-lg;
+$modal-content-box-shadow-xs: $box-shadow-lg;
+$modal-content-box-shadow-sm-up: $box-shadow-lg;
+$modal-backdrop-opacity: 0.5;
+
+// Dropdown
+$dropdown-padding-y: 0.5rem;
+$dropdown-border-radius: $border-radius;
+$dropdown-box-shadow: $box-shadow-lg;
+$dropdown-border-color: #e8e8e8;
+$dropdown-link-hover-bg: #f6f6f6;
+
+// Badges
+$badge-padding-y: 0.35em;
+$badge-padding-x: 0.65em;
+$badge-border-radius: $border-radius;
+$badge-font-weight: $font-weight-semibold;
+
+// Pagination
+$pagination-padding-y: 0.5rem;
+$pagination-padding-x: 0.75rem;
+$pagination-border-radius: $border-radius;
+$pagination-color: #000091;
+$pagination-hover-color: #1212ff;
+$pagination-focus-box-shadow: 0 0 0 3px rgba(0, 0, 145, 0.15);
+
+// Tables
+$table-cell-padding-y: 0.75rem;
+$table-cell-padding-x: 1rem;
+$table-striped-bg: #fafafa;
+$table-hover-bg: #f6f6f6;
+
+// === BREAKPOINTS (Mobile First) ===
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1400px,
+);
+
+// Container max widths
+$container-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 960px,
+    xl: 1140px,
+    xxl: 1320px,
+);
+
+// === TRANSITIONS ===
+$transition-base: all 0.2s ease-in-out;
+$transition-fade: opacity 0.15s linear;
+$transition-collapse: height 0.35s ease;
+
+// === Z-INDEX ===
+$zindex-dropdown: 1000;
+$zindex-sticky: 1020;
+$zindex-fixed: 1030;
+$zindex-modal-backdrop: 1040;
+$zindex-modal: 1050;
+$zindex-popover: 1060;
+$zindex-tooltip: 1070;
+
+// === DÉSACTIVER CERTAINES FEATURES ===
+$enable-rounded: true;
+$enable-shadows: false; // On utilise nos ombres custom
+$enable-gradients: false;
+$enable-transitions: true;
+$enable-reduced-motion: true;
+$enable-grid-classes: true;
+$enable-container-classes: true;
+$enable-caret: true;
+$enable-button-pointers: true;
+$enable-rfs: true; // Responsive font sizes
+$enable-validation-icons: true;
+$enable-negative-margins: true;
+$enable-deprecation-messages: true;
+$enable-important-utilities: true;

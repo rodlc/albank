@@ -1,0 +1,428 @@
+// === AlBank Button System ===
+// Boutons accessibles (WCAG AA) et tactiles (min 44px)
+// Mobile First avec états hover/focus/active clairs
+
+// === BOUTONS PRINCIPAUX (style service public français) ===
+.btn-gov-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: 2px solid #000091;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+    min-height: 44px; // Taille tactile minimum (WCAG)
+
+    // Couleurs
+    background-color: #000091;
+    color: #ffffff;
+
+    &:hover {
+        background-color: #1212ff;
+        border-color: #1212ff;
+        color: #ffffff;
+        text-decoration: none;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 145, 0.2);
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 0, 145, 0.25);
+    }
+
+    &:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 145, 0.2);
+    }
+
+    &:disabled,
+    &.disabled {
+        background-color: #cecece;
+        border-color: #cecece;
+        color: #929292;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    // Mobile : pleine largeur par défaut
+    @media (max-width: 767px) {
+        width: 100%;
+    }
+}
+
+.btn-gov-outline {
+    @extend .btn-gov-primary;
+    background-color: transparent;
+    color: #000091;
+    border-color: #000091;
+
+    &:hover {
+        background-color: #e3e3fd;
+        border-color: #1212ff;
+        color: #1212ff;
+    }
+
+    &:disabled,
+    &.disabled {
+        background-color: transparent;
+        border-color: #cecece;
+        color: #cecece;
+    }
+}
+
+// === BOUTONS D'ACTION (CTA) ===
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    border: none;
+    border-radius: 12px;
+    transition: all 0.2s ease-in-out;
+    min-height: 48px;
+    box-shadow: 0 2px 8px rgba(0, 85, 255, 0.15);
+
+    background-color: #0055ff;
+    color: #ffffff;
+
+    &:hover {
+        background-color: #0044cc;
+        color: #ffffff;
+        text-decoration: none;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 85, 255, 0.25);
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(0, 85, 255, 0.25);
+    }
+
+    &:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 6px rgba(0, 85, 255, 0.2);
+    }
+
+    // Mobile : pleine largeur
+    @media (max-width: 767px) {
+        width: 100%;
+        font-size: 1rem;
+        padding: 0.875rem 1.5rem;
+    }
+}
+
+// === BOUTONS SÉMANTIQUES ===
+.btn-danger-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #ce0500;
+    border-radius: 8px;
+    background-color: transparent;
+    color: #ce0500;
+    transition: all 0.2s ease-in-out;
+    min-height: 44px;
+
+    &:hover {
+        background-color: #fff5f5;
+        border-color: #b91c1c;
+        color: #b91c1c;
+        text-decoration: none;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(206, 5, 0, 0.2);
+    }
+}
+
+.btn-success-outline {
+    @extend .btn-danger-outline;
+    border-color: #18753c;
+    color: #18753c;
+
+    &:hover {
+        background-color: #e8ffed;
+        border-color: #0f5229;
+        color: #0f5229;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 3px rgba(24, 117, 60, 0.2);
+    }
+}
+
+// === BOUTONS SECONDAIRES (Soft) ===
+.btn-soft {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background-color: #f6f6f6;
+    color: #161616;
+    transition: all 0.2s ease-in-out;
+    min-height: 44px;
+
+    &:hover {
+        background-color: #e8e8e8;
+        color: #000000;
+        text-decoration: none;
+        transform: translateY(-1px);
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+// === BOUTONS FANTÔMES (Ghost) ===
+.btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background-color: transparent;
+    color: #6e6e6e;
+    transition: all 0.15s ease-in-out;
+
+    &:hover {
+        background-color: #f6f6f6;
+        color: #161616;
+        text-decoration: none;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+    }
+}
+
+// === BOUTONS ICÔNES ===
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    font-size: 1.25rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background-color: transparent;
+    color: #6e6e6e;
+    transition: all 0.15s ease-in-out;
+
+    &:hover {
+        background-color: #f6f6f6;
+        color: #161616;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+        background-color: #e8e8e8;
+    }
+}
+
+// === GROUPES DE BOUTONS ===
+.btn-group-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        width: auto;
+
+        .btn-gov-primary,
+        .btn-action {
+            width: auto;
+        }
+    }
+}
+
+// === BOUTONS STICKY (Mobile) ===
+.btn-sticky-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1020;
+    padding: 1rem;
+    background: linear-gradient(
+        to top,
+        #ffffff 0%,
+        #ffffff 90%,
+        transparent 100%
+    );
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+
+    @media (min-width: 768px) {
+        position: static;
+        padding: 0;
+        background: none;
+        box-shadow: none;
+    }
+}
+
+// === OVERRIDES BOOTSTRAP (pour cohérence) ===
+.btn-primary {
+    background-color: #000091;
+    border-color: #000091;
+    font-weight: 600;
+
+    &:hover {
+        background-color: #1212ff;
+        border-color: #1212ff;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 3px rgba(0, 0, 145, 0.25);
+    }
+}
+
+.btn-outline-primary {
+    border-color: #000091;
+    color: #000091;
+    font-weight: 600;
+
+    &:hover {
+        background-color: #000091;
+        border-color: #000091;
+        color: #ffffff;
+    }
+}
+
+.btn-secondary {
+    background-color: #6e6e6e;
+    border-color: #6e6e6e;
+    font-weight: 600;
+
+    &:hover {
+        background-color: #525252;
+        border-color: #525252;
+    }
+}
+
+.btn-danger {
+    background-color: #ce0500;
+    border-color: #ce0500;
+    font-weight: 600;
+
+    &:hover {
+        background-color: #b91c1c;
+        border-color: #b91c1c;
+    }
+}
+
+.btn-success {
+    background-color: #18753c;
+    border-color: #18753c;
+    font-weight: 600;
+
+    &:hover {
+        background-color: #0f5229;
+        border-color: #0f5229;
+    }
+}
+
+// === STATES COMMUNS ===
+.btn {
+    // Taille tactile minimum
+    min-height: 44px;
+
+    // Transition douce
+    transition: all 0.2s ease-in-out;
+
+    // Focus accessible
+    &:focus-visible {
+        outline: 2px solid #000091;
+        outline-offset: 2px;
+    }
+
+    // Désactivé
+    &:disabled,
+    &.disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+}
+
+// === UTILITAIRES ===
+.btn-rounded {
+    border-radius: 50rem !important;
+}
+
+.btn-sharp {
+    border-radius: 4px !important;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.btn-sm-mobile {
+    @media (max-width: 767px) {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        min-height: 40px;
+    }
+}

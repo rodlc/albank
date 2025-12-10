@@ -1,0 +1,73 @@
+<footer class="footer bg-white border-top mt-5 d-print-none">
+  <div class="container py-4 py-md-5">
+    <div class="row gy-4">
+      <!-- Logo et tagline -->
+      <div class="col-12 col-md-4">
+        <div class="d-flex align-items-center mb-3">
+          <span class="fs-2 me-2" aria-hidden="true">🕵️</span>
+          <span class="text-primary fs-4 fw-bold letter-spacing-tight">AlBank</span>
+        </div>
+        <p class="text-muted small mb-0">
+          Protégez votre argent des fraudes et abus.<br>
+          Service gratuit et confidentiel.
+        </p>
+      </div>
+
+      <!-- Liens utiles -->
+      <div class="col-6 col-md-2">
+        <h6 class="fw-semibold mb-3">Liens</h6>
+        <ul class="list-unstyled small">
+          <li class="mb-2">
+            <%= link_to "Accueil", root_path, class: "text-muted text-decoration-none" %>
+          </li>
+          <% if user_signed_in? %>
+            <li class="mb-2">
+              <%= link_to "Mes relevés", statements_path, class: "text-muted text-decoration-none" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <!-- À propos -->
+      <div class="col-6 col-md-3">
+        <h6 class="fw-semibold mb-3">À propos</h6>
+        <ul class="list-unstyled small">
+          <li class="mb-2">
+            <a href="#" class="text-muted text-decoration-none">Comment ça marche ?</a>
+          </li>
+          <li class="mb-2">
+            <a href="#" class="text-muted text-decoration-none">Sécurité & confidentialité</a>
+          </li>
+          <li class="mb-2">
+            <a href="#" class="text-muted text-decoration-none">Contact</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Légal -->
+      <div class="col-12 col-md-3">
+        <h6 class="fw-semibold mb-3">Légal</h6>
+        <ul class="list-unstyled small">
+          <li class="mb-2">
+            <a href="#" class="text-muted text-decoration-none">Mentions légales</a>
+          </li>
+          <li class="mb-2">
+            <a href="#" class="text-muted text-decoration-none">Politique de confidentialité</a>
+          </li>
+          <li class="mb-2">
+            <a href="#" class="text-muted text-decoration-none">CGU</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="row mt-4 pt-4 border-top">
+      <div class="col-12 text-center text-md-start">
+        <p class="text-muted small mb-0">
+          © <%= Date.current.year %> AlBank • Fait avec ❤️ en France
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

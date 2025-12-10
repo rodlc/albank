@@ -57,44 +57,40 @@
     </div>
   </div>
 
-  <!-- Desktop: Colonnes horizontales -->
-  <div class="d-none d-md-flex row align-items-center">
-    <!-- Category -->
-    <div class="col-3 d-flex align-items-center">
-      <div class="expense-icon me-2">
+  <!-- Desktop: Fixed-width flexbox columns -->
+  <div class="d-none d-md-flex expense-row-desktop align-items-center">
+    <!-- Icon + Category (Fixed) -->
+    <div class="expense-row-category">
+      <div class="expense-icon">
         <%= category_emoji(expense.category) %>
       </div>
-
       <div class="expense-category">
         <%= expense.category.name %>
       </div>
     </div>
 
-    <!-- Label -->
-    <div class="col-3">
-      <span class="expense-label">
+    <!-- Label (Flexible with truncation) -->
+    <div class="expense-row-label">
+      <span class="expense-label text-muted">
         <%= expense.label %>
       </span>
     </div>
 
-    <!-- Amount -->
-    <div class="col-2 text-end">
+    <!-- Amount + Savings (Fixed right) -->
+    <div class="expense-row-amount">
       <div class="expense-amount">
         <%= number_to_currency(expense.subtotal, unit: "€", precision: 2) %>
       </div>
 
       <% if opportunity&.opportunity? && opportunity.savings > 0 %>
-        <div class="expense-savings text-primary small">
+        <div class="expense-savings">
           -<%= number_to_currency(opportunity.savings, unit: "€", precision: 0) %>
         </div>
       <% end %>
     </div>
 
-    <!-- Spacer -->
-    <div class="col-2"></div>
-
-    <!-- Action -->
-    <div class="col-2 text-end">
+    <!-- Action Button (Fixed right) -->
+    <div class="expense-row-action">
       <% if opportunity&.completed? %>
         <span class="btn btn-sm btn-outline-success disabled">🎉 Optimisé</span>
       <% elsif opportunity&.contacted? %>

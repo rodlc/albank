@@ -1,190 +1,415 @@
-// conteneur
-// illustration upload
-.upload-label-image {
-  display: block;          /* évite le décalage baseline */
-  max-width: 200px;
-  margin: 0 auto;
-  height: auto;
+// === Homepage Mobile First ===
+
+// Hero Section
+.hero-section {
+    min-height: auto;
+    padding: 2rem 0;
+
+    @media (min-width: 768px) {
+        padding: 4rem 0;
+    }
+
+    h1 {
+        font-size: clamp(1.75rem, 5vw, 2.5rem);
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+
+    .lead {
+        font-size: clamp(1rem, 2vw, 1.125rem);
+        line-height: 1.6;
+    }
 }
+
+// Dropzone - Mobile First
 .file-upload-wrapper {
-  display: grid;
-  place-items: center;
-  height: 500px;
-  width: 90%;              /* largeur à 80% de la page */
-  margin: 50px auto;
-  border: 2px dashed $primary;
-  background: linear-gradient(135deg, rgba($cyan, 0.03) 0%, rgba($primary, 0.02) 100%);
-  border-radius: 12px;   /* coins arrondis pour un rendu plus doux */
-  padding: 15px;
-  cursor: pointer;
-  transition: box-shadow 180ms ease, transform 120ms ease, border-color 120ms ease, background 180ms ease;
-  box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 280px;
+    width: 100%;
+    margin: 0 auto 2rem;
+    padding: 2rem 1rem;
+    border: 3px dashed $primary;
+    border-radius: $border-radius-lg;
+    background: linear-gradient(
+        135deg,
+        rgba($cyan, 0.04) 0%,
+        rgba($primary, 0.02) 100%
+    );
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box;
 
-  &:hover, &.dragover {
-    border-color: $coral;
-    background: linear-gradient(135deg, rgba($coral, 0.05) 0%, rgba($cyan, 0.08) 100%);
-    box-shadow: 0 8px 16px rgba($coral, 0.15);
-  }
+    @media (min-width: 768px) {
+        min-height: 350px;
+        padding: 3rem 2rem;
+        width: 90%;
+    }
 
-  &.dragover {
-    border-width: 3px;
-    transform: scale(1.02);
-  }
+    // États interactifs
+    &:hover {
+        border-color: $cyan;
+        background: linear-gradient(
+            135deg,
+            rgba($cyan, 0.08) 0%,
+            rgba($primary, 0.04) 100%
+        );
+        box-shadow: 0 8px 20px rgba($primary, 0.12);
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &.dragover {
+        border-color: $link-hover-color;
+        border-width: 3px;
+        background: linear-gradient(
+            135deg,
+            rgba($link-hover-color, 0.08) 0%,
+            rgba($cyan, 0.08) 100%
+        );
+        box-shadow: 0 12px 24px rgba($link-hover-color, 0.2);
+        transform: scale(1.02);
+    }
+
+    // Contenu
+    .text-center {
+        max-width: 400px;
+    }
+
+    h5 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: $body-color;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+
+        @media (min-width: 768px) {
+            font-size: 1.25rem;
+        }
+    }
+
+    p {
+        font-size: 0.875rem;
+        color: $text-muted;
+
+        @media (min-width: 768px) {
+            font-size: 1rem;
+        }
+    }
+}
+
+// Illustration upload
+.upload-label-image {
+    display: block;
+    max-width: 140px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+
+    @media (min-width: 768px) {
+        max-width: 180px;
+    }
 }
 
 // masquage accessible
 .visually-hidden {
-  position: absolute;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
 }
 
-// Reassurance badges avec couleurs thématiques
+// Reassurance badges
 .reassurance-badge {
-  border-radius: 12px;
-  padding: 1rem;
-  height: 110px;  // Force exactement 110px (pas min-height)
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.2s ease;
+    border-radius: $border-radius-lg;
+    padding: 1rem 0.75rem;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
 
-  &:hover {
-    transform: translateY(-2px);
-  }
+    @media (min-width: 768px) {
+        padding: 1.25rem 1rem;
+    }
+}
 
-  &.reassurance-security {
-    background: rgba($primary, 0.05);
+    &:hover {
+        transform: translateY(-2px);
+    }
+
+    .fs-2 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
 
     p {
-      color: $primary !important;
+        font-size: 0.875rem;
+        margin-bottom: 0;
+        font-weight: 600;
     }
-  }
 
-  &.reassurance-privacy {
-    background: rgba($cyan, 0.15);
+    &.reassurance-security {
+        background: rgba($primary, 0.06);
 
-    p {
-      color: darken($cyan, 30%) !important;
+        p {
+            color: $primary !important;
+        }
     }
-  }
 
-  &.reassurance-auto {
-    background: rgba($coral, 0.1);
+    &.reassurance-privacy {
+        background: rgba($cyan, 0.12);
 
-    p {
-      color: $coral-text !important;
+        p {
+            color: $cyan-dark !important;
+        }
     }
-  }
+
+    &.reassurance-auto {
+        background: rgba($coral, 0.1);
+
+        p {
+            color: $danger !important;
+        }
+    }
+}
+
+// Section explicative
+#explications {
+    padding: 3rem 0;
+    background-color: $bg-lighter;
+
+    @media (min-width: 768px) {
+        padding: 5rem 0;
+    }
+
+    h2 {
+        font-size: clamp(1.5rem, 4vw, 2rem);
+        margin-bottom: 2.5rem;
+    }
 }
 
 // Cards pour la section "Comment ça marche"
 .feature-card {
-  border: 1px solid $border-color !important;
-  box-shadow: $box-shadow-sm !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    border: 1px solid $border-color !important;
+    border-radius: $border-radius-lg !important;
+    box-shadow: $box-shadow-sm !important;
+    transition: all 0.2s ease-in-out;
+    background-color: $white;
+    padding: 1.5rem !important;
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: $box-shadow !important;
-    background-color: rgba($cyan, 0.08); // Mon-entreprise style (#E0FDFF equivalent)
-    border-color: $cyan;
-  }
+    @media (min-width: 768px) {
+        padding: 2rem !important;
+    }
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: $box-shadow-lg !important;
+        background-color: rgba($cyan, 0.04);
+        border-color: $cyan !important;
+    }
+
+    .card-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: $body-color;
+    }
+
+    .card-text {
+        font-size: 0.9375rem;
+        line-height: 1.6;
+        color: $text-muted;
+    }
 }
 
 .feature-badge {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 1.25rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+    background-color: $primary;
+    color: $white;
+    border-radius: 50%;
 }
 
 .card-illustration {
-  height: 120px;
-  width: auto;
-  object-fit: contain;
+    height: 100px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    margin: 0 auto;
+
+    @media (min-width: 768px) {
+        height: 120px;
+    }
 }
 
 // FAQ section - flat modern design
 .faq-section {
-  .accordion-item {
-    border: none;
-    border-bottom: 1px solid $border-color;
-    background: transparent;
+    .accordion-item {
+        border: none;
+        border-bottom: 1px solid $border-color;
+        background: transparent;
 
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-
-  .accordion-button {
-    background: transparent;
-    font-weight: 600;
-    padding: 1.25rem 0;
-    border: none;
-
-    &:not(.collapsed) {
-      color: $primary;
-      background: transparent;
-      box-shadow: none;
+        &:last-child {
+            border-bottom: none;
+        }
     }
 
-    &:focus {
-      box-shadow: none;
-      border-color: transparent;
+    .accordion-button {
+        background: transparent;
+        font-weight: 600;
+        padding: 1.25rem 0;
+        border: none;
+
+        &:not(.collapsed) {
+            color: $primary;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        &:focus {
+            box-shadow: none;
+            border-color: transparent;
+        }
+
+        &::after {
+            // Filtre SVG pour primary color
+            opacity: 1;
+        }
     }
 
-    &::after {
-      filter: brightness(0) saturate(100%) invert(14%) sepia(72%) saturate(4715%) hue-rotate(236deg) brightness(94%) contrast(101%);
+    .accordion-body {
+        padding: 0 0 1.25rem 0;
     }
-  }
-
-  .accordion-body {
-    padding: 0 0 1.25rem 0;
-  }
 }
 
 .drop-zone.dragover {
-  outline: 3px dashed #4a90e2;
-  opacity: 0.8;
+    outline: 3px dashed $primary;
+    opacity: 0.8;
 }
 
+// Logos banques - Grid responsive
 .bank-logos {
-  display: flex;              /* aligne les logos côte à côte */
-  justify-content: center;    /* centre l'ensemble */
-  gap: 30px;                  /* espace entre chaque logo */
-  flex-wrap: wrap;            /* permet de passer à la ligne si trop de logos */
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    justify-items: center;
+    align-items: center;
+    margin: 2rem auto;
+    max-width: 100%;
+
+    @media (min-width: 576px) {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(6, 1fr) !important;
+        gap: 2.5rem;
+        max-width: 90%;
+    }
+
+    a {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        height: auto;
+        padding: 0.5rem;
+        transition: transform 0.2s ease;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
 }
 
 .bank-logo {
-  height: 70px;
-  filter: grayscale(100%);
-  opacity: 0.6;
-  transition: all 0.3s ease; /* effet fluide */
-  cursor: pointer;            /* indique que c'est cliquable */
-}
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 50px;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.5;
+    transition: all 0.3s ease;
 
-.bank-logo:hover {
-  filter: grayscale(0%);
-  opacity: 1;
-  transform: scale(1.05);      /* zoom léger au survol */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* ombre pour l'effet de mouvement */
+    @media (min-width: 768px) {
+        max-height: 60px;
+    }
+
+    &:hover {
+        filter: grayscale(0%);
+        opacity: 1;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
 }
 
 // Scroll hint animation
 .scroll-hint {
-  i {
-    animation: bounce 2s ease-in-out infinite;
-  }
+    display: inline-block;
+    margin-top: 2rem;
+
+    @media (min-width: 768px) {
+        margin-top: 3rem;
+    }
+
+    small {
+        color: $input-placeholder-color;
+        font-size: 0.875rem;
+    }
+
+    i {
+        color: $input-placeholder-color;
+        animation: bounce 2s ease-in-out infinite;
+    }
+
+    &:hover {
+        i {
+            color: $primary;
+        }
+    }
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(5px); }
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(5px);
+    }
+}
+
+// Section FAQ - mobile optimisé
+.faq-section {
+    padding: 2rem 0;
+
+    @media (min-width: 768px) {
+        padding: 3rem 0;
+    }
+
+    h1 {
+        font-size: clamp(1.5rem, 4vw, 2rem);
+        margin-bottom: 2rem;
+
+        @media (min-width: 768px) {
+            margin-bottom: 3rem;
+        }
+    }
 }

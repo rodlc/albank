@@ -1,74 +1,128 @@
-// === AlBank "Slate Hybride" Theme ===
-// Structure Linear/Vercel + Identité DSFR
+// === AlBank Design System - Palette Cohérente ===
+// Mobile First • Franco-Français • Accessible WCAG AA
 
-// === TYPOGRAPHIE ===
-$body-letter-spacing: -0.015em;
+// === COULEURS PRIMAIRES ===
+// Bleu Confiance (inspiré service public français)
+$primary: #000091; // Bleu France (Marianne)
+$primary-rgb: 0, 0, 145; // RGB pour rgba()
+$primary-light: #6a6af4; // Bleu France clair
+$primary-lighter: #e3e3fd; // Bleu France très pâle
+$primary-dark: #000074; // Bleu France foncé
+$primary-hover: #1212ff; // Hover accessible
 
-// === COULEURS ===
-// Action Principale (Mon-Entreprise)
-$primary: #2975d1; // Bleu Mon-Entreprise (plus vif que Bleu France)
-$primary-hover: #1d5ba8; // Bleu Mon-Entreprise foncé
+// === COULEURS D'ACTION ===
+$action: #0055ff; // Bleu électrique pour CTA
+$action-rgb: 0, 85, 255; // RGB pour rgba()
+$action-hover: #0044cc; // Hover CTA
 
-// Palette Secondaire (Mon-Entreprise)
-$coral: #e86c72; // Accent chaud
-$coral-text: #be123c; // Accent chaud foncé (Accessible)
-$cyan: #66c2e0; // Secondaire doux
+// === COULEURS SECONDAIRES ===
+$coral: #ff5e6c; // Accent chaleureux
+$coral-rgb: 255, 94, 108; // RGB pour rgba()
+$coral-text: #c9191e; // Texte rouge accessible (ratio 4.5:1)
+$coral-light: #ffe5e7; // Fond coral pâle
 
-// Neutres Slate (Tailwind)
-$body-bg: #f8fafc; // Slate 50 (fond général)
-$card-bg: #ffffff; // Blanc pur pour composants
-$text-main: #0f172a; // Slate 900
-$text-muted: #64748b; // Slate 500
-$border-color: #e2e8f0; // Slate 200
+$cyan: #53c1de; // Accent frais
+$cyan-rgb: 83, 193, 222; // RGB pour rgba()
+$cyan-dark: #2891b8; // Cyan foncé accessible
+$cyan-light: #e0f7ff; // Fond cyan pâle
 
-// Grays mappés sur Slate
-$gray-900: #0f172a;
-$gray-700: #334155;
-$gray-500: #64748b;
-$gray-300: #cbd5e1;
-$gray-200: #e2e8f0;
-$gray-100: #f1f5f9;
-$gray-50: #f8fafc;
+// === PALETTE NEUTRE (Slate) ===
+$body-bg: #f6f6f6; // Gris très clair (fond page)
+$bg-lighter: #fafafa; // Surface secondaire
+$card-bg: #ffffff; // Blanc pur (composants)
+$white: #ffffff; // Blanc pur
+$surface-bg: #fafafa; // Surface secondaire
 
-// Semantic
-$success: #059669; // Emerald 600 (conservé)
-$success-bg: #ecfdf5; // Emerald 50
-$success-text: #047857; // Emerald 700
-$danger: #dc2626;
-$danger-bg: #fef2f2;
-$danger-text: #b91c1c;
-$info: #6a6af4;
-$warning: #b34000;
+// Textes
+$text-primary: #161616; // Noir primaire (quasi-noir)
+$text-secondary: #6e6e6e; // Gris moyen (texte secondaire)
+$text-muted: #929292; // Gris clair (hints)
+$text-disabled: #cecece; // Gris très clair (désactivé)
 
-// Legacy mappings
+// Bordures
+$border-color: #dddddd; // Bordure standard
+$border-light: #e8e8e8; // Bordure légère
+$border-dark: #bbbbbb; // Bordure marquée
+
+// === COULEURS SÉMANTIQUES (Accessible) ===
+$success: #18753c; // Vert forêt (ratio 4.5:1 sur blanc)
+$success-bg: #b8fec9; // Fond vert pâle
+$success-light: #e8ffed; // Vert très pâle
+
+$danger: #ce0500; // Rouge erreur (ratio 4.5:1)
+$danger-bg: #ffe9e9; // Fond rouge pâle
+$danger-light: #fff5f5; // Rouge très pâle
+
+$warning: #b34000; // Orange accessible
+$warning-bg: #ffe8cc; // Fond orange pâle
+$warning-light: #fff5e6; // Orange très pâle
+
+$info: #0063cb; // Bleu info accessible
+$info-bg: #e5f0ff; // Fond bleu pâle
+$info-light: #f0f6ff; // Bleu très pâle
+
+// === GRAYS SCALE (pour compatibilité Bootstrap) ===
+$gray-900: $text-primary;
+$gray-800: #383838;
+$gray-700: #525252;
+$gray-600: #6e6e6e;
+$gray-500: #929292;
+$gray-400: #adadad;
+$gray-300: #cecece;
+$gray-200: #dddddd;
+$gray-100: #e8e8e8;
+$gray-50: #f6f6f6;
+
+// === LEGACY MAPPINGS (pour compatibilité) ===
 $light: #ffffff;
-$secondary: #f8fafc;
-$body-color: $text-main;
+$dark: $text-primary;
+$secondary: $gray-100;
+$body-color: $text-primary;
+$link-hover-color: $primary-hover;
+$link-hover-color-rgb: 18, 18, 255; // RGB pour rgba()
 
-// === FORMES ===
-$border-radius-base: 8px;
-$border-radius-lg: 12px;
-$box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-$box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+// === OMBRES ===
+$shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+$shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+$shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+$shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.12);
 
-// === UTILITIES ===
+// === OVERLAY ===
+$overlay-light: rgba(0, 0, 0, 0.3);
+$overlay-medium: rgba(0, 0, 0, 0.5);
+$overlay-dark: rgba(0, 0, 0, 0.7);
+
+// === UTILITY CLASSES ===
 .text-coral {
     color: $coral-text !important;
 }
+
 .bg-coral {
     background-color: $coral !important;
+    color: white !important;
 }
-.bg-coral-subtle {
-    background-color: rgba($coral, 0.1) !important;
+
+.bg-coral-light {
+    background-color: $coral-light !important;
+    color: $coral-text !important;
 }
 
 .text-cyan {
-    color: $cyan !important;
-}
-.bg-cyan {
-    background-color: $cyan !important;
+    color: $cyan-dark !important;
 }
 
+.bg-cyan {
+    background-color: $cyan !important;
+    color: white !important;
+}
+
+.bg-cyan-light {
+    background-color: $cyan-light !important;
+    color: $cyan-dark !important;
+}
+
+// Underline effet Mon-Entreprise
 .underline-cyan {
     position: relative;
     display: inline-block;
@@ -77,32 +131,61 @@ $box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         content: "";
         position: absolute;
         left: 0;
-        bottom: 0;
+        bottom: 2px;
         width: 100%;
-        height: 8px;                // Increased from 6px (mon-entreprise style)
+        height: 10px;
         background-color: $cyan;
-        opacity: 0.6;               // Increased from 0.4 (more visible)
+        opacity: 0.5;
         z-index: -1;
-        transform: translateY(-20%);
-        border-radius: 2px;         // Soft corners
+        border-radius: 2px;
     }
 }
 
-// Cyan bullet points (mon-entreprise style)
-.cyan-bullets {
+.underline-coral {
+    position: relative;
+    display: inline-block;
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 2px;
+        width: 100%;
+        height: 10px;
+        background-color: $coral;
+        opacity: 0.4;
+        z-index: -1;
+        border-radius: 2px;
+    }
+}
+
+// Bullet points colorés (Mon-Entreprise style)
+.cyan-bullets,
+.list-cyan {
     list-style: none;
-    padding-left: 1.5rem;
+    padding-left: 0;
 
     li {
         position: relative;
-        margin-bottom: 0.5rem;
+        padding-left: 1.5rem;
+        margin-bottom: 0.75rem;
 
         &::before {
-            content: '●';
+            content: "●";
             position: absolute;
-            left: -1.5rem;
+            left: 0;
             color: $cyan;
-            font-size: 80%;
+            font-size: 1rem;
+            line-height: inherit;
         }
     }
+}
+
+// Shadow utilities
+.shadow-soft {
+    box-shadow: $shadow-sm !important;
+}
+
+.shadow-card {
+    box-shadow: $shadow-md !important;
 }

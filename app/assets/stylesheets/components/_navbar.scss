@@ -1,12 +1,185 @@
+// === AlBank Navbar Styles ===
+// Navigation responsive avec optimisation mobile
+
+.navbar {
+    padding: 1rem 0;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e8e8e8;
+    transition: all 0.2s ease-in-out;
+
+    @media (max-width: 991px) {
+        padding: 0.75rem 0;
+    }
+}
+
+// Brand / Logo
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #000091 !important;
+    letter-spacing: -0.02em;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    @media (max-width: 991px) {
+        font-size: 1.25rem;
+    }
+}
+
+// Toggler (Hamburger Menu)
+.navbar-toggler {
+    padding: 0.5rem 0.75rem;
+    border: none;
+    background-color: transparent;
+    transition: background-color 0.2s ease;
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 0, 145, 0.15);
+    }
+
+    &:hover {
+        background-color: #f6f6f6;
+        border-radius: 8px;
+    }
+
+    .navbar-toggler-icon {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+// Navigation collapse
+.navbar-collapse {
+    @media (max-width: 991px) {
+        padding-bottom: 1rem;
+        border-top: 1px solid #e8e8e8;
+        margin-top: 1rem;
+    }
+}
+
+// Navigation items
+.navbar-nav {
+    @media (max-width: 991px) {
+        width: 100%;
+    }
+
+    .nav-item {
+        margin: 0;
+
+        @media (max-width: 991px) {
+            width: 100%;
+            margin-bottom: 0.5rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .nav-link {
+        font-weight: 500;
+        color: #161616;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+
+        &:hover {
+            color: #000091;
+            background-color: #f6f6f6;
+        }
+
+        &.active {
+            color: #000091;
+            font-weight: 600;
+            background-color: #e3e3fd;
+        }
+    }
+}
+
+// Dropdown menu
+.dropdown-menu {
+    min-width: 200px;
+    padding: 0.5rem;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+    @media (max-width: 991px) {
+        width: 100%;
+        margin-top: 0.5rem !important;
+        position: static !important;
+        transform: none !important;
+        border: none;
+        box-shadow: none;
+        background-color: #fafafa;
+    }
+}
+
+.dropdown-item {
+    padding: 0.625rem 1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: #161616;
+    transition: all 0.15s ease;
+
+    &:hover {
+        background-color: #f6f6f6;
+        color: #000091;
+    }
+
+    &:active {
+        background-color: #e3e3fd;
+        color: #000091;
+    }
+
+    &.text-danger {
+        color: #ce0500 !important;
+
+        &:hover {
+            background-color: #fff5f5;
+        }
+    }
+}
+
+.dropdown-item-text {
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+}
+
+.dropdown-divider {
+    margin: 0.5rem 0;
+    border-top: 1px solid #e8e8e8;
+}
+
+// Avatar circle dans dropdown
+.navbar .rounded-circle {
+    flex-shrink: 0;
+}
+
+// Sticky navbar (optionnel)
+.navbar-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+// Legacy class support (LeWagon template)
 .navbar-lewagon {
-  justify-content: space-between;
-  background: white;
-}
+    justify-content: space-between;
+    background: white;
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
-}
+    .navbar-collapse {
+        flex-grow: 0;
+    }
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+    .navbar-brand img {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+    }
 }
