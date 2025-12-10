@@ -65,7 +65,7 @@ class StatementsController < ApplicationController
     transactions = data[:transactions] || []
 
     # Création du relevé et des dépenses associées
-    statement = current_user.statements.create(date: Date.today)
+    statement = current_user.statements.create(date: Date.today, total: data[:total])
 
     transactions.each do |transaction|
       category = Category.find_by(name: transaction[:category])

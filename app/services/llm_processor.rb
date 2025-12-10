@@ -14,7 +14,7 @@ class LlmProcessor
 
   def initialize(text)
     @text = text
-    @categories = Category.pluck(:name)
+    @categories_with_keywords = Category.pluck(:name, :keywords)
   end
 
   def process
@@ -24,7 +24,7 @@ class LlmProcessor
     end
 
     Rails.logger.error("[LLM] Tous les modèles ont échoué")
-    { transactions: [] }
+    { total: nil, transactions: [] }
   end
 
   private
@@ -39,41 +39,57 @@ class LlmProcessor
 
   def try_model(model, provider)
     Rails.logger.info("[LLM] Essai avec #{model} (#{provider})")
+    Rails.logger.info("[LLM] Prompt: #{prompt.truncate(500)}")
+
     chat = RubyLLM.chat(model: model, provider: provider)
     response = chat.ask(prompt)
+
+    Rails.logger.info("[LLM] Response: #{response.content.truncate(1000)}")
     parse_response(response.content)
   rescue StandardError => e
     Rails.logger.warn("[LLM] #{model} échoué: #{e.message}")
-    { transactions: [] }
+    { total: nil, transactions: [] }
   end
 
   def prompt
+    categories_list = @categories_with_keywords.map do |name, keywords|
+      "- #{name} (ex: #{keywords})"
+    end.join("\n")
+
     <<~PROMPT
-      Voici le contenu de mon relevé bancaire :
+      Tu es un expert en analyse de relevés bancaires français.
+
+      RELEVÉ :
       #{@text}
 
-      Catégorise les dépenses suivantes et enrichis chaque libellé.
+      CATÉGORIES CONNUES (avec exemples de mots-clés) :
+      #{categories_list}
 
-      Attribue une catégorie parmi :
-      #{@categories.join(", ")}
+      MISSION :
+      Pour chaque ligne du relevé, identifie :
+      - Le libellé original (tel qu'il apparaît)
+      - La catégorie la plus probable
+      - Le montant
 
-      Réponds uniquement en JSON avec les clés, en reprenant toutes les lignes de dépenses, avec cette forme  :
-      {
-        "transactions":
-        [
-          {
-            "label": "...",
-            "category": "...",
-            "amount": ...
-          }
-        ]
-      }
+      Les mots-clés sont des indices, pas des règles strictes.
+      Utilise ton intelligence pour déduire la catégorie même si le libellé est abrégé ou cryptique.
+
+      Retourne aussi le total des dépenses du relevé.
+
+      IMPORTANT : Réponds UNIQUEMENT avec le JSON, sans aucun texte avant ou après.
+      Format : {"total": montant_total, "transactions": [{"label": "...", "category": "...", "amount": ...}]}
     PROMPT
   end
 
   def parse_response(content)
     cleaned = content.gsub(/```json|```/, "").strip
     json = JSON.parse(cleaned, symbolize_names: true)
-    { transactions: json[:transactions] || [] }
+
+    valid_categories = Category.pluck(:name)
+    valid_transactions = (json[:transactions] || []).select do |t|
+      valid_categories.include?(t[:category])
+    end
+
+    { total: json[:total], transactions: valid_transactions }
   end
 end
