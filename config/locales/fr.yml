@@ -46,6 +46,11 @@ fr:
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
         remember_me: "Se souvenir de moi"
+      opportunity:
+        status:
+          pending: "En attente"
+          contacted: "Contacté"
+          completed: "Terminé"
 
   simple_form:
     labels:
