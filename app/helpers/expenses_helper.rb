@@ -24,7 +24,7 @@ module ExpensesHelper
     when :success
       { emoji: "⚖️", label: "Optimisé", color: "success" }
     else
-      { emoji: "💳", label: "Dépenses non récurrentes", color: "secondary" }
+      { emoji: "💳", label: "Dépenses non ciblées", color: "secondary" }
     end
   end
 

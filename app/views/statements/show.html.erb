@@ -79,6 +79,31 @@
                    statement: @statement,
                    index: 3 %>
       <% end %>
+
+      <!-- Section calculée : Autres dépenses (non reconnues par le LLM) -->
+      <% recognized_total = @expenses.sum(&:subtotal) %>
+      <% statement_total = @statement.total&.abs || recognized_total %>
+      <% autres_amount = statement_total - recognized_total %>
+
+      <% if autres_amount > 0 %>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseAutres">
+              <span class="me-2">💳</span>
+              <span class="fw-semibold">Dépenses non ciblées</span>
+              <span class="ms-auto me-3 text-muted">
+                <%= number_to_currency(autres_amount, unit: "€", precision: 0) %>
+              </span>
+            </button>
+          </h2>
+          <div id="collapseAutres" class="accordion-collapse collapse">
+            <div class="accordion-body text-muted">
+              Dépenses hors périmètre AlBank (alimentation, transport, loisirs...)
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
   <% else %>
     <div class="text-center py-5">
