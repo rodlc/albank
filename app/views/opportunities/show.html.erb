@@ -46,11 +46,11 @@
           Utilisez ce modèle pour négocier avec votre fournisseur
         </p>
 
-        <!-- CTAs responsive -->
-        <div class="btn-group-mobile mb-3">
+        <!-- Actions groupées -->
+        <div class="opportunity-actions">
           <button
             type="button"
-            class="btn btn-action"
+            class="btn btn-primary"
             data-clipboard-target="button"
             data-action="click->clipboard#copy"
           >
@@ -59,42 +59,42 @@
 
           <button
             type="button"
-            class="btn btn-gov-outline"
+            class="btn btn-outline-primary"
             onclick="window.print()"
           >
             <span aria-hidden="true">🖨️</span> Imprimer
           </button>
+
+          <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true, class: "d-flex gap-2") do %>
+            <% unless @opportunity.contacted? || @opportunity.completed? %>
+              <button
+                type="submit"
+                name="opportunity[status]"
+                value="contacted"
+                class="btn btn-secondary"
+              >
+                <span aria-hidden="true">✉️</span> Marquer comme contactée
+              </button>
+            <% end %>
+
+            <% if @opportunity.contacted? && !@opportunity.completed? %>
+              <button
+                type="submit"
+                name="opportunity[status]"
+                value="completed"
+                class="btn btn-success"
+              >
+                <span aria-hidden="true">🎉</span> Clôturer
+              </button>
+            <% end %>
+
+            <% if @opportunity.completed? %>
+              <div class="alert alert-success mb-0 py-2 px-3">
+                <span aria-hidden="true">✅</span> Opportunité clôturée
+              </div>
+            <% end %>
+          <% end %>
         </div>
-
-        <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true, class: "d-flex flex-column flex-md-row gap-2 justify-content-center align-items-center") do %>
-          <% unless @opportunity.contacted? || @opportunity.completed? %>
-            <button
-              type="submit"
-              name="opportunity[status]"
-              value="contacted"
-              class="btn btn-soft w-100 w-md-auto"
-            >
-              <span aria-hidden="true">✉️</span> Marquer comme contactée
-            </button>
-          <% end %>
-
-          <% if @opportunity.contacted? && !@opportunity.completed? %>
-            <button
-              type="submit"
-              name="opportunity[status]"
-              value="completed"
-              class="btn btn-success-outline w-100 w-md-auto"
-            >
-              <span aria-hidden="true">🎉</span> Clôturer
-            </button>
-          <% end %>
-
-          <% if @opportunity.completed? %>
-            <div class="alert alert-success mb-0 py-2 px-3">
-              <span aria-hidden="true">✅</span> Opportunité clôturée
-            </div>
-          <% end %>
-        <% end %>
 
         <!-- Feedback copie -->
         <div
