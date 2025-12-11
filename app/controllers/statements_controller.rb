@@ -10,6 +10,12 @@ class StatementsController < ApplicationController
     @expenses = @statement.expenses.includes(:category, :opportunities)
   end
 
+  def destroy
+    @statement = current_user.statements.find(params[:id])
+    @statement.destroy
+    redirect_to statements_path, notice: "Relevé supprimé"
+  end
+
   def upload
     uploaded = params[:file] # ActionDispatch::Http::UploadedFile
 
