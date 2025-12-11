@@ -1,27 +1,21 @@
 <% opportunity = expense.opportunities.first %>
 
-<div class="expense-row py-3 border-bottom">
-  <div class="row g-2 align-items-center">
-    
-    <!-- 1. Icon & Category & Amount (Mobile Header) -->
-    <div class="col-12 col-md-4 d-flex align-items-center justify-content-between justify-content-md-start">
-      <div class="d-flex align-items-center gap-2 overflow-hidden">
-        <div class="expense-icon flex-shrink-0">
-          <%= category_emoji(expense.category) %>
-        </div>
-        <div class="expense-category fw-bold text-truncate">
-          <%= expense.category.name %>
-        </div>
+<div class="expense-row py-3 border-bottom overflow-hidden">
+  
+  <!-- === MOBILE LAYOUT === -->
+  <div class="d-md-none w-100">
+    <!-- Row 1: Icon + Category -->
+    <div class="d-flex align-items-center gap-2 mb-2 overflow-hidden">
+      <div class="expense-icon flex-shrink-0">
+        <%= category_emoji(expense.category) %>
       </div>
-      
-      <!-- Mobile Amount -->
-      <div class="d-md-none fw-bold">
-        <%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
+      <div class="expense-category fw-bold text-truncate">
+        <%= expense.category.name %>
       </div>
     </div>
 
-    <!-- 2. Label (Truncated) -->
-    <div class="col-12 col-md-4">
+    <!-- Row 2: Label -->
+    <div class="d-block w-100 mb-3">
       <div class="text-muted small text-truncate" title="<%= expense.label %>">
         <%= expense.label %>
         <% if expense.respond_to?(:grouped?) && expense.grouped? %>
@@ -30,23 +24,69 @@
       </div>
     </div>
 
-    <!-- 3. Desktop Amount & Savings & Button -->
-    <div class="col-12 col-md-4 d-flex align-items-center justify-content-between justify-content-md-end gap-3">
-      
-      <!-- Desktop Amount -->
-      <div class="d-none d-md-block fw-bold text-end" style="min-width: 80px;">
+    <!-- Row 3: Amounts (Subtotal + Savings) -->
+    <div class="d-flex justify-content-between align-items-end mb-2">
+      <div class="fw-bold">
+        <%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
+      </div>
+
+      <% if opportunity&.opportunity? && opportunity.savings > 0 %>
+        <div class="text-primary fw-bold">
+          <i class="fas fa-arrow-down small me-1"></i><%= number_to_currency(opportunity.savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Row 4: Button (Full Width) -->
+    <div class="w-100">
+      <%= render "opportunities/action_button",
+                 expense: expense,
+                 opportunity: opportunity,
+                 statement: statement %>
+    </div>
+  </div>
+
+  <!-- === DESKTOP LAYOUT === -->
+  <div class="d-none d-md-flex align-items-center w-100">
+    
+    <!-- Left Group: Icon + Category -->
+    <div class="d-flex align-items-center gap-2 flex-shrink-0">
+      <div class="expense-icon flex-shrink-0">
+        <%= category_emoji(expense.category) %>
+      </div>
+      <div class="expense-category fw-bold text-nowrap">
+        <%= expense.category.name %>
+      </div>
+    </div>
+
+    <!-- Middle: Label (Truncated, takes remaining space) -->
+    <div class="flex-grow-1 mx-3" style="min-width: 0;">
+      <div class="text-muted small text-truncate" title="<%= expense.label %>">
+        <%= expense.label %>
+        <% if expense.respond_to?(:grouped?) && expense.grouped? %>
+          <span class="badge bg-secondary ms-1">×<%= expense.grouped_expenses.size %></span>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Right Group: Amounts + Button (Pushed right) -->
+    <div class="d-flex align-items-center gap-3 flex-shrink-0">
+      <!-- Amount -->
+      <div class="fw-bold text-end" style="min-width: 80px;">
         <%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
       </div>
 
       <!-- Savings -->
       <% if opportunity&.opportunity? && opportunity.savings > 0 %>
-        <div class="text-primary fw-bold text-nowrap">
+        <div class="text-primary fw-bold text-end text-nowrap" style="min-width: 80px;">
           <i class="fas fa-arrow-down small me-1"></i><%= number_to_currency(opportunity.savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
         </div>
+      <% else %>
+        <div style="min-width: 80px;"></div>
       <% end %>
 
-      <!-- Action Button -->
-      <div class="flex-shrink-0">
+      <!-- Button -->
+      <div style="width: 140px;" class="text-end">
         <%= render "opportunities/action_button",
                    expense: expense,
                    opportunity: opportunity,
@@ -54,4 +94,5 @@
       </div>
     </div>
   </div>
+
 </div>

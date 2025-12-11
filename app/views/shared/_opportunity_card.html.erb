@@ -22,7 +22,7 @@
               </span>
             <% else %>
               Moyenne du marché:
-              <%= number_to_currency(opportunity.standard.average_amount, unit: "€") %>
+              <%= number_to_currency(opportunity.standard.average_amount, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
               <% freshness = opportunity.standard.freshness_for(opportunity.expense.statement.date) %>
               <% if freshness == :stale %>
                 <br>
@@ -40,17 +40,17 @@
           <% if opportunity.danger? %>
             <span class="text-danger small">Action urgente requise</span>
             <span class="h3 text-danger mb-0">
-              <%= number_to_currency(opportunity.expense.subtotal, unit: "€") %>/mois
+              <%= number_to_currency(opportunity.expense.subtotal, unit: "€", precision: 0, separator: ",", delimiter: " ") %>/mois
             </span>
           <% elsif opportunity.opportunity? %>
             <span class="text-muted small">Économies potentielles</span>
             <span class="h3 text-success mb-0">
-              <%= number_to_currency(opportunity.savings, unit: "€") %>
+              <%= number_to_currency(opportunity.savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
             </span>
           <% else %>
             <span class="text-success small">Vous payez</span>
             <span class="h3 text-success mb-0">
-              <%= number_to_currency(opportunity.expense.subtotal, unit: "€") %>
+              <%= number_to_currency(opportunity.expense.subtotal, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
             </span>
           <% end %>
         </div>
