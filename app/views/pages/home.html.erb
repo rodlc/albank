@@ -11,6 +11,13 @@
         des fraudes et abus
       </h1>
 
+      <p class="lead text-muted mb-4 mt-4 mx-auto" style="max-width: 600px;">
+        <span class="fw-bold text-primary">1 Français sur 10</span>
+        est victime de prélèvements abusifs<a href="#source-1" class="text-decoration-none ms-1" style="font-size: 0.7em; vertical-align: super;">(1)</a>.
+        <br>
+        Et vous ?
+      </p>
+
       <!-- Drop Zone -->
       <div data-controller="dropzone" data-dropzone-url-value="<%= upload_statements_path %>" class="mb-4">
         <label
@@ -51,6 +58,7 @@
               <img
                 src="<%= image_path 'uploading.svg' %>"
                 alt="Analyse en cours"
+                class="loading-illustration"
               >
               <!-- Spinner qui tourne autour du SVG -->
               <div class="loading-spinner"></div>
@@ -87,8 +95,8 @@
       </div>
 
       <!-- Scroll invitation -->
-      <div class="text-center mt-5">
-        <a href="#explications" class="scroll-hint-pill text-decoration-none">
+      <div class="text-center mt-4">
+        <a href="#explications" class="scroll-hint-pill text-decoration-none mt-4">
           <span>En savoir plus</span>
           <i class="fas fa-chevron-down"></i>
         </a>
@@ -319,5 +327,14 @@
                 target: "_blank" do %>
       <%= image_tag("boursorama.png", alt: "Boursorama Banque", class: "bank-logo") %>
     <% end %>
+  </div>
+
+  <!-- Sources / Footnotes -->
+  <div class="row mt-5 pt-4 border-top w-100">
+    <div class="col-12 text-center">
+      <p class="small text-muted mb-0" id="source-1">
+        (1) Source : <a href="https://www.banque-france.fr/fr/publications-et-statistiques/statistiques/observatoire-de-la-securite-des-moyens-de-paiement" target="_blank" class="text-muted text-decoration-underline">Rapport de l'Observatoire de la sécurité des moyens de paiement</a>, Banque de France (2023).
+      </p>
+    </div>
   </div>
 </div>
