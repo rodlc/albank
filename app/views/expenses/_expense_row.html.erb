@@ -1,44 +1,52 @@
 <% opportunity = expense.opportunities.first %>
 
-<div class="expense-row">
-  <!-- Unified responsive layout -->
-  <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center gap-2 gap-md-3">
-    <!-- Icon + Category -->
-    <div class="d-flex align-items-center gap-2 expense-row-category">
-      <div class="expense-icon">
-        <%= category_emoji(expense.category) %>
+<div class="expense-row py-3 border-bottom">
+  <div class="row g-2 align-items-center">
+    
+    <!-- 1. Icon & Category & Amount (Mobile Header) -->
+    <div class="col-12 col-md-4 d-flex align-items-center justify-content-between justify-content-md-start">
+      <div class="d-flex align-items-center gap-2 overflow-hidden">
+        <div class="expense-icon flex-shrink-0">
+          <%= category_emoji(expense.category) %>
+        </div>
+        <div class="expense-category fw-bold text-truncate">
+          <%= expense.category.name %>
+        </div>
       </div>
-      <div class="expense-category fw-bold">
-        <%= expense.category.name %>
+      
+      <!-- Mobile Amount -->
+      <div class="d-md-none fw-bold">
+        <%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
       </div>
     </div>
 
-    <!-- Label (flexible, grows to fill space on desktop) -->
-    <div class="flex-grow-1 expense-row-label">
-      <span class="expense-label text-muted small">
+    <!-- 2. Label (Truncated) -->
+    <div class="col-12 col-md-4">
+      <div class="text-muted small text-truncate" title="<%= expense.label %>">
         <%= expense.label %>
         <% if expense.respond_to?(:grouped?) && expense.grouped? %>
           <span class="badge bg-secondary ms-1">×<%= expense.grouped_expenses.size %></span>
         <% end %>
-      </span>
+      </div>
     </div>
 
-    <!-- Amount + Savings (stacked on mobile, inline on desktop) -->
-    <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center gap-2 gap-md-3">
-      <div class="d-flex align-items-baseline gap-2">
-        <span class="expense-amount fw-bold">
-          <%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
-        </span>
-
-        <% if opportunity&.opportunity? && opportunity.savings > 0 %>
-          <span class="expense-savings text-primary">
-            -<%= number_to_currency(opportunity.savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
-          </span>
-        <% end %>
+    <!-- 3. Desktop Amount & Savings & Button -->
+    <div class="col-12 col-md-4 d-flex align-items-center justify-content-between justify-content-md-end gap-3">
+      
+      <!-- Desktop Amount -->
+      <div class="d-none d-md-block fw-bold text-end" style="min-width: 80px;">
+        <%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
       </div>
 
+      <!-- Savings -->
+      <% if opportunity&.opportunity? && opportunity.savings > 0 %>
+        <div class="text-primary fw-bold text-nowrap">
+          <i class="fas fa-arrow-down small me-1"></i><%= number_to_currency(opportunity.savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+        </div>
+      <% end %>
+
       <!-- Action Button -->
-      <div class="expense-row-action">
+      <div class="flex-shrink-0">
         <%= render "opportunities/action_button",
                    expense: expense,
                    opportunity: opportunity,
