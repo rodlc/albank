@@ -36,7 +36,7 @@
           <div class="text-start text-md-end">
             <div class="text-uppercase text-danger small fw-semibold mb-1">Fraude</div>
             <div class="h3 fw-bold text-danger mb-0">
-              <i class="fas fa-arrow-trend-up small me-1"></i><%= number_to_currency(fraude_amount, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+              <i class="fas fa-caret-up small me-1"></i><%= number_to_currency(fraude_amount, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
             </div>
           </div>
         <% end %>
@@ -45,7 +45,7 @@
           <div class="text-start text-md-end">
             <div class="text-uppercase text-primary small fw-semibold mb-1">Économie</div>
             <div class="h3 fw-bold text-primary mb-0">
-              <i class="fas fa-arrow-trend-up small me-1"></i><%= number_to_currency(economie_amount, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+              <i class="fas fa-caret-up me-1"></i><%= number_to_currency(economie_amount, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
             </div>
           </div>
         <% end %>

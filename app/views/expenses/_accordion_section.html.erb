@@ -36,15 +36,15 @@
 
         <% if result_type == :opportunity && totals[:savings] > 0 %>
           <div class="text-primary fw-bold text-end text-nowrap" style="min-width: 100px;">
-            <i class="fas fa-arrow-trend-up small me-1"></i><%= number_to_currency(totals[:savings], unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+            <i class="fas fa-caret-up me-1"></i><%= number_to_currency(totals[:savings], unit: "€", precision: 0, separator: ",", delimiter: " ") %>
           </div>
         <% elsif result_type == :success && totals[:savings] < 0 %>
           <div class="text-success fw-bold text-end text-nowrap" style="min-width: 100px;">
-            <i class="fas fa-arrow-trend-down small me-1"></i><%= number_to_currency(totals[:savings].abs, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+            <i class="fas fa-caret-down me-1"></i><%= number_to_currency(totals[:savings].abs, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
           </div>
         <% elsif result_type == :danger %>
           <div class="text-danger fw-bold text-end text-nowrap" style="min-width: 100px;">
-            <i class="fas fa-arrow-trend-up small me-1"></i><%= number_to_currency(totals[:total], unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+            <i class="fas fa-caret-up small me-1"></i><%= number_to_currency(totals[:total], unit: "€", precision: 0, separator: ",", delimiter: " ") %>
           </div>
         <% else %>
           <div style="min-width: 100px;"></div>
@@ -62,15 +62,15 @@
         </span>
         <% if result_type == :opportunity && totals[:savings] > 0 %>
           <span class="text-primary fw-bold small">
-            <i class="fas fa-arrow-trend-up small me-1"></i><%= number_to_currency(totals[:savings], unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+            <i class="fas fa-caret-up me-1"></i><%= number_to_currency(totals[:savings], unit: "€", precision: 0, separator: ",", delimiter: " ") %>
           </span>
         <% elsif result_type == :success && totals[:savings] < 0 %>
           <span class="text-success fw-bold small">
-            <i class="fas fa-arrow-trend-down small me-1"></i><%= number_to_currency(totals[:savings].abs, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+            <i class="fas fa-caret-down me-1"></i><%= number_to_currency(totals[:savings].abs, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
           </span>
         <% elsif result_type == :danger %>
           <span class="text-danger fw-bold small">
-            <i class="fas fa-arrow-trend-up small me-1"></i><%= number_to_currency(totals[:total], unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+            <i class="fas fa-caret-up small me-1"></i><%= number_to_currency(totals[:total], unit: "€", precision: 0, separator: ",", delimiter: " ") %>
           </span>
         <% end %>
       </div>
