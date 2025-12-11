@@ -1,122 +1,57 @@
 <% opportunity = expense.opportunities.first %>
 
-<div class="expense-row">
-  <!-- Mobile: Stack vertical -->
-  <div class="d-md-none">
-    <div class="d-flex align-items-center mb-2">
-      <div class="expense-icon me-2">
-        <%= category_emoji(expense.category) %>
-      </div>
-
-      <div class="flex-grow-1">
-        <div class="expense-category fw-bold">
+<div class="expense-row py-3 border-bottom">
+  <div class="row g-2 align-items-center">
+    
+    <!-- 1. Icon & Category & Amount (Mobile Header) -->
+    <div class="col-12 col-md-4 d-flex align-items-center justify-content-between justify-content-md-start">
+      <div class="d-flex align-items-center gap-2 overflow-hidden">
+        <div class="expense-icon flex-shrink-0">
+          <%= category_emoji(expense.category) %>
+        </div>
+        <div class="expense-category fw-bold text-truncate">
           <%= expense.category.name %>
         </div>
       </div>
-    </div>
-
-    <div class="text-muted small mb-2">
-      <%= expense.label %>
-      <% if expense.respond_to?(:grouped?) && expense.grouped? %>
-        <span class="badge bg-secondary ms-1">×<%= expense.grouped_expenses.size %></span>
-      <% end %>
-    </div>
-
-    <div class="d-flex justify-content-between align-items-center">
-      <div>
-        <span class="expense-amount fw-bold">
-          <%= number_to_currency(expense.subtotal, unit: "€", precision: 2) %>
-        </span>
-
-        <% if opportunity&.opportunity? && opportunity.savings > 0 %>
-          <span class="expense-savings text-primary ms-2">
-            -<%= number_to_currency(opportunity.savings, unit: "€", precision: 0) %>
-          </span>
-        <% end %>
-      </div>
-
-      <div>
-        <% if opportunity&.completed? %>
-          <span class="btn btn-sm btn-outline-success disabled">🎉 Optimisé</span>
-        <% elsif opportunity&.contacted? %>
-          <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
-                      class: "btn btn-sm btn-outline-primary" do %>
-            ✅ Archiver
-          <% end %>
-        <% elsif opportunity&.danger? %>
-          <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
-                      class: "btn btn-sm btn-danger text-white" do %>
-            🚨 Alerter
-          <% end %>
-        <% elsif opportunity %>
-          <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
-                      class: "btn btn-sm btn-primary text-white" do %>
-            ✉️ Contacter
-          <% end %>
-        <% else %>
-          <span class="btn btn-sm btn-light disabled">☑️ OK</span>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <!-- Desktop: Fixed-width flexbox columns -->
-  <div class="d-none d-md-flex expense-row-desktop align-items-center">
-    <!-- Icon + Category (Fixed) -->
-    <div class="expense-row-category">
-      <div class="expense-icon">
-        <%= category_emoji(expense.category) %>
-      </div>
-      <div class="expense-category">
-        <%= expense.category.name %>
+      
+      <!-- Mobile Amount -->
+      <div class="d-md-none fw-bold">
+        <%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
       </div>
     </div>
 
-    <!-- Label (Flexible with truncation) -->
-    <div class="expense-row-label">
-      <span class="expense-label text-muted">
+    <!-- 2. Label (Truncated) -->
+    <div class="col-12 col-md-4">
+      <div class="text-muted small text-truncate" title="<%= expense.label %>">
         <%= expense.label %>
         <% if expense.respond_to?(:grouped?) && expense.grouped? %>
           <span class="badge bg-secondary ms-1">×<%= expense.grouped_expenses.size %></span>
         <% end %>
-      </span>
+      </div>
     </div>
 
-    <!-- Amount + Savings (Fixed right) -->
-    <div class="expense-row-amount">
-      <div class="expense-amount">
-        <%= number_to_currency(expense.subtotal, unit: "€", precision: 2) %>
+    <!-- 3. Desktop Amount & Savings & Button -->
+    <div class="col-12 col-md-4 d-flex align-items-center justify-content-between justify-content-md-end gap-3">
+      
+      <!-- Desktop Amount -->
+      <div class="d-none d-md-block fw-bold text-end" style="min-width: 80px;">
+        <%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
       </div>
 
+      <!-- Savings -->
       <% if opportunity&.opportunity? && opportunity.savings > 0 %>
-        <div class="expense-savings">
-          -<%= number_to_currency(opportunity.savings, unit: "€", precision: 0) %>
+        <div class="text-primary fw-bold text-nowrap">
+          <i class="fas fa-arrow-down small me-1"></i><%= number_to_currency(opportunity.savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
         </div>
       <% end %>
-    </div>
 
-    <!-- Action Button (Fixed right) -->
-    <div class="expense-row-action">
-      <% if opportunity&.completed? %>
-        <span class="btn btn-sm btn-outline-success disabled">🎉 Optimisé</span>
-      <% elsif opportunity&.contacted? %>
-        <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
-                    class: "btn btn-sm btn-outline-primary" do %>
-          ✅ Archiver
-        <% end %>
-      <% elsif opportunity&.danger? %>
-        <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
-                    class: "btn btn-sm btn-danger text-white" do %>
-          🚨 Alerter
-        <% end %>
-      <% elsif opportunity %>
-        <%= link_to statement_expense_opportunity_path(statement, expense, opportunity),
-                    class: "btn btn-sm btn-primary text-white" do %>
-          ✉️ Contacter
-        <% end %>
-      <% else %>
-        <span class="btn btn-sm btn-light disabled">☑️ OK</span>
-      <% end %>
+      <!-- Action Button -->
+      <div class="flex-shrink-0">
+        <%= render "opportunities/action_button",
+                   expense: expense,
+                   opportunity: opportunity,
+                   statement: statement %>
+      </div>
     </div>
   </div>
 </div>
