@@ -52,11 +52,21 @@
 
         <!-- Loading State (must be inside dropzone controller) -->
         <div data-dropzone-target="loading" class="d-none mt-4">
-          <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Importation en cours...</span>
-          </div>
+          <div class="loading-container text-center py-5">
+            <!-- Réutiliser ton SVG -->
+            <div class="loading-illustration-wrapper">
+              <img
+                src="<%= image_path 'uploading.svg' %>"
+                alt="Analyse en cours"
+                class="loading-illustration"
+              >
+              <!-- Spinner qui tourne autour du SVG -->
+              <div class="loading-spinner"></div>
+            </div>
 
-          <p class="text-muted mt-2 fw-medium">Analyse sécurisée en cours...</p>
+            <h5 class="fw-bold mt-4 mb-2">Analyse sécurisée en cours...</h5>
+            <p class="text-muted small mb-0">Vos données sont traitées de manière confidentielle</p>
+          </div>
         </div>
       </div>
 
