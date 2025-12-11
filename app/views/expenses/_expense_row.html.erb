@@ -25,7 +25,7 @@
     </div>
 
     <!-- Row 3: Amounts (Subtotal + Savings) -->
-    <div class="d-flex justify-content-start align-items-baseline gap-3 mb-2">
+    <div class="d-flex justify-content-between align-items-end mb-2">
       <div class="fw-bold">
         <%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
       </div>
