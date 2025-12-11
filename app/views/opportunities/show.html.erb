@@ -65,15 +65,15 @@
             <span aria-hidden="true">🖨️</span> Imprimer
           </button>
 
-          <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true, class: "d-flex gap-2") do %>
+          <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true, class: "d-flex gap-2 justify-content-center flex-wrap") do %>
             <% unless @opportunity.contacted? || @opportunity.completed? %>
               <button
                 type="submit"
                 name="opportunity[status]"
                 value="contacted"
-                class="btn btn-secondary"
+                class="btn btn-gov-primary"
               >
-                <span aria-hidden="true">✉️</span> Marquer comme contactée
+                <span aria-hidden="true">✉️</span> Envoyer
               </button>
             <% end %>
 
@@ -84,14 +84,19 @@
                 value="completed"
                 class="btn btn-success"
               >
-                <span aria-hidden="true">🎉</span> Clôturer
+                <span aria-hidden="true">✅</span> Clôturer
               </button>
             <% end %>
 
             <% if @opportunity.completed? %>
-              <div class="alert alert-success mb-0 py-2 px-3">
-                <span aria-hidden="true">✅</span> Opportunité clôturée
-              </div>
+              <button
+                type="submit"
+                name="opportunity[status]"
+                value="pending"
+                class="btn btn-soft"
+              >
+                <span aria-hidden="true">↩️</span> Restaurer
+              </button>
             <% end %>
           <% end %>
         </div>
