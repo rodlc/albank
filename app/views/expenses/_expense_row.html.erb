@@ -32,15 +32,15 @@
 
       <% if opportunity&.opportunity? && opportunity.savings > 0 %>
         <div class="text-primary fw-bold">
-          <i class="fas fa-arrow-down small me-1"></i><%= number_to_currency(opportunity.savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+          <i class="fas fa-arrow-trend-up small me-1"></i><%= number_to_currency(opportunity.savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
         </div>
       <% elsif opportunity&.success? %>
         <div class="text-success fw-bold">
-          <i class="fas fa-arrow-up small me-1"></i><%= number_to_currency((opportunity.standard.average_amount - expense.subtotal).abs, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+          <i class="fas fa-arrow-trend-down small me-1"></i><%= number_to_currency((opportunity.standard.average_amount - expense.subtotal).abs, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
         </div>
       <% elsif opportunity&.danger? %>
         <div class="text-danger fw-bold">
-          <i class="fas fa-arrow-down small me-1"></i><%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
+          <i class="fas fa-arrow-trend-up small me-1"></i><%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
         </div>
       <% end %>
     </div>
@@ -87,15 +87,15 @@
       <!-- Savings -->
       <% if opportunity&.opportunity? && opportunity.savings > 0 %>
         <div class="text-primary fw-bold text-end text-nowrap" style="min-width: 100px;">
-          <i class="fas fa-arrow-down small me-1"></i><%= number_to_currency(opportunity.savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+          <i class="fas fa-arrow-trend-up small me-1"></i><%= number_to_currency(opportunity.savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
         </div>
       <% elsif opportunity&.success? %>
         <div class="text-success fw-bold text-end text-nowrap" style="min-width: 100px;">
-          <i class="fas fa-arrow-up small me-1"></i><%= number_to_currency((opportunity.standard.average_amount - expense.subtotal).abs, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+          <i class="fas fa-arrow-trend-down small me-1"></i><%= number_to_currency((opportunity.standard.average_amount - expense.subtotal).abs, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
         </div>
       <% elsif opportunity&.danger? %>
         <div class="text-danger fw-bold text-end text-nowrap" style="min-width: 100px;">
-          <i class="fas fa-arrow-down small me-1"></i><%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
+          <i class="fas fa-arrow-trend-up small me-1"></i><%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
         </div>
       <% else %>
         <div style="min-width: 100px;"></div>
