@@ -1,32 +1,25 @@
 <div
-  class="container d-flex flex-column justify-content-center pt-4 pt-lg-0"
-  style="min-height: calc(100vh - 100px);"
+  class="container d-flex flex-column justify-content-center pt-3 pt-lg-0"
+  style="min-height: calc(100vh - 120px);"
 >
   <div class="row justify-content-center w-100">
     <div class="col-md-8 col-lg-6 text-center">
       <!-- Header -->
-      <h1 class="display-5 fw-bold mb-3 mt-5" style="letter-spacing: -0.03em;">
+      <h1 class="display-5 fw-bold mb-2 mt-4" style="letter-spacing: -0.03em;">
         <span class="underline-cyan">Protégez votre argent</span>
         <br>
         des fraudes et abus
       </h1>
-
-      <p class="lead text-muted mb-5">
-        Les prélèvements abusifs ont <strong class="text-dark">doublé en 10 ans</strong>.
-        <strong class="text-dark">1 Français sur 10</strong> est concerné. Et vous ?
-        <br>
-        <a href="https://www.banque-france.fr/fr/publications-et-statistiques/publications/rapport-de-lobservatoire-de-la-securite-des-moyens-de-paiement-2023" target="_blank" class="text-muted small" style="text-decoration: underline;">Source: Banque de France 2023</a>
-      </p>
 
       <!-- Drop Zone -->
       <div data-controller="dropzone" data-dropzone-url-value="<%= upload_statements_path %>" class="mb-4">
         <label
           for="file-input"
           data-dropzone-target="dropzone"
-          class="file-upload-wrapper w-100 shadow-sm border-2"
+          class="file-upload-wrapper shadow-sm border-2"
           id="dropZone"
         >
-          <div class="text-center py-5">
+          <div class="text-center py-3">
             <img
               src="<%= image_path 'uploading.svg' %>"
               alt="Choisir un fichier"
@@ -34,7 +27,7 @@
               class="upload-label-image"
             >
 
-            <h5 class="fw-bold mt-3 mb-2">Importez votre relevé PDF</h5>
+            <h5 class="fw-bold mt-2 mb-1">Importez votre relevé PDF</h5>
 
             <p class="text-muted small mb-0">
               pour lancer la vérification
@@ -64,14 +57,14 @@
               <div class="loading-spinner"></div>
             </div>
 
-            <h5 class="fw-bold mt-4 mb-2">Analyse sécurisée en cours...</h5>
-            <p class="text-muted small mb-0">Vos données sont traitées de manière confidentielle</p>
+            <h5 data-dropzone-target="loadingTitle" class="fw-bold mt-4 mb-2">Analyse sécurisée en cours...</h5>
+            <p data-dropzone-target="loadingText" class="text-muted small mb-0">Vos données sont traitées de manière confidentielle</p>
           </div>
         </div>
       </div>
 
       <!-- Reassurance -->
-      <div class="row g-3 text-center mt-4 mb-5">
+      <div class="row g-2 text-center mt-1 mb-4">
         <div class="col-12 col-md-4">
           <div class="reassurance-badge reassurance-security">
             <div class="fs-2 mb-2">🔒</div>
@@ -95,7 +88,7 @@
       </div>
 
       <!-- Scroll invitation -->
-      <div class="text-center mt-5">
+      <div class="text-center mt-4">
         <a href="#explications" class="scroll-hint-pill text-decoration-none">
           <span>En savoir plus</span>
           <i class="fas fa-chevron-down"></i>

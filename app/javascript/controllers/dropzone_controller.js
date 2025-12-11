@@ -1,10 +1,21 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["dropzone", "input", "loading"];
+  static targets = ["dropzone", "input", "loading", "loadingTitle", "loadingText"];
   static values = { url: String };
 
+  // Messages à alterner
+  loadingMessages = [
+    { title: "Analyse sécurisée en cours...", text: "Traitement 100% anonymisé sur serveurs français 🥖" },
+    { title: "Lecture de votre relevé...", text: "Comparaison avec les archives de la Banque de France 🗂️" },
+    { title: "Détection des anomalies...", text: "Interrogatoire de vos abonnements oubliés 🔮" },
+    { title: "Presque terminé...", text: "Traque des euros qui s'échappent discrètement 💸" }
+  ];
+
   connect() {
+    this.currentMessageIndex = 0;
+    this.messageInterval = null;
+
     this.inputTarget.addEventListener("change", (e) => {
       if (e.target.files.length > 0) {
         this.handleFiles(e.target.files);
@@ -27,6 +38,10 @@ export default class extends Controller {
         this.handleFiles(e.dataTransfer.files);
       }
     });
+  }
+
+  disconnect() {
+    this.stopMessageRotation();
   }
 
   handleFiles(files) {
@@ -71,10 +86,40 @@ export default class extends Controller {
   showLoading() {
     this.dropzoneTarget.classList.add("d-none");
     this.loadingTarget.classList.remove("d-none");
+    this.startMessageRotation();
   }
 
   hideLoading() {
     this.dropzoneTarget.classList.remove("d-none");
     this.loadingTarget.classList.add("d-none");
+    this.stopMessageRotation();
+  }
+
+  startMessageRotation() {
+    this.currentMessageIndex = 0;
+    this.updateMessage();
+
+    this.messageInterval = setInterval(() => {
+      this.currentMessageIndex = (this.currentMessageIndex + 1) % this.loadingMessages.length;
+      this.updateMessage();
+    }, 4000); // 5 secondes
+  }
+
+  stopMessageRotation() {
+    if (this.messageInterval) {
+      clearInterval(this.messageInterval);
+      this.messageInterval = null;
+    }
+  }
+
+  updateMessage() {
+    const message = this.loadingMessages[this.currentMessageIndex];
+
+    if (this.hasLoadingTitleTarget) {
+      this.loadingTitleTarget.textContent = message.title;
+    }
+    if (this.hasLoadingTextTarget) {
+      this.loadingTextTarget.textContent = message.text;
+    }
   }
 }

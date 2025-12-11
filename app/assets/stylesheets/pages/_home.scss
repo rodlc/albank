@@ -27,10 +27,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 280px;
+    min-height: 100px;
     width: 100%;
-    margin: 0 auto 2rem;
-    padding: 2rem 1rem;
+    margin: 0 auto 1rem;
+    padding: 1rem 1rem;
     border: 3px dashed $primary;
     border-radius: $border-radius-lg;
     background: linear-gradient(
@@ -43,8 +43,8 @@
     box-sizing: border-box;
 
     @media (min-width: 768px) {
-        min-height: 350px;
-        padding: 3rem 2rem;
+        min-height: 200px;
+        padding: 1.5rem 1rem;
         width: 90%;
     }
 
@@ -106,13 +106,13 @@
 // Illustration upload
 .upload-label-image {
     display: block;
-    max-width: 140px;
+    max-width: 70px;
     width: 100%;
     height: auto;
     margin: 0 auto;
 
     @media (min-width: 768px) {
-        max-width: 180px;
+        max-width: 100px;
     }
 }
 
@@ -129,9 +129,9 @@
   position: relative;
   width: 180px;
   height: 180px;
-  display: flex;              // 👈 Ajouter
-  align-items: center;        // 👈 Centre verticalement
-  justify-content: center;    // 👈 Centre horizontalement
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .loading-illustration {
@@ -142,13 +142,12 @@
 
 .loading-spinner {
   position: absolute;
-  top: 50%;                   // 👈 Position au centre vertical
-  left: 50%;                  // 👈 Position au centre horizontal
-  // transform: translate(-50%, -50%);  // 👈 Centre automatiquement !
-  width: 200px;               // 👈 Taille adaptée au SVG (140px + marge)
-  height: 200px;              // 👈 Idem
-  margin-top: -100px;          // 👈 Décalage = -50% de la hauteur
-  margin-left: -100px;         // 👈 Décalage = -50% de la largeur
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  margin-top: -100px;
+  margin-left: -100px;
   border: 4px solid rgba($primary, 0.1);
   border-top-color: $primary;
   border-radius: 50%;
@@ -176,7 +175,7 @@
 .reassurance-badge {
     border-radius: $border-radius-lg;
     padding: 1rem 0.75rem;
-    height: 110px;
+    height: 80px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -415,6 +414,7 @@
   min-height: 44px; // Zone de tap accessible
   background-color: rgba($cyan, 0.1);
   color: $cyan-dark;
+  border: 2px solid $cyan;
   border-radius: 50px;
   font-size: 0.875rem;
   font-weight: 600;
