@@ -43,11 +43,7 @@
     padding: 1rem 1rem;
     border: 3px dashed $primary;
     border-radius: $border-radius-lg;
-    background: linear-gradient(
-        135deg,
-        rgba($cyan, 0.04) 0%,
-        rgba($primary, 0.02) 100%
-    );
+    background-color: $primary-lighter;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     box-sizing: border-box;
@@ -61,11 +57,7 @@
     // États interactifs
     &:hover {
         border-color: $cyan;
-        background: linear-gradient(
-            135deg,
-            rgba($cyan, 0.08) 0%,
-            rgba($primary, 0.04) 100%
-        );
+        background-color: darken($primary-lighter, 2%);
         box-shadow: 0 8px 20px rgba($primary, 0.12);
         transform: translateY(-2px);
     }
@@ -77,11 +69,7 @@
     &.dragover {
         border-color: $link-hover-color;
         border-width: 3px;
-        background: linear-gradient(
-            135deg,
-            rgba($link-hover-color, 0.08) 0%,
-            rgba($cyan, 0.08) 100%
-        );
+        background-color: darken($primary-lighter, 5%);
         box-shadow: 0 12px 24px rgba($link-hover-color, 0.2);
         transform: scale(1.02);
     }
@@ -419,15 +407,16 @@
 .scroll-hint-pill {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  padding: 0.875rem 1.5rem;
+  padding: 0.75rem 1.5rem;
   min-height: 44px; // Zone de tap accessible
-  background-color: rgba($cyan, 0.1);
-  color: $cyan-dark;
-  border: 2px solid $cyan;
+  background-color: transparent;
+  color: $primary;
+  border: 1px solid $border-color;
   border-radius: 50px;
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 500;
   transition: all 0.2s ease;
 
   @media (min-width: 768px) {
@@ -436,7 +425,8 @@
   }
 
   &:hover {
-      background-color: rgba($cyan, 0.2);
+      background-color: $primary-lighter;
+      border-color: $primary;
       color: $primary;
       transform: translateY(-2px);
   }
