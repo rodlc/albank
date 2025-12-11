@@ -74,10 +74,12 @@ class LlmProcessor
       Les mots-clés sont des indices, pas des règles strictes.
       Utilise ton intelligence pour déduire la catégorie même si le libellé est abrégé ou cryptique.
 
-      Retourne aussi le total des dépenses du relevé.
+      Extrais aussi :
+      - La date du relevé (mois/année de la période couverte, au format YYYY-MM-DD avec le 1er du mois)
+      - Le total des dépenses (débits uniquement, en valeur absolue)
 
       IMPORTANT : Réponds UNIQUEMENT avec le JSON, sans aucun texte avant ou après.
-      Format : {"total": montant_total, "transactions": [{"label": "...", "category": "...", "amount": ...}]}
+      Format : {"statement_date": "YYYY-MM-DD", "total": montant_total, "transactions": [{"label": "...", "category": "...", "amount": ...}]}
     PROMPT
   end
 
@@ -90,6 +92,6 @@ class LlmProcessor
       valid_categories.include?(t[:category])
     end
 
-    { total: json[:total], transactions: valid_transactions }
+    { statement_date: json[:statement_date], total: json[:total], transactions: valid_transactions }
   end
 end

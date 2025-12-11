@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
 
-  resources :statements, only: [:index, :show] do
+  resources :statements, only: [:index, :show, :destroy] do
     collection do
       post :upload
       get :process_upload
