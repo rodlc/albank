@@ -5,7 +5,7 @@
   <div class="row justify-content-center w-100">
     <div class="col-md-8 col-lg-6 text-center">
       <!-- Header -->
-      <h1 class="display-5 fw-bold mb-3" style="letter-spacing: -0.03em;">
+      <h1 class="display-5 fw-bold mb-3 mt-5" style="letter-spacing: -0.03em;">
         <span class="underline-cyan">Protégez votre argent</span>
         <br>
         des fraudes et abus
@@ -62,21 +62,21 @@
 
       <!-- Reassurance -->
       <div class="row g-3 text-center mt-4 mb-5">
-        <div class="col-4">
+        <div class="col-12 col-md-4">
           <div class="reassurance-badge reassurance-security">
             <div class="fs-2 mb-2">🔒</div>
             <p class="small fw-semibold mb-0">100% Sécurisé</p>
           </div>
         </div>
 
-        <div class="col-4">
+        <div class="col-12 col-md-4">
           <div class="reassurance-badge reassurance-privacy">
             <div class="fs-2 mb-2">🙈</div>
             <p class="small fw-semibold mb-0">Confidentiel</p>
           </div>
         </div>
 
-        <div class="col-4">
+        <div class="col-12 col-md-4">
           <div class="reassurance-badge reassurance-auto">
             <div class="fs-2 mb-2">🗑️</div>
             <p class="small fw-semibold mb-0">Aucun stockage</p>
@@ -143,72 +143,6 @@
     </div>
   </div>
 </section>
-
-<div class="container text-center mt-5 mb-5">
-  <p>
-    Pour importer vos relevés bancaires, vous pouvez généralement les
-    télécharger au format PDF, ou csv, depuis le site web de votre banque.
-    <i>Cliquez</i> sur le logo votre banque pour être redirigé sur la page tuto
-    de téléchargement de vos relevéés bancaires:
-  </p>
-
-  <div class="bank-logos mt-5 mb-5">
-    <%= link_to "https://www.caisse-epargne.fr/rhone-alpes/faq-particuliers/comptes-et-documents/e-documents/comment-imprimer-mes-releves-bancaires/",
-            target: "_blank" do %>
-      <%= image_tag("cde.png", alt: "Caisse d'Epargne", class: "bank-logo") %>
-    <% end %>
-
-    <%= link_to "https://www.credit-agricole.fr/particulier/compte/service-bancaire/e-documents.html",
-            target: "_blank" do %>
-      <%= image_tag("ca.jpeg", alt: "Crédit Agricole", class: "bank-logo") %>
-    <% end %>
-
-    <%= link_to "https://www.labanquepostale.fr/particulier/faq-centre-aide/espace-client.question.html/comment-imprimer-mon-releve-de-compte-bancaire.html",
-            target: "_blank" do %>
-      <%= image_tag("lbp.png", alt: "Banque Postale", class: "bank-logo") %>
-    <% end %>
-
-    <%= link_to "https://www.banquepopulaire.fr/banque-a-distance/e-documents-mes-releves-avis-courriers/#:~:text=sont%20disponibles%20gratuitement.-,Depuis%20votre%20application%20mobile,dans%20le%20menu%20%C2%AB%20Documents%20%C2%BB.",
-            target: "_blank" do %>
-      <%= image_tag("bp.jpeg", alt: "Banque Populaire", class: "bank-logo") %>
-    <% end %>
-
-    <%= link_to "https://particuliers.sg.fr/icd/pch/faq/compte-et-budget/mes-comptes-et-operations/comment-acceder-a-mes-releves-de-compte",
-            target: "_blank" do %>
-      <%= image_tag("sg.png", alt: "Société Générale", class: "bank-logo") %>
-    <% end %>
-
-    <%= link_to "https://mabanque.bnpparibas/fr/gerer/services-lies-compte/options-et-services/telecharger-vos-releves-d-operation",
-            target: "_blank" do %>
-      <%= image_tag("bnp.png", alt: "BNP Paribas", class: "bank-logo") %>
-    <% end %>
-
-    <%= link_to "https://www.creditmutuel.fr/fr/search_engine.html?pQuery=t%C3%A9l%C3%A9chargement%20relev%C3%A9%20bancaires&pSpace=Particulier/",
-            target: "_blank" do %>
-      <%= image_tag("cm.png", alt: "Crédit Mutuel", class: "bank-logo") %>
-    <% end %>
-
-    <%= link_to "https://www.cic.fr/fr/particuliers/comptes/documents-dematerialises.html",
-            target: "_blank" do %>
-      <%= image_tag("cic.png", alt: "CIC", class: "bank-logo") %>
-    <% end %>
-
-    <%= link_to "https://www.monabanq.com/fr/services-bancaires/application-mobile.html",
-            target: "_blank" do %>
-      <%= image_tag("monabanq.jpeg", alt: "Mona Banq", class: "bank-logo") %>
-    <% end %>
-
-    <%= link_to "https://www.fortuneo.fr/faq/comment-telecharger-mon-releve-de-compte-ou-de-carte-bancaire",
-            target: "_blank" do %>
-      <%= image_tag("fortuneo.png", alt: "Fortuneo", class: "bank-logo") %>
-    <% end %>
-
-    <%= link_to "https://www.boursobank.com/aide-en-ligne/banque/releves-et-documents-bancaires/question/comment-telecharger-mon-releve-de-compte-ou-de-carte-bancaire-144",
-                target: "_blank" do %>
-      <%= image_tag("boursorama.png", alt: "Boursorama Banque", class: "bank-logo") %>
-    <% end %>
-  </div>
-</div>
 
 <div class="container mt-5 mb-5 faq-section">
   <h1 class="text-center mb-5"><strong>Des réponses à vos questions</strong></h1>
@@ -316,5 +250,71 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="container text-center mt-5 mb-5">
+  <p>
+    Pour importer vos relevés bancaires, vous pouvez généralement les
+    télécharger au format PDF, ou csv, depuis le site web de votre banque.
+    <i>Cliquez</i> sur le logo votre banque pour être redirigé sur la page tuto
+    de téléchargement de vos relevéés bancaires:
+  </p>
+
+  <div class="bank-logos mt-5 mb-5">
+    <%= link_to "https://www.caisse-epargne.fr/rhone-alpes/faq-particuliers/comptes-et-documents/e-documents/comment-imprimer-mes-releves-bancaires/",
+            target: "_blank" do %>
+      <%= image_tag("cde.png", alt: "Caisse d'Epargne", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://www.credit-agricole.fr/particulier/compte/service-bancaire/e-documents.html",
+            target: "_blank" do %>
+      <%= image_tag("ca.jpeg", alt: "Crédit Agricole", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://www.labanquepostale.fr/particulier/faq-centre-aide/espace-client.question.html/comment-imprimer-mon-releve-de-compte-bancaire.html",
+            target: "_blank" do %>
+      <%= image_tag("lbp.png", alt: "Banque Postale", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://www.banquepopulaire.fr/banque-a-distance/e-documents-mes-releves-avis-courriers/#:~:text=sont%20disponibles%20gratuitement.-,Depuis%20votre%20application%20mobile,dans%20le%20menu%20%C2%AB%20Documents%20%C2%BB.",
+            target: "_blank" do %>
+      <%= image_tag("bp.jpeg", alt: "Banque Populaire", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://particuliers.sg.fr/icd/pch/faq/compte-et-budget/mes-comptes-et-operations/comment-acceder-a-mes-releves-de-compte",
+            target: "_blank" do %>
+      <%= image_tag("sg.png", alt: "Société Générale", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://mabanque.bnpparibas/fr/gerer/services-lies-compte/options-et-services/telecharger-vos-releves-d-operation",
+            target: "_blank" do %>
+      <%= image_tag("bnp.png", alt: "BNP Paribas", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://www.creditmutuel.fr/fr/search_engine.html?pQuery=t%C3%A9l%C3%A9chargement%20relev%C3%A9%20bancaires&pSpace=Particulier/",
+            target: "_blank" do %>
+      <%= image_tag("cm.png", alt: "Crédit Mutuel", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://www.cic.fr/fr/particuliers/comptes/documents-dematerialises.html",
+            target: "_blank" do %>
+      <%= image_tag("cic.png", alt: "CIC", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://www.monabanq.com/fr/services-bancaires/application-mobile.html",
+            target: "_blank" do %>
+      <%= image_tag("monabanq.jpeg", alt: "Mona Banq", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://www.fortuneo.fr/faq/comment-telecharger-mon-releve-de-compte-ou-de-carte-bancaire",
+            target: "_blank" do %>
+      <%= image_tag("fortuneo.png", alt: "Fortuneo", class: "bank-logo") %>
+    <% end %>
+
+    <%= link_to "https://www.boursobank.com/aide-en-ligne/banque/releves-et-documents-bancaires/question/comment-telecharger-mon-releve-de-compte-ou-de-carte-bancaire-144",
+                target: "_blank" do %>
+      <%= image_tag("boursorama.png", alt: "Boursorama Banque", class: "bank-logo") %>
+    <% end %>
   </div>
 </div>

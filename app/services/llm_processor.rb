@@ -15,33 +15,6 @@ class LlmProcessor
   def initialize(text)
     @text = text
     @categories_with_keywords = Category.pluck(:name, :keywords)
-    @example_transactions = fetch_example_transactions
-  end
-
-  def llm_logger
-    @llm_logger ||= Logger.new(Rails.root.join("log", "llm.log"))
-  end
-
-  def fetch_example_transactions
-    # Récupère des exemples de transactions déjà catégorisées
-    return [] if Expense.count.zero?
-
-    Expense.joins(:category)
-           .includes(:category)
-           .order("RANDOM()")
-           .limit(20)
-           .map { |e| { label: e.label, category: e.category.name } }
-  rescue StandardError => e
-    llm_logger.warn("Impossible de récupérer les exemples: #{e.message}")
-    []
-  end
-
-  def examples_list
-    return "Aucun exemple disponible." if @example_transactions.empty?
-
-    @example_transactions.map do |ex|
-      "- \"#{ex[:label]}\" → #{ex[:category]}"
-    end.join("\n")
   end
 
   def process
@@ -50,7 +23,7 @@ class LlmProcessor
       return result if result[:transactions].any?
     end
 
-    llm_logger.error("Tous les modèles ont échoué")
+    Rails.logger.error("[LLM] Tous les modèles ont échoué")
     { total: nil, transactions: [] }
   end
 
@@ -65,16 +38,16 @@ class LlmProcessor
   end
 
   def try_model(model, provider)
-    llm_logger.info("Essai avec #{model} (#{provider})")
-    llm_logger.info("Prompt:\n#{prompt}")
+    Rails.logger.info("[LLM] Essai avec #{model} (#{provider})")
+    Rails.logger.info("[LLM] Prompt: #{prompt.truncate(500)}")
 
     chat = RubyLLM.chat(model: model, provider: provider)
     response = chat.ask(prompt)
 
-    llm_logger.info("Response:\n#{response.content}")
+    Rails.logger.info("[LLM] Response: #{response.content.truncate(1000)}")
     parse_response(response.content)
   rescue StandardError => e
-    llm_logger.warn("#{model} échoué: #{e.message}")
+    Rails.logger.warn("[LLM] #{model} échoué: #{e.message}")
     { total: nil, transactions: [] }
   end
 
@@ -86,24 +59,25 @@ class LlmProcessor
     <<~PROMPT
       Tu es un expert en analyse de relevés bancaires français.
 
-      RELEVÉ À ANALYSER :
+      RELEVÉ :
       #{@text}
 
-      CATÉGORIES DISPONIBLES :
+      CATÉGORIES CONNUES (avec exemples de mots-clés) :
       #{categories_list}
 
-      EXEMPLES DE TRANSACTIONS DÉJÀ CATÉGORISÉES :
-      #{examples_list}
+      MISSION :
+      Pour chaque ligne du relevé, identifie :
+      - Le libellé original (tel qu'il apparaît)
+      - La catégorie la plus probable
+      - Le montant
 
-      RÈGLES :
-      1. Cherche d'abord les ARNAQUES : HPY, PDF, VERIF, BESTPDF
-      2. Puis les assurances et abonnements identifiables (EDF, Orange, MAIF, AXA...)
-      3. IGNORE tout le reste : achats (APPLE, CB), virements, salaires, transports (IDFM, UMS), abonnements inconnus (Starlink, Kindle)
+      Les mots-clés sont des indices, pas des règles strictes.
+      Utilise ton intelligence pour déduire la catégorie même si le libellé est abrégé ou cryptique.
 
-      TOTAL : Cherche le montant total du relevé dans le PDF. Si introuvable, mets null.
+      Retourne aussi le total des dépenses du relevé.
 
-      IMPORTANT : JSON uniquement, sans texte avant/après.
-      Format : {"total": montant_ou_null, "transactions": [{"label": "...", "category": "...", "amount": ...}]}
+      IMPORTANT : Réponds UNIQUEMENT avec le JSON, sans aucun texte avant ou après.
+      Format : {"total": montant_total, "transactions": [{"label": "...", "category": "...", "amount": ...}]}
     PROMPT
   end
 

@@ -78,7 +78,7 @@ class ExpensesHelperTest < ActionView::TestCase
   test "result_type_config returns default config for nil" do
     config = result_type_config(nil)
     assert_equal "💳", config[:emoji]
-    assert_equal "Autres", config[:label]
+    assert_equal "Dépenses non ciblées", config[:label]
     assert_equal "secondary", config[:color]
   end
 end

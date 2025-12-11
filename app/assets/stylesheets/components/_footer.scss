@@ -1,0 +1,61 @@
+// === AlBank Footer Styles ===
+// Footer minimaliste style service public français
+
+.footer {
+    background-color: #ffffff;
+    border-top: 1px solid #e8e8e8;
+    margin-top: auto;
+    font-size: 0.875rem;
+
+    a {
+        color: #6e6e6e;
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: #000091;
+            text-decoration: underline;
+        }
+    }
+
+    h6 {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #161616;
+        margin-bottom: 1rem;
+        letter-spacing: -0.01em;
+    }
+
+    .list-unstyled {
+        margin-bottom: 0;
+
+        li {
+            line-height: 1.8;
+        }
+    }
+
+    .text-muted {
+        color: #6e6e6e !important;
+    }
+
+    // Responsive
+    @media (max-width: 767px) {
+        margin-top: 3rem;
+
+        .col-6 {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+    }
+}
+
+// Sticky footer (pour pages courtes)
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}

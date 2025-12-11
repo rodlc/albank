@@ -1,25 +1,35 @@
-<% if notice %>
-  <div class="alert alert-info alert-dismissible fade show m-1" role="alert">
-    <%= notice %>
+<div class="flash-messages-container">
+  <% if notice %>
+    <div class="alert alert-success alert-dismissible fade show m-3 shadow-soft" role="alert">
+      <div class="d-flex align-items-start gap-2">
+        <span class="flex-shrink-0" aria-hidden="true">✅</span>
+        <div class="flex-grow-1">
+          <%= notice %>
+        </div>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Fermer le message"
+        ></button>
+      </div>
+    </div>
+  <% end %>
 
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="alert"
-      aria-label="Close"
-    ></button>
-  </div>
-<% end %>
-
-<% if alert %>
-  <div class="alert alert-warning alert-dismissible fade show m-1" role="alert">
-    <%= alert %>
-
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="alert"
-      aria-label="Close"
-    ></button>
-  </div>
-<% end %>
+  <% if alert %>
+    <div class="alert alert-warning alert-dismissible fade show m-3 shadow-soft" role="alert">
+      <div class="d-flex align-items-start gap-2">
+        <span class="flex-shrink-0" aria-hidden="true">⚠️</span>
+        <div class="flex-grow-1">
+          <%= alert %>
+        </div>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Fermer le message"
+        ></button>
+      </div>
+    </div>
+  <% end %>
+</div>
