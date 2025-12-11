@@ -58,6 +58,14 @@
               </div>
             </div>
           <% end %>
+
+          <%= button_to statement_path(statement),
+              method: :delete,
+              data: { turbo_confirm: "Supprimer ce relevé et toutes ses dépenses ?" },
+              class: "btn-close position-absolute top-0 end-0 m-2",
+              style: "z-index: 10;",
+              form: { class: "d-inline" } do %>
+          <% end %>
           </div>
         </div>
       <% end %>

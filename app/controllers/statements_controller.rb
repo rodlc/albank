@@ -10,6 +10,12 @@ class StatementsController < ApplicationController
     @expenses = @statement.expenses.includes(:category, :opportunities)
   end
 
+  def destroy
+    @statement = current_user.statements.find(params[:id])
+    @statement.destroy
+    redirect_to statements_path, notice: "Relevé supprimé"
+  end
+
   def upload
     uploaded = params[:file] # ActionDispatch::Http::UploadedFile
 
@@ -65,7 +71,8 @@ class StatementsController < ApplicationController
     transactions = data[:transactions] || []
 
     # Création du relevé et des dépenses associées
-    statement = current_user.statements.create(date: Date.today, total: data[:total])
+    statement_date = Date.parse(data[:statement_date]) rescue Date.today
+    statement = current_user.statements.create(date: statement_date, total: data[:total])
 
     transactions.each do |transaction|
       category = Category.find_by(name: transaction[:category])
