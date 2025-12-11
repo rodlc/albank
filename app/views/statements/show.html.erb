@@ -21,8 +21,8 @@
       </div>
 
       <!-- Right: Inline stats -->
-      <div class="d-flex gap-4 align-items-end">
-        <div class="text-end">
+      <div class="d-flex flex-row gap-3 gap-md-4 align-items-start align-items-md-end">
+        <div class="text-start text-md-end">
           <div class="text-uppercase text-muted small fw-semibold mb-1">Total</div>
           <div class="h3 fw-bold mb-0">
             <%= number_to_currency(@expenses.sum(&:subtotal), unit: "€", precision: 0, separator: ",", delimiter: " ") %>
@@ -30,7 +30,7 @@
         </div>
 
         <% if total_dangers > 0 %>
-          <div class="text-end">
+          <div class="text-start text-md-end">
             <div class="text-uppercase text-danger small fw-semibold mb-1">Fraudes</div>
             <div class="h3 fw-bold text-danger mb-0">
               <%= number_to_currency(total_dangers, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
@@ -39,7 +39,7 @@
         <% end %>
 
         <% if total_savings > 0 %>
-          <div class="text-end">
+          <div class="text-start text-md-end">
             <div class="text-uppercase text-primary small fw-semibold mb-1">Économies</div>
             <div class="h3 fw-bold text-primary mb-0">
               <%= number_to_currency(total_savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
@@ -48,15 +48,6 @@
         <% end %>
       </div>
     </div>
-
-    <!-- Badge opportunités (sous le header si présent) -->
-    <% if total_opportunities > 0 %>
-      <div class="d-inline-flex">
-        <span class="badge bg-primary rounded-pill px-3 py-2">
-          <span aria-hidden="true">💡</span> <%= total_opportunities %> opportunité<%= total_opportunities > 1 ? 's' : '' %>
-        </span>
-      </div>
-    <% end %>
   </div>
 
   <% if @expenses.any? %>
