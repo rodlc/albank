@@ -49,28 +49,21 @@
             </div>
           </div>
         <% end %>
-
-        <% if optimise_gain > 0 %>
-          <div class="text-start text-md-end">
-            <div class="text-uppercase text-success small fw-semibold mb-1">Optimisé</div>
-            <div class="h3 fw-bold text-success mb-0">
-              <i class="fas fa-arrow-up small me-1"></i><%= number_to_currency(optimise_gain, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
-            </div>
-          </div>
-        <% end %>
       </div>
     </div>
   </div>
 
   <% if @expenses.any? %>
     <div class="accordion expenses-accordion" id="expensesAccordion">
-      <% [:danger, :opportunity, :success].each_with_index do |type, i| %>
+      <% rendered_count = 0 %>
+      <% [:danger, :opportunity, :success].each do |type| %>
         <% next unless (expenses = grouped[type.to_s])&.any? %>
         <%= render "expenses/accordion_section",
                    result_type: type,
                    expenses: expenses,
                    statement: @statement,
-                   index: i %>
+                   index: rendered_count %>
+        <% rendered_count += 1 %>
       <% end %>
 
       <% if (autres = grouped[nil])&.any? %>
@@ -78,7 +71,8 @@
                    result_type: nil,
                    expenses: autres,
                    statement: @statement,
-                   index: 3 %>
+                   index: rendered_count %>
+        <% rendered_count += 1 %>
       <% end %>
 
       <!-- Section calculée : Autres dépenses (non reconnues par le LLM) -->
