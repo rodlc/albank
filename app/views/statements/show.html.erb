@@ -6,9 +6,12 @@
   </div>
 
   <!-- Header avec stats inline (Target design) -->
-  <% total_dangers = @statement.total_dangers %>
-  <% total_savings = @statement.total_savings %>
-  <% total_opportunities = @statement.total_opportunities %>
+  <% grouped = @expenses.group_by { |e| e.opportunities.first&.result_type } %>
+  
+  <% total_amount = @expenses.sum(&:subtotal) %>
+  <% fraude_amount = grouped['danger']&.sum(&:subtotal) || 0 %>
+  <% economie_amount = grouped['opportunity']&.sum { |e| e.opportunities.first.savings } || 0 %>
+  <% optimise_gain = grouped['success']&.sum { |e| (e.opportunities.first.standard.average_amount - e.subtotal) } || 0 %>
 
   <div class="statement-header mb-4">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-end gap-3 mb-3">
@@ -21,28 +24,37 @@
       </div>
 
       <!-- Right: Inline stats -->
-      <div class="d-flex flex-row gap-3 gap-md-4 align-items-start align-items-md-end">
+      <div class="d-flex flex-row gap-3 gap-md-4 align-items-start align-items-md-end flex-wrap">
         <div class="text-start text-md-end">
           <div class="text-uppercase text-muted small fw-semibold mb-1">Total</div>
           <div class="h3 fw-bold mb-0">
-            <%= number_to_currency(@expenses.sum(&:subtotal), unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+            <%= number_to_currency(total_amount, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
           </div>
         </div>
 
-        <% if total_dangers > 0 %>
+        <% if fraude_amount > 0 %>
           <div class="text-start text-md-end">
             <div class="text-uppercase text-danger small fw-semibold mb-1">Fraudes</div>
             <div class="h3 fw-bold text-danger mb-0">
-              <%= number_to_currency(total_dangers, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+              <i class="fas fa-arrow-down small me-1"></i><%= number_to_currency(fraude_amount, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
             </div>
           </div>
         <% end %>
 
-        <% if total_savings > 0 %>
+        <% if economie_amount > 0 %>
           <div class="text-start text-md-end">
             <div class="text-uppercase text-primary small fw-semibold mb-1">Économies</div>
             <div class="h3 fw-bold text-primary mb-0">
-              <%= number_to_currency(total_savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+              <i class="fas fa-arrow-down small me-1"></i><%= number_to_currency(economie_amount, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+            </div>
+          </div>
+        <% end %>
+
+        <% if optimise_gain > 0 %>
+          <div class="text-start text-md-end">
+            <div class="text-uppercase text-success small fw-semibold mb-1">Optimisé</div>
+            <div class="h3 fw-bold text-success mb-0">
+              <i class="fas fa-arrow-up small me-1"></i><%= number_to_currency(optimise_gain, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
             </div>
           </div>
         <% end %>
@@ -52,8 +64,6 @@
 
   <% if @expenses.any? %>
     <div class="accordion expenses-accordion" id="expensesAccordion">
-      <% grouped = @expenses.group_by { |e| e.opportunities.first&.result_type } %>
-
       <% [:danger, :opportunity, :success].each_with_index do |type, i| %>
         <% next unless (expenses = grouped[type.to_s])&.any? %>
         <%= render "expenses/accordion_section",
@@ -84,23 +94,37 @@
               data-bs-target="#collapseAutres"
               aria-expanded="false"
               aria-controls="collapseAutres"
-              aria-label="Dépenses non ciblées : total <%= number_to_currency(autres_amount, unit: '€', precision: 0, separator: ',', delimiter: ' ') %>"
+              aria-label="Autres dépenses : total <%= number_to_currency(autres_amount, unit: '€', precision: 0, separator: ',', delimiter: ' ') %>"
             >
               <div class="d-flex align-items-center gap-2 flex-grow-1">
                 <span class="section-emoji">💳</span>
-                <span class="section-label">Dépenses non ciblées</span>
+                <span class="section-label">Autres dépenses</span>
               </div>
-              <span class="section-totals ms-auto">
-                <%= number_to_currency(autres_amount, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
-              </span>
-              <span class="section-action d-none d-md-inline">Voir</span>
+
+              <!-- Desktop Alignment Wrapper -->
+              <div class="d-none d-md-flex align-items-center gap-4 ms-auto">
+                <div class="fw-bold text-end" style="min-width: 100px;">
+                  <%= number_to_currency(autres_amount, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+                </div>
+                <div style="min-width: 100px;"></div>
+                <div class="d-flex align-items-center justify-content-center gap-2" style="width: 140px;">
+                  Voir <i class="fas fa-chevron-down transition-transform"></i>
+                </div>
+              </div>
+
+              <!-- Mobile Totals -->
+              <div class="d-md-none ms-auto d-flex flex-column align-items-end">
+                <span class="fw-bold">
+                  <%= number_to_currency(autres_amount, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+                </span>
+              </div>
             </button>
           </h2>
           <div id="collapseAutres" class="accordion-collapse collapse" data-bs-parent="#expensesAccordion">
-            <div class="accordion-body">
-              <div class="text-muted">
-                Dépenses hors périmètre AlBank (alimentation, transport, loisirs...)
-              </div>
+            <div class="accordion-body p-4">
+              <p class="mb-0 text-muted">
+                Dépenses non reconnues ou hors périmètre Albank (alimentation, transports, loisirs...).
+              </p>
             </div>
           </div>
         </div>
