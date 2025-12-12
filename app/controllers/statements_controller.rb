@@ -65,7 +65,7 @@ class StatementsController < ApplicationController
   def process_pdf_import(file_io, filename = nil)
     # Mode demo si fichier demo.pdf
     if filename&.downcase == "demo.pdf"
-      sleep(30)  # Simulate LLM processing
+      sleep(20)  # Simulate LLM processing
       data = demo_statement_data
       transactions = data[:transactions] || []
     else
