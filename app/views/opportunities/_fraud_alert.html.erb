@@ -1,59 +1,71 @@
 <div class="action-section">
   <div class="container">
-    <div class="paper-sheet shadow-lg position-relative" style="border: none;">
-
-      <!-- Alerte Header -->
-      <div class="alert alert-danger d-flex align-items-center mb-4">
-        <span class="fs-3 me-3">🚨</span>
-        <div>
-          <strong>Prélèvement suspect détecté</strong><br>
-          <span class="small"><%= @opportunity.expense.label %></span>
-        </div>
-        <div class="ms-auto fw-bold fs-4">
-          <%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 2) %>
-        </div>
+    <div
+      class="paper-sheet shadow-lg position-relative"
+      id="letter-content"
+      data-clipboard-target="source"
+      style="border: none;"
+    >
+      <!-- Letter Header -->
+      <div class="d-flex justify-content-between mb-5">
+        <div class="text-muted small fst-italic">[Vos Coordonnées]</div>
+        <div class="fw-bold">Le <%= l(Date.current, format: "%d %B %Y") %></div>
       </div>
 
-      <!-- Vos droits -->
-      <div class="mb-4">
-        <h5 class="fw-bold mb-3">📋 Vos droits</h5>
-        <ul class="list-unstyled">
-          <li class="mb-2">✅ <strong>13 mois</strong> pour contester un prélèvement non autorisé</li>
-          <li class="mb-2">✅ Votre banque <strong>doit vous rembourser</strong> sous 10 jours ouvrés</li>
-          <li class="mb-2">✅ Aucune justification requise pour les prélèvements SEPA</li>
-        </ul>
+      <div class="mb-4 text-muted small fst-italic">
+        Service Réclamations<br>
+        [Nom de votre banque]
       </div>
 
-      <!-- Étapes -->
-      <div class="mb-4">
-        <h5 class="fw-bold mb-3">🛡️ Comment contester</h5>
-        <ol class="ps-3">
-          <li class="mb-3">
-            <strong>Contactez votre banque</strong><br>
-            <span class="text-muted small">Espace client ou agence : demandez l'opposition au prélèvement et le remboursement</span>
-          </li>
-          <li class="mb-3">
-            <strong>Bloquez les prélèvements futurs</strong><br>
-            <span class="text-muted small">Demandez la révocation du mandat SEPA pour ce créancier</span>
-          </li>
-          <li class="mb-3">
-            <strong>Signalez l'arnaque</strong> (optionnel)<br>
-            <span class="text-muted small">
-              <a href="https://signal.conso.gouv.fr" target="_blank" rel="noopener">SignalConso</a> ou
-              <a href="https://www.signal-arnaques.com" target="_blank" rel="noopener">Signal-Arnaques</a>
-            </span>
-          </li>
+      <div class="mb-5">
+        <p class="fw-bold mb-4">
+          Objet: Contestation de prélèvement SEPA non autorisé -
+          <span class="bg-danger bg-opacity-25 px-1"><%= @opportunity.expense.label.truncate(50) %></span>
+        </p>
+
+        <p>Madame, Monsieur,</p>
+
+        <p>
+          Je constate sur mon relevé de compte un prélèvement SEPA que je n'ai pas autorisé.
+          Je vous demande par la présente d'exercer mon droit de contestation conformément
+          à l'article L133-24 du Code monétaire et financier.
+        </p>
+
+        <div class="my-4 ps-3 border-start border-3 border-danger bg-light p-3">
+          <ul class="list-unstyled mb-0">
+            <li class="mb-2">
+              Prélèvement contesté:
+              <strong><%= @opportunity.expense.label %></strong>
+            </li>
+            <li class="mb-2">
+              Montant:
+              <strong class="text-danger"><%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 2) %></strong>
+            </li>
+          </ul>
+        </div>
+
+        <p>
+          Je vous demande de bien vouloir :
+        </p>
+        <ol>
+          <li class="mb-2">Procéder au <strong>remboursement intégral</strong> de ce prélèvement sous 10 jours ouvrés</li>
+          <li class="mb-2"><strong>Révoquer le mandat SEPA</strong> associé à ce créancier pour bloquer tout prélèvement futur</li>
         </ol>
-      </div>
 
-      <!-- Info box -->
-      <div class="bg-light p-3 rounded border-start border-3 border-primary">
-        <small class="text-muted">
-          <strong>💡 Bon à savoir :</strong> Les arnaques type "abonnement PDF" utilisent souvent des
-          essais gratuits avec prélèvement automatique. Vérifiez vos relevés chaque mois !
-        </small>
-      </div>
+        <p>
+          Je vous rappelle que pour les prélèvements non autorisés, le délai de contestation
+          est de 13 mois et qu'aucune justification n'est requise de ma part.
+        </p>
 
+        <p class="mt-5">
+          Dans l'attente de votre confirmation de remboursement, je vous prie d'agréer,
+          Madame, Monsieur, mes salutations distinguées.
+        </p>
+
+        <div class="mt-5 pt-5 border-top w-25">
+          <small class="text-muted">[Votre Signature]</small>
+        </div>
+      </div>
     </div>
   </div>
 </div>

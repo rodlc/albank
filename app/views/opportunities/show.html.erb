@@ -52,24 +52,22 @@
 
         <!-- Actions groupées -->
         <div class="opportunity-actions">
-          <% unless @opportunity.danger? %>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-clipboard-target="button"
-              data-action="click->clipboard#copy"
-            >
-              <span aria-hidden="true">📋</span> Copier la lettre
-            </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-clipboard-target="button"
+            data-action="click->clipboard#copy"
+          >
+            <span aria-hidden="true">📋</span> Copier la lettre
+          </button>
 
-            <button
-              type="button"
-              class="btn btn-outline-primary"
-              onclick="window.print()"
-            >
-              <span aria-hidden="true">🖨️</span> Imprimer
-            </button>
-          <% end %>
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            onclick="window.print()"
+          >
+            <span aria-hidden="true">🖨️</span> Imprimer
+          </button>
 
           <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true, class: "d-flex gap-2 justify-content-center flex-wrap") do %>
             <% unless @opportunity.contacted? || @opportunity.completed? %>
