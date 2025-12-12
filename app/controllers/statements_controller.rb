@@ -104,6 +104,8 @@ class StatementsController < ApplicationController
       if category.blacklist? || standard
         opp = Opportunity.create!(expense: expense, standard: standard, status: :pending)
         opp.classify!
+        # Budget optimisé = archivé par défaut
+        opp.update!(status: :completed) if opp.result_type == 'success'
       end
     end
 
