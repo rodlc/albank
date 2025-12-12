@@ -8,7 +8,7 @@
   <!-- Header avec stats inline (Target design) -->
   <% grouped = @expenses.group_by { |e| e.opportunities.first&.result_type } %>
   
-  <% total_amount = @expenses.sum(&:subtotal) %>
+  <% total_amount = @expenses.sum(&:subtotal) + @statement.unrecognized_amount %>
   <% fraude_amount = grouped['danger']&.sum(&:subtotal) || 0 %>
   <% economie_amount = grouped['opportunity']&.sum { |e| e.opportunities.first.savings } || 0 %>
   <% optimise_gain = grouped['success']&.sum { |e| (e.opportunities.first.standard.average_amount - e.subtotal) } || 0 %>
