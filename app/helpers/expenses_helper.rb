@@ -18,13 +18,13 @@ module ExpensesHelper
   def result_type_config(result_type)
     case result_type&.to_sym
     when :danger
-      { emoji: "🚨", label: "Alertes", color: "danger" }
+      { emoji: "🚨", label: "Alerte fraude", color: "danger" }
     when :opportunity
-      { emoji: "💡", label: "Opportunités", color: "primary" }
+      { emoji: "💡", label: "Économie potentielle", color: "primary" }
     when :success
-      { emoji: "⚖️", label: "Optimisé", color: "success" }
+      { emoji: "💰", label: "Budget optimisé", color: "success" }
     else
-      { emoji: "💳", label: "Dépenses non ciblées", color: "secondary" }
+      { emoji: "💳", label: "Autres dépenses", color: "secondary" }
     end
   end
 
@@ -59,15 +59,6 @@ module ExpensesHelper
   end
 
   def extract_merchant_name(label)
-    # Extrait le nom du bénéficiaire (EDF, MAIF, etc.)
-    # Ignore les dates, numéros de compte, etc.
-    cleaned = label
-      .gsub(/\d{2}\/\d{2}/, "") # Dates 23/07
-      .gsub(/\d{10,}/, "")      # Numéros longs
-      .gsub(/Numéro de (client|compte).*$/i, "") # Infos client
-      .strip
-
-    # Garde les 3 premiers mots significatifs
-    cleaned.split(/\s+/).take(3).join(" ").upcase
+    Expense.new(label: label).merchant_name
   end
 end
