@@ -1,0 +1,71 @@
+<div class="action-section">
+  <div class="container">
+    <div
+      class="paper-sheet shadow-lg position-relative"
+      id="letter-content"
+      data-clipboard-target="source"
+      style="border: none;"
+    >
+      <!-- Letter Header -->
+      <div class="d-flex justify-content-between mb-5">
+        <div class="text-muted small fst-italic">[Vos Coordonnées]</div>
+        <div class="fw-bold">Le <%= l(Date.current, format: "%d %B %Y") %></div>
+      </div>
+
+      <div class="mb-4 text-muted small fst-italic">
+        Service Réclamations<br>
+        [Nom de votre banque]
+      </div>
+
+      <div class="mb-5">
+        <p class="fw-bold mb-4">
+          Objet: Contestation de prélèvement SEPA non autorisé -
+          <span class="bg-danger bg-opacity-25 px-1"><%= @opportunity.expense.label.truncate(50) %></span>
+        </p>
+
+        <p>Madame, Monsieur,</p>
+
+        <p>
+          Je constate sur mon relevé de compte un prélèvement SEPA que je n'ai pas autorisé.
+          Je vous demande par la présente d'exercer mon droit de contestation conformément
+          à l'article L133-24 du Code monétaire et financier.
+        </p>
+
+        <div class="my-4 ps-3 border-start border-3 border-danger bg-light p-3">
+          <ul class="list-unstyled mb-0">
+            <li class="mb-2">
+              Prélèvement contesté:
+              <strong><%= @opportunity.expense.label %></strong>
+            </li>
+            <li class="mb-2">
+              Montant:
+              <strong class="text-danger"><%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 2) %></strong>
+            </li>
+          </ul>
+        </div>
+
+        <p>
+          Je vous demande de bien vouloir :
+        </p>
+        <ol>
+          <li class="mb-2">Procéder au <strong>remboursement intégral</strong> de ce prélèvement sous 10 jours ouvrés</li>
+          <li class="mb-2"><strong>Révoquer le mandat SEPA</strong> associé à ce créancier pour bloquer tout prélèvement futur</li>
+        </ol>
+
+        <p>
+          Je vous rappelle que pour les prélèvements non autorisés, le délai de contestation
+          est de 13 mois et qu'aucune justification n'est requise de ma part.
+        </p>
+
+        <p class="mt-5">
+          Dans l'attente de votre confirmation de remboursement, je vous prie d'agréer,
+          Madame, Monsieur, mes salutations distinguées.
+        </p>
+
+        <div class="mt-5 pt-5 border-top w-25">
+          <small class="text-muted">[Votre Signature]</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

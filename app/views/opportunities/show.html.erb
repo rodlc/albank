@@ -41,9 +41,13 @@
 
       <!-- Intro lettre -->
       <div class="text-center mb-4 d-print-none">
-        <h2 class="h4 h3-md fw-bold mb-2">Modèle de lettre prêt à l'emploi</h2>
+        <h2 class="h4 h3-md fw-bold mb-2">
+          <%= @opportunity.danger? ? "Alerte prélèvement suspect" : "Modèle de lettre prêt à l'emploi" %>
+        </h2>
         <p class="text-muted mb-4">
-          Utilisez ce modèle pour négocier avec votre fournisseur
+          <%= @opportunity.danger? ?
+              "Contestez ce prélèvement auprès de votre banque sous 13 mois" :
+              "Utilisez ce modèle pour négocier avec votre fournisseur" %>
         </p>
 
         <!-- Actions groupées -->
@@ -111,7 +115,7 @@
         </div>
       </div>
 
-      <%= render 'negotiation_letter' %>
+      <%= @opportunity.danger? ? render('fraud_alert') : render('negotiation_letter') %>
     </div>
   </div>
 </div>
