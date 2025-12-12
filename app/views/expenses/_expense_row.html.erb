@@ -32,7 +32,15 @@
 
       <% if opportunity&.opportunity? && opportunity.savings > 0 %>
         <div class="text-primary fw-bold">
-          <i class="fas fa-arrow-down small me-1"></i><%= number_to_currency(opportunity.savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+          <i class="fas fa-caret-up me-1"></i><%= number_to_currency(opportunity.savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+        </div>
+      <% elsif opportunity&.success? %>
+        <div class="text-success fw-bold">
+          <i class="fas fa-caret-down me-1"></i><%= number_to_currency((opportunity.standard.average_amount - expense.subtotal).abs, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+        </div>
+      <% elsif opportunity&.danger? %>
+        <div class="text-danger fw-bold">
+          <i class="fas fa-caret-up small me-1"></i><%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
         </div>
       <% end %>
     </div>
@@ -70,23 +78,31 @@
     </div>
 
     <!-- Right Group: Amounts + Button (Pushed right) -->
-    <div class="d-flex align-items-center gap-3 flex-shrink-0">
+    <div class="d-flex align-items-center gap-4 flex-shrink-0">
       <!-- Amount -->
-      <div class="fw-bold text-end" style="min-width: 80px;">
+      <div class="fw-bold text-end" style="min-width: 100px;">
         <%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
       </div>
 
       <!-- Savings -->
       <% if opportunity&.opportunity? && opportunity.savings > 0 %>
-        <div class="text-primary fw-bold text-end text-nowrap" style="min-width: 80px;">
-          <i class="fas fa-arrow-down small me-1"></i><%= number_to_currency(opportunity.savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+        <div class="text-primary fw-bold text-end text-nowrap" style="min-width: 100px;">
+          <i class="fas fa-caret-up me-1"></i><%= number_to_currency(opportunity.savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+        </div>
+      <% elsif opportunity&.success? %>
+        <div class="text-success fw-bold text-end text-nowrap" style="min-width: 100px;">
+          <i class="fas fa-caret-down me-1"></i><%= number_to_currency((opportunity.standard.average_amount - expense.subtotal).abs, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
+        </div>
+      <% elsif opportunity&.danger? %>
+        <div class="text-danger fw-bold text-end text-nowrap" style="min-width: 100px;">
+          <i class="fas fa-caret-up small me-1"></i><%= number_to_currency(expense.subtotal, unit: "€", precision: 2, separator: ",", delimiter: " ") %>
         </div>
       <% else %>
-        <div style="min-width: 80px;"></div>
+        <div style="min-width: 100px;"></div>
       <% end %>
 
       <!-- Button -->
-      <div style="width: 140px;" class="text-end">
+      <div style="width: 140px;" class="d-flex justify-content-center">
         <%= render "opportunities/action_button",
                    expense: expense,
                    opportunity: opportunity,

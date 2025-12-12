@@ -163,6 +163,15 @@
         outline: none;
         box-shadow: 0 0 0 3px rgba(206, 5, 0, 0.2);
     }
+
+    &:disabled,
+    &.disabled {
+        background-color: transparent;
+        border-color: #cecece;
+        color: #cecece;
+        cursor: not-allowed;
+        box-shadow: none;
+    }
 }
 
 .btn-success-outline {
@@ -215,6 +224,15 @@
 
     &:active {
         transform: translateY(0);
+    }
+
+    &:disabled,
+    &.disabled {
+        background-color: #f6f6f6;
+        color: #cecece;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
     }
 }
 
