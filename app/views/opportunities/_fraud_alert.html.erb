@@ -1,0 +1,59 @@
+<div class="action-section">
+  <div class="container">
+    <div class="paper-sheet shadow-lg position-relative" style="border: none;">
+
+      <!-- Alerte Header -->
+      <div class="alert alert-danger d-flex align-items-center mb-4">
+        <span class="fs-3 me-3">🚨</span>
+        <div>
+          <strong>Prélèvement suspect détecté</strong><br>
+          <span class="small"><%= @opportunity.expense.label %></span>
+        </div>
+        <div class="ms-auto fw-bold fs-4">
+          <%= number_to_currency(@opportunity.expense.subtotal, unit: "€", precision: 2) %>
+        </div>
+      </div>
+
+      <!-- Vos droits -->
+      <div class="mb-4">
+        <h5 class="fw-bold mb-3">📋 Vos droits</h5>
+        <ul class="list-unstyled">
+          <li class="mb-2">✅ <strong>13 mois</strong> pour contester un prélèvement non autorisé</li>
+          <li class="mb-2">✅ Votre banque <strong>doit vous rembourser</strong> sous 10 jours ouvrés</li>
+          <li class="mb-2">✅ Aucune justification requise pour les prélèvements SEPA</li>
+        </ul>
+      </div>
+
+      <!-- Étapes -->
+      <div class="mb-4">
+        <h5 class="fw-bold mb-3">🛡️ Comment contester</h5>
+        <ol class="ps-3">
+          <li class="mb-3">
+            <strong>Contactez votre banque</strong><br>
+            <span class="text-muted small">Espace client ou agence : demandez l'opposition au prélèvement et le remboursement</span>
+          </li>
+          <li class="mb-3">
+            <strong>Bloquez les prélèvements futurs</strong><br>
+            <span class="text-muted small">Demandez la révocation du mandat SEPA pour ce créancier</span>
+          </li>
+          <li class="mb-3">
+            <strong>Signalez l'arnaque</strong> (optionnel)<br>
+            <span class="text-muted small">
+              <a href="https://signal.conso.gouv.fr" target="_blank" rel="noopener">SignalConso</a> ou
+              <a href="https://www.signal-arnaques.com" target="_blank" rel="noopener">Signal-Arnaques</a>
+            </span>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Info box -->
+      <div class="bg-light p-3 rounded border-start border-3 border-primary">
+        <small class="text-muted">
+          <strong>💡 Bon à savoir :</strong> Les arnaques type "abonnement PDF" utilisent souvent des
+          essais gratuits avec prélèvement automatique. Vérifiez vos relevés chaque mois !
+        </small>
+      </div>
+
+    </div>
+  </div>
+</div>

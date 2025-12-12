@@ -41,29 +41,35 @@
 
       <!-- Intro lettre -->
       <div class="text-center mb-4 d-print-none">
-        <h2 class="h4 h3-md fw-bold mb-2">Modèle de lettre prêt à l'emploi</h2>
+        <h2 class="h4 h3-md fw-bold mb-2">
+          <%= @opportunity.danger? ? "Alerte prélèvement suspect" : "Modèle de lettre prêt à l'emploi" %>
+        </h2>
         <p class="text-muted mb-4">
-          Utilisez ce modèle pour négocier avec votre fournisseur
+          <%= @opportunity.danger? ?
+              "Contestez ce prélèvement auprès de votre banque sous 13 mois" :
+              "Utilisez ce modèle pour négocier avec votre fournisseur" %>
         </p>
 
         <!-- Actions groupées -->
         <div class="opportunity-actions">
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-clipboard-target="button"
-            data-action="click->clipboard#copy"
-          >
-            <span aria-hidden="true">📋</span> Copier la lettre
-          </button>
+          <% unless @opportunity.danger? %>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-clipboard-target="button"
+              data-action="click->clipboard#copy"
+            >
+              <span aria-hidden="true">📋</span> Copier la lettre
+            </button>
 
-          <button
-            type="button"
-            class="btn btn-outline-primary"
-            onclick="window.print()"
-          >
-            <span aria-hidden="true">🖨️</span> Imprimer
-          </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              onclick="window.print()"
+            >
+              <span aria-hidden="true">🖨️</span> Imprimer
+            </button>
+          <% end %>
 
           <%= form_with(model: [@statement, @expense, @opportunity], method: :patch, local: true, class: "d-flex gap-2 justify-content-center flex-wrap") do %>
             <% unless @opportunity.contacted? || @opportunity.completed? %>
@@ -111,7 +117,7 @@
         </div>
       </div>
 
-      <%= render 'negotiation_letter' %>
+      <%= @opportunity.danger? ? render('fraud_alert') : render('negotiation_letter') %>
     </div>
   </div>
 </div>
