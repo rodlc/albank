@@ -19,53 +19,89 @@
   <% if @statements.any? %>
     <div class="row g-4">
       <% @statements.each do |statement| %>
-        <% opportunities_count = statement.expenses.joins(:opportunities).count %>
-        <% total_savings = statement.expenses.joins(:opportunities).includes(:opportunities).sum { |e| e.opportunities.sum(&:savings) } %>
+        <% 
+           expenses = statement.expenses.includes(:opportunities)
+           total_amount = expenses.sum(&:subtotal)
+           
+           fraude_expenses = expenses.select { |e| e.opportunities.any?(&:danger?) }
+           fraude_amount = fraude_expenses.sum(&:subtotal)
+           fraude_count = fraude_expenses.count
+           
+           economie_expenses = expenses.select { |e| e.opportunities.any?(&:opportunity?) }
+           economie_amount = economie_expenses.sum { |e| e.opportunities.find(&:opportunity?)&.savings || 0 }
+           economie_count = economie_expenses.count
+
+           status_class = if fraude_amount > 0
+                            "status-danger"
+                          elsif economie_amount > 0
+                            "status-opportunity"
+                          elsif expenses.any? { |e| e.opportunities.any?(&:success?) }
+                            "status-success"
+                          else
+                            ""
+                          end
+        %>
 
         <div class="col-md-6 col-lg-4">
-          <div class="position-relative">
-            <%= link_to statement, class: "text-decoration-none" do %>
-              <div class="smart-card <%= 'has-savings' if total_savings > 0 %>">
-                <div class="d-flex justify-content-between align-items-start">
-                  <h3 class="smart-card__title">
+          <div class="position-relative h-100">
+            <%= link_to statement, class: "text-decoration-none h-100 d-block" do %>
+              <div class="smart-card <%= status_class %> h-100 d-flex flex-column pb-3">
+                <div class="mb-3 pe-4">
+                  <h3 class="smart-card__title mb-1 text-truncate">
                     <span class="me-2">📄</span>
                     <%= l(statement.date, format: "%B %Y").capitalize %>
                   </h3>
+                  <div class="text-muted small">Compte courant</div>
+                </div>
 
-                <% if opportunities_count > 0 %>
-                  <span class="smart-card__tag">
-                    <%= opportunities_count %> détectées
-                  </span>
-                <% end %>
+                <div class="d-flex flex-column justify-content-center gap-2 mb-3" style="min-height: 3.5rem;">
+                  <% if fraude_count > 0 %>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span class="badge bg-danger-subtle text-danger rounded-pill">
+                        Fraude détectée
+                      </span>
+                      <span class="fw-bold text-danger">
+                        <i class="fas fa-caret-up small me-1"></i><%= number_to_currency(fraude_amount, unit: "€", precision: 0) %>
+                      </span>
+                    </div>
+                  <% end %>
+
+                  <% if economie_count > 0 %>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span class="badge bg-primary-subtle text-primary rounded-pill">
+                        Économie possible
+                      </span>
+                      <span class="fw-bold text-primary">
+                        <i class="fas fa-caret-up small me-1"></i><%= number_to_currency(economie_amount, unit: "€", precision: 0) %>
+                      </span>
+                    </div>
+                  <% end %>
+
+                  <% if fraude_count == 0 && economie_count == 0 %>
+                    <div class="text-muted fst-italic small text-center">
+                      Aucune anomalie
+                    </div>
+                  <% end %>
+                </div>
+
+                <div class="mt-auto border-top pt-3">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-muted small text-uppercase fw-semibold">Total</span>
+                    <span class="fs-5 fw-bold text-dark">
+                      <%= number_to_currency(total_amount, unit: "€", precision: 0) %>
+                    </span>
+                  </div>
+                </div>
               </div>
+            <% end %>
 
-              <div class="mt-auto">
-                <div class="smart-card__label">
-                  Économies possibles
-                </div>
-
-                <div class="smart-card__value text-coral">
-                  <%= number_to_currency(total_savings, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
-                </div>
-
-                <div class="d-flex justify-content-between border-top pt-2 mt-2">
-                  <span class="text-muted small">Dépenses</span>
-
-                  <span class="fw-bold">
-                    <%= number_to_currency(statement.expenses.sum(:subtotal), unit: "€", precision: 0, separator: ",", delimiter: " ") %>
-                  </span>
-                </div>
-              </div>
-            </div>
-          <% end %>
-
-          <%= button_to statement_path(statement),
-              method: :delete,
-              data: { turbo_confirm: "Supprimer ce relevé et toutes ses dépenses ?" },
-              class: "btn-close position-absolute top-0 end-0 m-2",
-              style: "z-index: 10;",
-              form: { class: "d-inline" } do %>
-          <% end %>
+            <%= button_to statement_path(statement),
+                method: :delete,
+                data: { turbo_confirm: "Supprimer ce relevé et toutes ses dépenses ?" },
+                class: "btn-close position-absolute top-0 end-0 m-3",
+                style: "z-index: 10;",
+                form: { class: "d-inline" } do %>
+            <% end %>
           </div>
         </div>
       <% end %>
