@@ -21,7 +21,7 @@
       <% @statements.each do |statement| %>
         <% 
            expenses = statement.expenses.includes(:opportunities)
-           total_amount = expenses.sum(&:subtotal)
+           total_amount = expenses.sum(&:subtotal) + statement.unrecognized_amount
            
            fraude_expenses = expenses.select { |e| e.opportunities.any?(&:danger?) }
            fraude_amount = fraude_expenses.sum(&:subtotal)
