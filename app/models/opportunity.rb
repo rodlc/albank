@@ -1,18 +1,35 @@
 class Opportunity < ApplicationRecord
   belongs_to :expense
-  belongs_to :standard
+  belongs_to :standard, optional: true
 
   enum :status, { pending: "pending", contacted: "contacted", completed: "completed" }
   enum :result_type, { danger: "danger", opportunity: "opportunity", success: "success" }
 
   def savings
+    return 0 unless standard
     expense.subtotal - standard.average_amount
   end
 
   def classify!
     if danger_detected?
       update!(result_type: :danger)
-    elsif expense.subtotal > standard.average_amount
+      return
+    end
+
+    # Pas de comparaison si pas de standard (catégories sans benchmark)
+    return unless standard
+
+    merchant = expense.merchant_name
+    merchant_total = if merchant.blank? || merchant.length < 3
+                       expense.subtotal
+                     else
+                       expense.statement.expenses
+                              .where(category: expense.category)
+                              .select { |e| e.merchant_name == merchant }
+                              .sum(&:subtotal)
+                     end
+
+    if merchant_total > standard.average_amount
       update!(result_type: :opportunity)
     else
       update!(result_type: :success)

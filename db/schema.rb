@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_09_212042) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_12_082331) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -36,7 +36,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_09_212042) do
 
   create_table "opportunities", force: :cascade do |t|
     t.bigint "expense_id", null: false
-    t.bigint "standard_id", null: false
+    t.bigint "standard_id"
     t.string "status", default: "pending"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -67,6 +67,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_09_212042) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "total", precision: 10, scale: 2
+    t.integer "status", default: 0, null: false
     t.index ["user_id"], name: "index_statements_on_user_id"
   end
 

@@ -84,11 +84,11 @@
               data-bs-target="#collapseAutres"
               aria-expanded="false"
               aria-controls="collapseAutres"
-              aria-label="Dépenses non ciblées : total <%= number_to_currency(autres_amount, unit: '€', precision: 0, separator: ',', delimiter: ' ') %>"
+              aria-label="Autres dépenses : total <%= number_to_currency(autres_amount, unit: '€', precision: 0, separator: ',', delimiter: ' ') %>"
             >
               <div class="d-flex align-items-center gap-2 flex-grow-1">
                 <span class="section-emoji">💳</span>
-                <span class="section-label">Dépenses non ciblées</span>
+                <span class="section-label">Autres dépenses</span>
               </div>
               <span class="section-totals ms-auto">
                 <%= number_to_currency(autres_amount, unit: "€", precision: 0, separator: ",", delimiter: " ") %>
