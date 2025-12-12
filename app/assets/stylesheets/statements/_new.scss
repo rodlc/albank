@@ -11,8 +11,8 @@
   height: 500px;
   width: 90%;              /* largeur à 80% de la page */
   margin: 50px auto;
-  border: 1px dashed #756DF5;
-  background-color: #f2f1f7;
+  border: 3px dashed $primary;
+  background-color: $primary-lighter;
   border-radius: 12px;   /* coins arrondis pour un rendu plus doux */
   padding: 15px;
   cursor: pointer;
@@ -21,11 +21,11 @@
 }
 
 .file-upload-wrapper:hover {
-  box-shadow: 0 6px 16px rgba(117, 109, 245, 0.2);
+  box-shadow: 0 6px 16px rgba(0, 0, 145, 0.2);
 }
 
 .file-upload-wrapper:focus {
-  outline: 3px solid #756DF5;
+  outline: 3px solid $primary;
   outline-offset: 4px;
 }
 
@@ -42,8 +42,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 2px solid #756DF5;
-  background-color: #f2f1f7;
+  border: 2px solid $primary;
+  background-color: $primary-lighter;
   border-radius: 8px;   /* coins arrondis pour un rendu plus doux */
   padding: 15px;
   margin: 10px;
@@ -70,19 +70,19 @@
 
 /* Couleur du bouton actif (quand ouvert) */
 .accordion-button:not(.collapsed) {
-  color: #756DF5;              /* texte bleu */
-  background-color: #f0f0ff;   /* fond léger pour contraste, optionnel */
+  color: $primary;              /* texte bleu */
+  background-color: $primary-lighter;   /* fond léger pour contraste, optionnel */
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
 }
 
 /* Couleur du bouton au focus (quand cliqué) */
 .accordion-button:focus {
-  border-color: #756DF5;
-  box-shadow: 0 0 0 0.25rem rgba(117, 109, 245, 0.25);
+  border-color: $primary;
+  box-shadow: 0 0 0 0.25rem rgba(0, 0, 145, 0.25);
 }
 
 .drop-zone.dragover {
-  outline: 3px dashed #4a90e2;
+  outline: 3px dashed $primary;
   opacity: 0.8;
 }
 
