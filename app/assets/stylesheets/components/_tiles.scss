@@ -31,8 +31,16 @@
         transition: background 0.2s;
     }
 
-    &.has-savings::before {
-        background: $coral; // Coral indicator
+    &.status-danger::before {
+        background: $danger;
+    }
+
+    &.status-opportunity::before {
+        background: $primary;
+    }
+
+    &.status-success::before {
+        background: $success;
     }
 
     &__label {
