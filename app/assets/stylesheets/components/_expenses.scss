@@ -34,6 +34,10 @@
                 box-shadow: none;
                 border-bottom: 1px solid #e8e8e8;
                 border-radius: 12px 12px 0 0;
+
+                .section-action i {
+                    transform: rotate(180deg);
+                }
             }
 
             &:focus {
@@ -44,6 +48,11 @@
 
             &:hover {
                 background: #f6f6f6;
+            }
+
+            // Hide default Bootstrap accordion icon
+            &::after {
+                display: none;
             }
 
             // Section emoji + label + badge wrapper
@@ -117,11 +126,15 @@
             }
 
             .section-action {
-                color: #929292;
-                font-weight: 500;
-                font-size: 0.8125rem;
-                margin-left: 0.5rem;
+                color: $primary;
+                font-weight: 600;
+                font-size: 0.875rem;
+                margin-left: 1rem;
                 flex-shrink: 0;
+
+                i {
+                    transition: transform 0.2s ease-in-out;
+                }
             }
         }
     }
