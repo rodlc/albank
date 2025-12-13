@@ -10,6 +10,7 @@ gem "pdf-reader"
 
 # Gem pour interagir avec des LLMs génériques
 gem "ruby_llm", "~> 1.9"
+gem "googleauth"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"

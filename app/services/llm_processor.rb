@@ -1,9 +1,9 @@
 class LlmProcessor
   # Triumvirat de résilience : Google → Meta → Microsoft
   FALLBACK_MODELS = [
-    # Google Gemini (primary, GCP credits)
-    { model: "gemini-flash-lite-latest", provider: :gemini },  # Rapide & économique
-    { model: "gemini-flash-latest", provider: :gemini },       # Intelligent
+    # Google Vertex AI (primary, GCP credits) - Gemini 2.5 thinking models
+    { model: "gemini-2.5-flash-lite", provider: :vertexai },  # Rapide & économique
+    { model: "gemini-2.5-flash", provider: :vertexai },       # Meilleur rapport qualité/prix
 
     # Meta Llama (fallback, OpenRouter free tier)
     { model: "meta-llama/llama-3.3-70b-instruct:free", provider: :openrouter },
@@ -31,7 +31,7 @@ class LlmProcessor
 
   def models_to_try
     if ENV["LLM_MODEL"]
-      [{ model: ENV["LLM_MODEL"], provider: :gemini }] + FALLBACK_MODELS
+      [{ model: ENV["LLM_MODEL"], provider: :vertexai }] + FALLBACK_MODELS
     else
       FALLBACK_MODELS
     end
